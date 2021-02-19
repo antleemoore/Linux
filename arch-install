@@ -34,3 +34,4 @@ exit                                                        # return to install 
 umount -R /mnt                                              # unmounts the install drive
 reboot
 vim /etc/sudoers                                            # write "Defaults !tty_tickets" (no retyping password)
+pacman -S xorg-server xorg-init                             # set up for graphical environment
