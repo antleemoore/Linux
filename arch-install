@@ -39,5 +39,3 @@ pacman -S xorg-server xorg-init noto-fonts                  # set up for graphic
 vim ~/.xinitrc                                              # write "exec ${name of graphical environment}
 startx
 .                                                           # if error in graphical environment, press CTRL+ALT+F(2-3-4) to return to tty
-sudo pacman -S lightdm lightdm-gtk-greeter                  # for login screen
-sudo systemctl enable lightdm.service
