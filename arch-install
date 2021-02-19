@@ -21,7 +21,7 @@ genfstab -U /mnt >> /mnt/etc/fstab                          # tells Linux what p
 arch-chroot /mnt                                            # move to new Arch installation
 pacman -S networkmanager grub                               # install Network Manager for automated internet access
 .                                                           # install grub boot loader
-systemctl enable networkmanager                             # start Network Manager on startup
+systemctl enable NetworkManager                             # start Network Manager on startup
 grub-install --target=i386-pc /${DRIVE}                     # installs grub
 grub-mkconfig -o /boot/grub/grub.cfg                        # configure grub boot
 passwd                                                      # set root password
