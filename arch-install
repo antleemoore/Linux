@@ -33,3 +33,4 @@ vim /etc/hostname                                           # write a name for t
 exit                                                        # return to install drive
 umount -R /mnt                                              # unmounts the install drive
 reboot
+vim /etc/sudoers                                            # write "Defaults !tty_tickets" (no retyping password)
