@@ -34,6 +34,10 @@ exit                                                        # return to install 
 umount -R /mnt                                              # unmounts the install drive
 reboot
 vim /etc/sudoers                                            # write "Defaults !tty_tickets" (no retyping password)
+
+###
+# Rest is optional and can differ depending on graphical environment 
+
 pacman -S xorg-server xorg-init noto-fonts                  # set up for graphical environment
 .                                                           # install a graphical environment
 vim ~/.xinitrc                                              # write "exec ${name of graphical environment}
