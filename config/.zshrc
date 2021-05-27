@@ -34,7 +34,7 @@ alias vimr="$BROWSER www.vimregex.com"
 alias agit="~/scripts/autogit"
 alias vim="nvim"
 alias gs="git status"
-alias lgit="cd ~/repos/Linux && autogit && cd -"
+alias lgit="cd ~/repos/Linux && agit && cd -"
 
 # Vim Mode Config
 bindkey -v
@@ -67,4 +67,4 @@ TRAPINT() {
   THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
   return $(( 128 + $1 ))
 }
-PROMPT='%{$fg[yellow]%}${vcs_info_msg_0_}$THEME_PROMPT_PREFIX%f%B%F{0}%1~%f%b %(?.%F{magenta}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
+PROMPT='%{$fg[yellow]%}${vcs_info_msg_0_}$THEME_PROMPT_PREFIX%f%B%F{255}%1~%f%b %(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
