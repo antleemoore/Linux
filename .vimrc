@@ -48,6 +48,7 @@ let mapleader = " "
 nnoremap ; :
 vnoremap ; :
 noremap <leader>v <C-w>v
+noremap <leader>h <C-w>s
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -61,3 +62,4 @@ noremap k gk
 nnoremap <leader>c <Plug>CommentaryLine
 
 let g:ctrlp_max_height = 30
+let g:ctrlp_show_hidden = 1
