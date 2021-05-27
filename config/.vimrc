@@ -47,16 +47,19 @@ let mapleader = " "
 
 nnoremap ; :
 vnoremap ; :
-noremap <leader>v <C-w>v
-noremap <leader>h <C-w>s
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap / /\v
 vnoremap / /\v
+noremap <leader>v :noh<cr>:vnew<cr>:noh<cr>:CtrlP<cr>
+noremap <leader>h :noh<cr>:new<cr>:noh<cr>:CtrlP<cr>
+noremap <leader>p :noh<cr>:CtrlP<cr>
 noremap <leader>x :noh<cr>:call clearmatches()<cr>
 nnoremap <leader><leader> <c-^>
+nnoremap <leader>D :noh<cr>:bd<cr>
+nnoremap <leader>W :noh<cr>:bw<cr>
 noremap j gj
 noremap k gk
 nnoremap <leader>c <Plug>CommentaryLine
