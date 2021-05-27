@@ -35,6 +35,7 @@ alias agit="~/scripts/autogit"
 alias vim="nvim"
 alias gs="git status"
 alias lgit="cd ~/repos/Linux && agit && cd -"
+alias nvimc="vim ~/.config/nvim/init.vim"
 
 # Vim Mode Config
 bindkey -v
@@ -68,3 +69,4 @@ TRAPINT() {
   return $(( 128 + $1 ))
 }
 PROMPT='%{$fg[yellow]%}${vcs_info_msg_0_}$THEME_PROMPT_PREFIX%f%B%F{255}%1~%f%b %(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
+cd ~
