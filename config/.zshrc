@@ -34,6 +34,7 @@ alias vimr="$BROWSER www.vimregex.com"
 alias autogit="~/scripts/autogit"
 alias vim="nvim"
 alias gs="git status"
+alias autogitlinux="cd ~/repos/Linux && autogit && cd ~"
 
 # Vim Mode Config
 bindkey -v
