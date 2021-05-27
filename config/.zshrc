@@ -31,10 +31,10 @@ alias vimc="vim ~/.vimrc"
 alias zshs="source ~/.zshrc"
 alias vims="source ~/.vimrc"
 alias vimr="$BROWSER www.vimregex.com"
-alias autogit="~/scripts/autogit"
+alias agit="~/scripts/autogit"
 alias vim="nvim"
 alias gs="git status"
-alias autogitlinux="cd ~/repos/Linux && autogit && cd ~"
+alias lgit="cd ~/repos/Linux && autogit && cd ~"
 
 # Vim Mode Config
 bindkey -v
