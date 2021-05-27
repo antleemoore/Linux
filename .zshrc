@@ -111,14 +111,20 @@ source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
+export BROWSER="/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe"
+
 alias p="cd ~/projects"
 alias codehere="code . && exit"
 alias doc="cd /mnt/c/Users/Bruce/Documents"
+alias windows="cd /mnt/c/Users/Bruce"
 alias rdcstart="sudo service xrdp start"
 alias rdcstop="sudo service xrdp stop"
 alias zshc="vim ~/.zshrc"
+alias vimc="vim ~/.vimrc"
 alias zshs="source ~/.zshrc"
-export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
+alias vims="source ~/.vimrc"
+alias vimr="$BROWSER www.vimregex.com"
 
 # Vim Mode Config
 bindkey -v
