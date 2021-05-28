@@ -25,10 +25,6 @@ if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 noremap <leader>p :noh<cr>:CtrlP<cr>
-noremap <leader>a :e .
-noremap <leader>A :e ~/.
-noremap <leader>e :e 
-noremap <leader>E :e ~/
 nnoremap <leader>c <Plug>CommentaryLine
 noremap <leader>v :noh<cr>:vnew<cr>:noh<cr>:CtrlP<cr>
 noremap <leader>h :noh<cr>:new<cr>:noh<cr>:CtrlP<cr>

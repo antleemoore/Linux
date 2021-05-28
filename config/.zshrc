@@ -69,4 +69,3 @@ TRAPINT() {
   return $(( 128 + $1 ))
 }
 PROMPT='%{$fg[yellow]%}${vcs_info_msg_0_}$THEME_PROMPT_PREFIX%f%B%F{255}%1~%f%b %(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
-cd ~

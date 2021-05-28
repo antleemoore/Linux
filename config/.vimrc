@@ -1,5 +1,4 @@
 set nocompatible 
-filetype off
 syntax on 
 
 set tabstop=4
@@ -36,6 +35,10 @@ nnoremap <C-left> <C-w><
 nnoremap <C-right> <C-w>>
 nnoremap <C-up> <C-w>+
 nnoremap <C-down> <C-w>-
+noremap <leader>a :e .
+noremap <leader>A :e ~/.
+noremap <leader>e :e 
+noremap <leader>E :e ~/
 nnoremap / /\v
 vnoremap / /\v
 noremap <leader>x :noh<cr>:call clearmatches()<cr>
