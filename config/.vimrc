@@ -32,6 +32,10 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+nnoremap <C-left> <C-w><
+nnoremap <C-right> <C-w>>
+nnoremap <C-up> <C-w>+
+nnoremap <C-down> <C-w>-
 nnoremap / /\v
 vnoremap / /\v
 noremap <leader>x :noh<cr>:call clearmatches()<cr>
