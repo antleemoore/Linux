@@ -7,7 +7,7 @@ autoload -U colors && colors
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export ZSH="/home/ant/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="candy"
 ENABLE_CORRECTION="true"
@@ -36,6 +36,7 @@ alias vim="nvim"
 alias gs="git status"
 alias lgit="cd ~/repos/Linux && agit && cd -"
 alias nvimc="vim ~/.config/nvim/init.vim"
+alias killport="~/utils/killport"
 
 # Vim Mode Config
 bindkey -v
