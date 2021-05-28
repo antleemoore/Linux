@@ -20,6 +20,8 @@ source $ZSH/oh-my-zsh.sh
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 export BROWSER="/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe"
 
+
+alias ll='ls -alF --color=always | grep -v ^l'
 alias p="cd ~/projects"
 alias codehere="code . && exit"
 alias doc="cd /mnt/c/Users/Bruce/Documents"
