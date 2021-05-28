@@ -35,4 +35,5 @@ noremap <leader>h :noh<cr>:new<cr>:noh<cr>:CtrlP<cr>
 nnoremap <leader>n :noh<cr>:TilerNew<cr>:noh<cr>:CtrlP<cr>
 nnoremap <leader>d :noh<cr>:TilerClose<cr>
 nnoremap <leader>m :noh<cr>:TilerFocus<cr>
+nnoremap <leader>r :noh<cr>:TilerReorder<cr>
 nnoremap ZZ ZZ:noh<cr>:TilerReorder<cr>
