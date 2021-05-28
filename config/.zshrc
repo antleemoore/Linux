@@ -9,7 +9,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="candy"
+ZSH_THEME="agnoster"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
 
@@ -20,9 +20,17 @@ source $ZSH/oh-my-zsh.sh
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 export BROWSER="/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe"
 
+function cd {
+    builtin cd "$@" && ls
+}
 
-alias ll='ls -alF --color=always | grep -v ^l'
-alias p="cd ~/projects"
+alias la='ls -alF --color=always | grep -v ^l'
+alias cdp="cd ~/projects"
+alias cdc="cd ~/.config"
+alias cds="cd ~/scripts"
+alias cdu="cd ~/utils"
+alias cdr="cd ~/repos"
+alias cdlr="cd ~/repos/Linux"
 alias codehere="code . && exit"
 alias doc="cd /mnt/c/Users/Bruce/Documents"
 alias windows="cd /mnt/c/Users/Bruce"
