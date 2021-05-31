@@ -1,6 +1,7 @@
 set nocompatible 
 syntax on 
 
+set nowrap
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -39,6 +40,7 @@ noremap <leader>a :e .
 noremap <leader>A :e ~/.
 noremap <leader>e :e 
 noremap <leader>E :e ~/
+nnoremap <leader>s :noh<cr>:source %<cr>
 nnoremap / /\v
 vnoremap / /\v
 noremap <leader>x :noh<cr>:call clearmatches()<cr>
