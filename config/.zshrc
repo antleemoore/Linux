@@ -18,7 +18,7 @@ plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
-export BROWSER="/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe"
+[ -f "/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe"] && export BROWSER="/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe" || export BROWSER="firefox" 
 
 function cd {
     builtin cd "$@" && ls
@@ -86,3 +86,5 @@ TRAPINT() {
 }
 setxkbmap -option caps:swapescape
 PROMPT='%{$fg[yellow]%}${vcs_info_msg_0_}$THEME_PROMPT_PREFIX%f%B%F{255}%1~%f%b %(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
+clear
+neofetch
