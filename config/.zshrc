@@ -38,16 +38,21 @@ alias rdcstart="sudo service xrdp start"
 alias rdcstop="sudo service xrdp stop"
 alias zshc="vim ~/.zshrc"
 alias vimc="vim ~/.vimrc"
+alias dwmc="vim ~/repos/dwm/config.h"
+alias stc="vim ~/repos/st/config.h"
 alias zshs="source ~/.zshrc"
-alias vims="source ~/.vimrc"
 alias vimr="$BROWSER www.vimregex.com"
 alias agit="~/scripts/autogit"
+alias dwmgit="~/scripts/dwmgit"
 alias vim="nvim"
 alias gs="git status"
 alias lgit="cd ~/repos/Linux && agit && cd -"
 alias nvimc="vim ~/.config/nvim/init.vim"
 alias killport="~/utils/killport"
-
+alias cls="clear"
+alias cddwm="cd ~/repos/dwm"
+alias cdst="cd ~/repos/st"
+alias redwm="~/scripts/reinstall-wm"
 # Vim Mode Config
 bindkey -v
 export KEYTIMEOUT=1
