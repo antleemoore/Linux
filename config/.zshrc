@@ -5,8 +5,8 @@ fi
 autoload -U colors && colors
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="agnoster"
@@ -18,12 +18,13 @@ plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
 source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
-[ -f "/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe" ] && export BROWSER="/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe" || export BROWSER="firefox" 
+[ -f "/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe" ] \
+    && export BROWSER="/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe" \
+    || export BROWSER="firefox" 
 
 function cd {
     builtin cd "$@" && ls
 }
-
 alias la='ls -alF --color=always | grep -v ^l'
 alias cdp="cd ~/projects"
 alias cdc="cd ~/.config"
@@ -53,6 +54,7 @@ alias cls="clear"
 alias cddwm="cd ~/repos/dwm"
 alias cdst="cd ~/repos/st"
 alias redwm="~/scripts/reinstall-wm"
+alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
 # Vim Mode Config
 bindkey -v
 export KEYTIMEOUT=1
@@ -84,4 +86,14 @@ TRAPINT() {
   THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
   return $(( 128 + $1 ))
 }
-PROMPT='%{$fg[yellow]%}${vcs_info_msg_0_}$THEME_PROMPT_PREFIX%f%B%F{255}%1~%f%b %(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
+PROMPT='%{$fg[yellow]%}${vcs_info_msg_0_}$THEME_PROMPT_PREFIX%f%B%F{255}%1~%f%b 
+%(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
+function precmd() {
+    # Print a newline before the prompt, unless it's the
+    # first prompt in the process.
+    if [ -z "$NEW_LINE_BEFORE_PROMPT" ]; then
+        NEW_LINE_BEFORE_PROMPT=1
+    elif [ "$NEW_LINE_BEFORE_PROMPT" -eq 1 ]; then
+        echo 
+    fi
+}
