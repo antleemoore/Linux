@@ -5,9 +5,13 @@ import qualified XMonad.StackSet as W
 import XMonad.Hooks.DynamicLog
 import XMonad.Layout.Spacing
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Actions.NoBorders
 
-myTerminal = "xfce4-terminal"
+myTerminal = "terminator"
 myWorkspaces = ["[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]"]
+myFocusedBorderColor = "#FABD2F"
+myBorderWidth = 3
 
 myLayout = avoidStruts $ spacingRaw True (Border 5 5 5 5) True (Border 5 5 5 5) True $
             layoutHook xfceConfig
@@ -22,7 +26,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm .|. shiftMask, xK_c     ), spawn "xmonad --recompile; xmonad --restart")
   , ((modm,               xK_y ), sendMessage NextLayout)
   , ((modm .|. shiftMask, xK_y ), setLayout $ XMonad.layoutHook conf)
-  , ((modm,               xK_space), windows W.swapMaster)
+  , ((modm, xK_space), windows W.swapMaster)
+  , ((modm, xK_b), withFocused toggleBorder)
+  -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
   ]
   ++
   [((m .|. modm, k), windows $ f i)
@@ -34,4 +40,7 @@ main = xmonad xfceConfig{ terminal=myTerminal
                         , keys=myKeys <+> keys defaultConfig
                         , workspaces=myWorkspaces
                         , layoutHook=myLayout
+                        , handleEventHook=handleEventHook xfceConfig <+> fullscreenEventHook
+                        , focusedBorderColor=myFocusedBorderColor
+                        , borderWidth=myBorderWidth
             }
