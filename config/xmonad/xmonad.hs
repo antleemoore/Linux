@@ -60,7 +60,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_d     ), spawn "dmenu_run")
 
     -- launch gmrun
-    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+    --, ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+
+    -- launch gmrun
+    , ((modm .|. shiftMask, xK_Return     ), spawn "firefox")
 
     -- close focused window
     , ((modm, xK_q     ), kill)
