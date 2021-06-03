@@ -4,17 +4,21 @@ import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 import XMonad.Hooks.DynamicLog
 import XMonad.Layout.Spacing
+import XMonad.Layout.Gaps
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Actions.NoBorders
 
 myTerminal = "terminator"
 myWorkspaces = ["[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]"]
+
 myFocusedBorderColor = "#FABD2F"
 myBorderWidth = 3
 
-myLayout = avoidStruts $ spacingRaw True (Border 5 5 5 5) True (Border 5 5 5 5) True $
-            layoutHook xfceConfig
+mySpacing = spacingRaw True (Border 5 5 5 5) True (Border 5 5 5 5) True
+myGaps = gaps [(U,5), (R,5), (L,5), (D,5)]
+
+myLayout = avoidStruts $ mySpacing $ myGaps $ layoutHook xfceConfig 
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
@@ -28,6 +32,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm .|. shiftMask, xK_y ), setLayout $ XMonad.layoutHook conf)
   , ((modm, xK_space), windows W.swapMaster)
   , ((modm, xK_b), withFocused toggleBorder)
+  , ((modm, xK_g), sendMessage $ ToggleGaps)
   -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
   ]
   ++
