@@ -111,7 +111,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
 
     -- Deincrement the number of windows in the master area
-    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+   , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
@@ -249,7 +249,7 @@ myStartupHook = do
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-    xmproc <- spawnPipe "xmobar -x 0 /home/anthony/.xmonad/xmobar.config"
+    xmproc <- spawnPipe "xmobar -x 0 /home/anthony/.xmonad/xmobar.hs"
     xmonad $ docks defaults
 
 -- A structure containing your configuration settings, overriding

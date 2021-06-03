@@ -86,7 +86,7 @@ TRAPINT() {
   THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
   return $(( 128 + $1 ))
 }
-PROMPT='%{$fg[yellow]%}${vcs_info_msg_0_}$THEME_PROMPT_PREFIX%f%B%F{255}%1~%f%b 
+PROMPT='%{$fg[yellow]%}${vcs_info_msg_0_}$THEME_PROMPT_PREFIX%f%B%F{255}%~%f%b 
 %(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
 function precmd() {
     # Print a newline before the prompt, unless it's the
