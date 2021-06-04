@@ -9,6 +9,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Actions.NoBorders
 import XMonad.Hooks.ManageHelpers
+import XMonad.Util.SpawnOnce
 
 myTerminal = "terminator"
 myWorkspaces = ["[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]"]
@@ -20,6 +21,11 @@ mySpacing = spacingRaw True (Border 10 10 10 10 ) True (Border 10 10 10 10 ) Tru
 myGaps = gaps [(U,10), (R,10), (L,10), (D,10)]
 
 myLayout = avoidStruts $ mySpacing $ myGaps $ layoutHook xfceConfig 
+
+myStartupHook = do
+            spawnOnce "setxkbmap -option caps:swapescape &"
+            spawnOnce "xfce4-panel --restart"
+            spawnOnce "picom &"
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
@@ -41,7 +47,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
     , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
 
-main = xmonad $ docks $ ewmh xfceConfig{ terminal=myTerminal
+main = xmonad $ ewmh xfceConfig{ terminal=myTerminal
                         , modMask=mod4Mask
                         , keys=myKeys <+> keys defaultConfig
                         , workspaces=myWorkspaces
@@ -50,7 +56,8 @@ main = xmonad $ docks $ ewmh xfceConfig{ terminal=myTerminal
                         , handleEventHook=handleEventHook xfceConfig <+> fullscreenEventHook
                         , focusedBorderColor=myFocusedBorderColor
                         , borderWidth=myBorderWidth
-            }
+                        , startupHook=myStartupHook
+                        }
 myManageHooks = composeAll
         [ isFullscreen -->doFullFloat
         ]
