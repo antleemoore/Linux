@@ -2,6 +2,8 @@ import XMonad
 import XMonad.Config.Xfce
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
+import XMonad.Actions.NoBorders
+import XMonad.Util.SpawnOnce
 
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -11,9 +13,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.Spacing
 import XMonad.Layout.Gaps
 import XMonad.Layout.ResizableTile
-
-import XMonad.Actions.NoBorders
-import XMonad.Util.SpawnOnce
+import XMonad.Layout.LayoutHints
 
 myTerminal = "terminator"
 myWorkspaces = ["[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]"]
@@ -23,14 +23,12 @@ myBorderWidth = 3
 
 mySpacing = spacingRaw True (Border 7 7 7 7) True (Border 7 7 7 7) True
 myGaps = gaps [(U,10), (R,10), (L,10), (D,10)]
-myVertSpacing = ResizableTall 1 (3/100) (1/2) []
-
-myLayout = avoidStruts $ mySpacing $ myGaps $ layoutHook xfceConfig ||| myVertSpacing
-        
+myVertSpacing = ResizableTall 1 (3/100) (3/5) []
+myLayout = layoutHints (avoidStruts $ mySpacing $ myGaps $ myVertSpacing ||| layoutHook xfceConfig)
 myStartupHook = do
             spawnOnce "setxkbmap -option caps:swapescape &"
             spawnOnce "xfce4-panel --restart"
-            spawnOnce "picom &"
+            spawnOnce "picom --vsync &"
 
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
@@ -40,13 +38,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm, xK_e), spawn "thunar")
   , ((modm .|. shiftMask, xK_Return), spawn "firefox")
   , ((modm .|. shiftMask, xK_c), spawn "xmonad --recompile; xmonad --restart; xfce4-panel --restart")
-  , ((modm,               xK_y ), sendMessage NextLayout)
+  , ((modm, xK_y ), sendMessage NextLayout)
+  , ((modm, xK_c ), spawn "guvcview")
   , ((modm .|. shiftMask, xK_y ), setLayout $ XMonad.layoutHook conf)
   , ((modm, xK_space), windows W.swapMaster)
   , ((modm, xK_b), withFocused toggleBorder)
   , ((modm, xK_g), sendMessage $ ToggleGaps)
   , ((modm, xK_u), sendMessage MirrorExpand)
   , ((modm, xK_d), sendMessage MirrorShrink)
+  , ((modm, xK_p), spawn "xfce4-popup-whiskermenu")
   , ((modm, xK_f), sequence_ [ sendMessage $ ToggleStruts, sendMessage $ ToggleGaps, withFocused toggleBorder, windows W.focusDown])
   ]
   ++
@@ -67,4 +67,5 @@ main = xmonad $ ewmh xfceConfig{ terminal=myTerminal
                         }
 myManageHooks = composeAll
         [ isFullscreen -->doFullFloat
+        , appName =? "galculator" -->doCenterFloat
         ]

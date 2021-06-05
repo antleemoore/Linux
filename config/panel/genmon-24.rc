@@ -1,0 +1,6 @@
+Command=ram-usage
+UseLabel=1
+Text=🐏⚡
+UpdatePeriod=10000
+Font=Cascadia Mono PL 12
+

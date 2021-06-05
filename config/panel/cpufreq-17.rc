@@ -1,0 +1,12 @@
+timeout=10
+show_cpu=-3
+show_icon=true
+show_label_freq=true
+show_label_governor=true
+show_warning=true
+keep_compact=true
+one_line=true
+icon_color_freq=true
+freq_unit=0
+fontcolor=rgb(211,134,155)
+
