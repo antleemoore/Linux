@@ -1,8 +1,0 @@
-cd ~/repos/dwm
-echo "Comming DWM..."
-~/scripts/autogit
-cd -
-cd ~/repos/st
-echo "Comming ST..."
-~/scripts/autogit
-cd -

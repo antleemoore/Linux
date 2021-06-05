@@ -25,6 +25,7 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 function cd {
     builtin cd "$@" && ls
 }
+
 alias la='ls -alF --color=always | grep -v ^l'
 alias cdp="cd ~/projects"
 alias cdc="cd ~/.config"
@@ -33,27 +34,18 @@ alias cdu="cd ~/utils"
 alias cdr="cd ~/repos"
 alias cdlr="cd ~/repos/Linux"
 alias codehere="code . && exit"
-alias doc="cd /mnt/c/Users/Bruce/Documents"
-alias windows="cd /mnt/c/Users/Bruce"
-alias rdcstart="sudo service xrdp start"
-alias rdcstop="sudo service xrdp stop"
 alias zshc="vim ~/.zshrc"
 alias vimc="vim ~/.vimrc"
-alias dwmc="vim ~/repos/dwm/config.h"
-alias stc="vim ~/repos/st/config.h"
+alias xmoc="vim ~/repos/Linux/config/xmonad/xmonad.hs"
 alias zshs="source ~/.zshrc"
 alias vimr="$BROWSER www.vimregex.com"
 alias agit="~/scripts/autogit"
-alias dwmgit="~/scripts/dwmgit"
 alias vim="nvim"
 alias gs="git status"
 alias lgit="cd ~/repos/Linux && agit && cd -"
 alias nvimc="vim ~/.config/nvim/init.vim"
 alias killport="~/utils/killport"
-alias cls="clear"
-alias cddwm="cd ~/repos/dwm"
-alias cdst="cd ~/repos/st"
-alias redwm="~/scripts/reinstall-wm"
+alias rewm="~/scripts/reinstall-wm"
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
 # Vim Mode Config
 bindkey -v

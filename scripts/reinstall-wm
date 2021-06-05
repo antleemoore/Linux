@@ -1,8 +1,3 @@
-cd ~/repos/dwm
-sudo make uninstall
-sudo make clean install
-cd -
-cd ~/repos/st
-sudo make uninstall
-sudo make clean install
-cd -
+xmonad --recompile
+xmonad --restart
+xfce4-panel --restart
