@@ -17,14 +17,28 @@ Plugin 'groenewege/vim-less'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'zhamlin/tiler.vim'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+Plugin 'frazrepo/vim-rainbow'
 call vundle#end()
 filetype plugin indent on 
+
+let g:rainbow_active = 1
+
+let g:rainbow_load_separately = [
+    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
+    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
+    \ ]
+
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
+let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
 
 let g:ctrlp_max_height = 10
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 if executable('ag')
   let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
+
 let g:coc_global_extensions = ['coc-json', 'coc-prettier', 'coc-pairs', 'coc-java', 'coc-html', 'coc-python', 'coc-css', 'coc-clangd', 'coc-tsserver', 'coc-eslint', 'coc-sh', 'coc-snippets']
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"

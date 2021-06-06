@@ -47,6 +47,8 @@ alias nvimc="vim ~/.config/nvim/init.vim"
 alias killport="~/utils/killport"
 alias rewm="~/scripts/reinstall-wm"
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
+alias supac="sudo pacman -S"
+
 # Vim Mode Config
 bindkey -v
 export KEYTIMEOUT=1
