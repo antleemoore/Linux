@@ -44,6 +44,7 @@ nnoremap <leader>s :noh<cr>:source %<cr>
 nnoremap / /\v
 vnoremap / /\v
 noremap <leader>x :noh<cr>:call clearmatches()<cr>
+noremap <leader>w :noh<cr>:w<cr>
 nnoremap <leader><leader> <c-^>
 nnoremap <leader>D :noh<cr>:bd<cr>
 nnoremap <leader>W :noh<cr>:bw<cr>

@@ -2,6 +2,7 @@ import XMonad
 import XMonad.Config.Xfce
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
+
 import XMonad.Actions.NoBorders
 
 import XMonad.Util.Run
@@ -11,6 +12,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.InsertPosition
 
 import XMonad.Layout.Spacing
 import XMonad.Layout.Gaps
@@ -31,7 +33,7 @@ myStartupHook = do
             spawnOnce "setxkbmap -option caps:swapescape &"
             spawnOnce "xfce4-panel --restart"
             spawnOnce "picom --vsync &"
-
+myDefToMasterHook = insertPosition Master Newer
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
   [
@@ -46,13 +48,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm, xK_t), runInTerm "" "htop")
   , ((modm .|. shiftMask, xK_c), spawn "xmonad --recompile; xmonad --restart; xfce4-panel --restart")
   , ((modm, xK_y ), sendMessage NextLayout)
-  , ((modm, xK_c ), spawn "guvcview")
+  , ((modm, xK_c), spawn "killall mpv || mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed") 
   , ((modm .|. shiftMask, xK_y ), setLayout $ XMonad.layoutHook conf)
   , ((modm, xK_space), windows W.swapMaster)
   , ((modm, xK_b), withFocused toggleBorder)
   , ((modm, xK_g), sendMessage $ ToggleGaps)
   , ((modm, xK_u), sendMessage MirrorExpand)
   , ((modm, xK_d), sendMessage MirrorShrink)
+  , ((modm .|. shiftMask, xK_s), spawn "killall screenkey || screenkey &")
   , ((modm, xK_p), spawn "xfce4-popup-whiskermenu")
   , ((modm, xK_f), sequence_ [ sendMessage $ ToggleStruts, sendMessage $ ToggleGaps, withFocused toggleBorder, windows W.focusDown])
   ]
@@ -66,7 +69,7 @@ main = xmonad $ ewmh xfceConfig{ terminal=myTerminal
                         , keys=myKeys <+> keys defaultConfig
                         , workspaces=myWorkspaces
                         , layoutHook=myLayout
-                        , manageHook=myManageHooks <+> manageDocks <+> manageHook xfceConfig
+                        , manageHook=myDefToMasterHook <+> myManageHooks <+> manageDocks <+> manageHook xfceConfig
                         , handleEventHook=handleEventHook xfceConfig <+> fullscreenEventHook
                         , focusedBorderColor=myFocusedBorderColor
                         , borderWidth=myBorderWidth

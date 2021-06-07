@@ -9,13 +9,7 @@ call vundle#begin()
 Plugin 'gmarik/vundle'
 Plugin 'itchyny/lightline.vim'
 Plugin 'tpope/vim-commentary'
-Plugin 'leshill/vim-json'
-Plugin 'pangloss/vim-javascript'
-Plugin 'indenthtml.vim'
-Plugin 'tpope/vim-markdown'
-Plugin 'groenewege/vim-less'
 Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'zhamlin/tiler.vim'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
 Plugin 'frazrepo/vim-rainbow'
 call vundle#end()
@@ -24,11 +18,11 @@ filetype plugin indent on
 let g:rainbow_active = 1
 
 let g:rainbow_load_separately = [
-    \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
-    \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-    \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
-    \ ]
+            \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+            \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
+            \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+            \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
+            \ ]
 
 let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
 let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
@@ -36,21 +30,29 @@ let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
 let g:ctrlp_max_height = 10
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 if executable('ag')
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
-let g:coc_global_extensions = ['coc-json', 'coc-prettier', 'coc-pairs', 'coc-java', 'coc-html', 'coc-python', 'coc-css', 'coc-clangd', 'coc-tsserver', 'coc-eslint', 'coc-sh', 'coc-snippets']
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
+let g:coc_global_extensions = ['coc-json', 'coc-pairs', 'coc-java', 'coc-html', 'coc-python', 'coc-css', 'coc-clangd', 'coc-tsserver', 'coc-eslint', 'coc-sh', 'coc-snippets']
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <expr><CR>  pumvisible() ? "\<C-right>" : "\<CR>"
+inoremap <expr><CR>  pumvisible() ? "\<ESC>" : "\<CR>"
 noremap <leader>p :noh<cr>:CtrlP<cr>
 nnoremap <leader>c <Plug>CommentaryLine
 noremap <leader>v :noh<cr>:vnew<cr>:noh<cr>:CtrlP<cr>
 noremap <leader>h :noh<cr>:new<cr>:noh<cr>:CtrlP<cr>
-noremap <leader>w :noh<cr>:Prettier<cr>:noh<cr>:w<cr>
-nnoremap <leader>n :noh<cr>:TilerNew<cr>:noh<cr>:CtrlP<cr>
-nnoremap <leader>d :noh<cr>:TilerClose<cr>
-nnoremap <leader>m :noh<cr>:TilerFocus<cr>
-nnoremap <leader>r :noh<cr>:TilerReorder<cr>
-nnoremap ZZ ZZ:noh<cr>:TilerReorder<cr>
+
+" OLD PLUGINS/COMMANDS/REMAPS
+" Plugin 'groenewege/vim-less'
+" Plugin 'leshill/vim-json'
+" Plugin 'pangloss/vim-javascript'
+" Plugin 'indenthtml.vim'
+" Plugin 'tpope/vim-markdown'
+" Plugin 'zhamlin/tiler.vim'
+" noremap <leader>w :noh<cr>:Prettier<cr>:noh<cr>:w<cr>
+" nnoremap <leader>n :noh<cr>:TilerNew<cr>:noh<cr>:CtrlP<cr>
+" nnoremap <leader>d :noh<cr>:TilerClose<cr>
+" nnoremap <leader>m :noh<cr>:TilerFocus<cr>
+" nnoremap <leader>r :noh<cr>:TilerReorder<cr>
+" nnoremap ZZ ZZ:noh<cr>:TilerReorder<cr>
+" command! -nargs=0 Prettier :CocCommand prettier.formatFile
