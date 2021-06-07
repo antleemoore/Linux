@@ -21,7 +21,7 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
 [ -f "/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe" ] \
     && export BROWSER="/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe" \
     || export BROWSER="firefox" 
-
+export HISTCONTROL=ignoredups:erasedups
 function cd {
     builtin cd "$@" && ls
 }

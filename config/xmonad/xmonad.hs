@@ -3,6 +3,8 @@ import XMonad.Config.Xfce
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 import XMonad.Actions.NoBorders
+
+import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
 
 import XMonad.Hooks.DynamicLog
@@ -36,7 +38,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   ((modm, xK_q), kill)
   , ((modm, xK_Return), spawn $ XMonad.terminal conf)
   , ((modm, xK_e), spawn "thunar")
-  , ((modm .|. shiftMask, xK_Return), spawn "firefox")
+  , ((modm, xK_w), spawn "firefox")
+  , ((modm, xK_a), spawn "anki")
+  , ((modm, xK_o), spawn "obs")
+  , ((modm, xK_i), runInTerm "" "nvim")
+  , ((modm .|. shiftMask, xK_i), spawn "code")
+  , ((modm, xK_t), runInTerm "" "htop")
   , ((modm .|. shiftMask, xK_c), spawn "xmonad --recompile; xmonad --restart; xfce4-panel --restart")
   , ((modm, xK_y ), sendMessage NextLayout)
   , ((modm, xK_c ), spawn "guvcview")
