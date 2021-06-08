@@ -39,7 +39,7 @@ alias vimc="vim ~/.vimrc"
 alias xmoc="vim ~/repos/Linux/config/xmonad/xmonad.hs"
 alias zshs="source ~/.zshrc"
 alias vimr="$BROWSER www.vimregex.com"
-alias agit="~/scripts/autogit"
+alias agit="~/utils/autogit"
 alias vim="nvim"
 alias gs="git status"
 alias lgit="cd ~/repos/Linux && agit && cd -"
@@ -60,8 +60,10 @@ zstyle ':vcs_info:git:*' formats '%b '
  
 setopt PROMPT_SUBST
 THEME_PROMPT_PREFIX=${THEME_PROMPT_PREFIX:-''}
-THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'λ'}
-THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'ᐅ'}
+# THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'λ'}
+THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'✏️ '}
+THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'💡'}
+# THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'ᐅ'}
 THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
 zle-keymap-select() {
   if [ "${KEYMAP}" = 'vicmd' ]; then

@@ -33,6 +33,7 @@ myStartupHook = do
             spawnOnce "setxkbmap -option caps:swapescape &"
             spawnOnce "xfce4-panel --restart"
             spawnOnce "picom --vsync &"
+            spawnOnce "$HOME/scripts/styli.sh -x"
 myDefToMasterHook = insertPosition Master Newer
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
