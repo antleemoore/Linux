@@ -23,10 +23,16 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
     || export BROWSER="firefox" 
 export HISTCONTROL=ignoredups:erasedups
 function cd {
-    builtin cd "$@" && ls
+    builtin cd "$@" && lsd
 }
 
-alias la='ls -alF --color=always | grep -v ^l'
+alias ls='lsd'
+alias laf='lsd -aF --color=always | grep -v @$'
+alias la='lsd -a'
+alias lal='lsd -al'
+alias ll='lsd -l'
+alias l='lsd -1'
+alias lf='lsd -F --color=always | grep -v @$'
 alias cdp="cd ~/projects"
 alias cdc="cd ~/.config"
 alias cds="cd ~/scripts"
@@ -67,6 +73,7 @@ function git_branch_name()
       echo '(%B%F{#FB4934}'$branch'%f%b)'
   fi
 }
+
 setopt PROMPT_SUBST
 THEME_PROMPT_PREFIX=${THEME_PROMPT_PREFIX:-''}
 # THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'λ'}
@@ -91,7 +98,7 @@ TRAPINT() {
   THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
   return $(( 128 + $1 ))
 }
-PROMPT='$(git_branch_name) $THEME_PROMPT_PREFIX%B%F{#B16286}%~%f%b %(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
+PROMPT='$THEME_PROMPT_PREFIX%B%F{#B16286}%~%f%b $(git_branch_name) %(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
 function precmd() {
     # Print a newline before the prompt, unless it's the
     # first prompt in the process.
