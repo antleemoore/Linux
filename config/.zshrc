@@ -54,10 +54,19 @@ bindkey -v
 export KEYTIMEOUT=1
 
 # Git Config
-autoload -Uz vcs_info
-precmd() { vcs_info }
-zstyle ':vcs_info:git:*' formats '%b '
- 
+# autoload -Uz vcs_info
+# precmd() { vcs_info }
+# zstyle ':vcs_info:git:*' formats '%b '
+function git_branch_name()
+{
+  branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
+  if [[ $branch == "" ]];
+  then
+    :
+  else
+      echo '(%B%F{#FB4934}'$branch'%f%b)'
+  fi
+}
 setopt PROMPT_SUBST
 THEME_PROMPT_PREFIX=${THEME_PROMPT_PREFIX:-''}
 # THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'λ'}
@@ -82,7 +91,7 @@ TRAPINT() {
   THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
   return $(( 128 + $1 ))
 }
-PROMPT='%{$fg[yellow]%}${vcs_info_msg_0_}$THEME_PROMPT_PREFIX%f%B%F{#B16286}%~%f%b ⌨️  %(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
+PROMPT='$(git_branch_name) $THEME_PROMPT_PREFIX%B%F{#B16286}%~%f%b %(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
 function precmd() {
     # Print a newline before the prompt, unless it's the
     # first prompt in the process.
