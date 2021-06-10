@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-link="https://source.unsplash.com/random/"
+# link="https://source.unsplash.com/random/"
+link="https://source.unsplash.com/1920x1080/?mountain,beach,water,forest"
 
 if [ -z ${XDG_CONFIG_HOME+x} ]; then
     XDG_CONFIG_HOME="${HOME}/.config"

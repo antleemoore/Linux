@@ -36,6 +36,7 @@ nnoremap <C-left> <C-w><
 nnoremap <C-right> <C-w>>
 nnoremap <C-up> <C-w>+
 nnoremap <C-down> <C-w>-
+nnoremap <C-s> :noh<cr>:w<cr>
 noremap <leader>a :e .
 noremap <leader>A :e ~/.
 noremap <leader>e :e 
@@ -44,7 +45,6 @@ nnoremap <leader>s :noh<cr>:source %<cr>
 nnoremap / /\v
 vnoremap / /\v
 noremap <leader>x :noh<cr>:call clearmatches()<cr>
-noremap <leader>w :noh<cr>:w<cr>
 nnoremap <leader><leader> <c-^>
 nnoremap <leader>D :noh<cr>:bd<cr>
 nnoremap <leader>W :noh<cr>:bw<cr>

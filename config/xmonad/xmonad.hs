@@ -4,6 +4,7 @@ import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
 import XMonad.Actions.NoBorders
+import XMonad.Actions.CopyWindow
 
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
@@ -30,10 +31,9 @@ myGaps = gaps [(U,10), (R,10), (L,10), (D,10)]
 myVertSpacing = ResizableTall 1 (3/100) (3/5) []
 myLayout = layoutHints (avoidStruts $ mySpacing $ myGaps $ myVertSpacing ||| layoutHook xfceConfig)
 myStartupHook = do
-            spawnOnce "setxkbmap -option caps:swapescape &"
-            spawnOnce "xfce4-panel --restart"
+            spawnOnce "setxkbmap -option caps:escape &"
+            spawnOnce "xfce4-panel --restart &"
             spawnOnce "picom --vsync &"
-            spawnOnce "$HOME/scripts/styli.sh -x"
 myDefToMasterHook = insertPosition Master Newer
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
@@ -41,15 +41,19 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   ((modm, xK_q), kill)
   , ((modm, xK_Return), spawn $ XMonad.terminal conf)
   , ((modm, xK_e), spawn "thunar")
+  , ((modm .|. shiftMask, xK_e), runInTerm "" "ranger")
+  , ((modm .|. shiftMask, xK_d), spawn "discord")
   , ((modm, xK_w), spawn "firefox")
   , ((modm, xK_a), spawn "anki")
   , ((modm, xK_o), spawn "obs")
   , ((modm, xK_i), runInTerm "" "nvim")
   , ((modm .|. shiftMask, xK_i), spawn "code")
-  , ((modm, xK_t), runInTerm "" "htop")
+  , ((modm .|. shiftMask, xK_t), runInTerm "" "htop")
   , ((modm .|. shiftMask, xK_c), spawn "xmonad --recompile; xmonad --restart; xfce4-panel --restart")
   , ((modm, xK_y ), sendMessage NextLayout)
   , ((modm, xK_c), spawn "killall mpv || mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed") 
+  , ((modm, xK_v ), windows copyToAll)
+  , ((modm .|. shiftMask, xK_v ),  killAllOtherCopies)
   , ((modm .|. shiftMask, xK_y ), setLayout $ XMonad.layoutHook conf)
   , ((modm, xK_space), windows W.swapMaster)
   , ((modm, xK_b), withFocused toggleBorder)

@@ -22,6 +22,7 @@ export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
     && export BROWSER="/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe" \
     || export BROWSER="firefox" 
 export HISTCONTROL=ignoredups:erasedups
+export EDITOR="nvim"
 function cd {
     builtin cd "$@" && lsd
 }
@@ -54,6 +55,7 @@ alias killport="~/utils/killport"
 alias rewm="~/scripts/reinstall-wm"
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
 alias supac="sudo pacman -S"
+alias setesc="setxkbmap -option caps:escape"
 
 # Vim Mode Config
 bindkey -v
@@ -98,6 +100,7 @@ TRAPINT() {
   THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
   return $(( 128 + $1 ))
 }
+
 PROMPT='$THEME_PROMPT_PREFIX%B%F{#B16286}%~%f%b $(git_branch_name) %(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
 function precmd() {
     # Print a newline before the prompt, unless it's the
@@ -109,3 +112,6 @@ function precmd() {
     fi
 }
 $HOME/scripts/pacman
+
+# auto scripting
+alias autoc="~/scripts/auto-compile"

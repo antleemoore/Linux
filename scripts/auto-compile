@@ -1,0 +1,31 @@
+#!/bin/bash
+
+clear
+
+extension="${1##*.}"
+
+case $extension in 
+    cpp)
+        echo "Starting Auto C++ Runner"
+        echo $1 | entr -ps 'clear; echo Compiling C++ File; echo; echo Output:;g++ -o '${1%.cpp}' '$1' && ./'${1%.cpp}
+        ;;
+    c)
+        echo "Starting Auto C Runner"
+        echo $1 | entr -ps 'clear; echo Compiling C File; echo; echo Output:;gcc -o '${1%.c}' '$1' && ./'${1%.c}
+        ;;
+    js)
+        echo "Starting Auto JavaScript Runner"
+        echo $1 | entr -ps 'clear; echo Compiling JavaScript File; echo; echo Output:;node '$1
+        ;;
+    js)
+        echo "Starting Auto Python Runner"
+        echo $1 | entr -ps 'clear; echo Compiling Python File; echo; echo Output:;python '$1
+        ;;
+    java)
+        echo "Starting Auto Java Runner"
+        echo $1 | entr -ps 'clear; echo Compiling Java File; echo; echo Output:;javac '$1' && java '${1%.java}
+        ;;
+    *)
+        echo "Unsupported Filetype"
+        ;;
+esac
