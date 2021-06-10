@@ -17,7 +17,7 @@ case $extension in
         echo "Starting Auto JavaScript Runner"
         echo $1 | entr -ps 'clear; echo Compiling JavaScript File; echo; echo Output:;node '$1
         ;;
-    js)
+    py)
         echo "Starting Auto Python Runner"
         echo $1 | entr -ps 'clear; echo Compiling Python File; echo; echo Output:;python '$1
         ;;
