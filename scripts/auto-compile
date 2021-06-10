@@ -3,7 +3,10 @@
 clear
 
 extension="${1##*.}"
-
+RED='\033[0;31m'
+NC='\033[0m'
+YELLOW='\033[1;33m'
+LIGHTBLUE='\033[1;34m'
 case $extension in 
     cpp)
         echo "Starting Auto C++ Runner"
@@ -24,6 +27,14 @@ case $extension in
     java)
         echo "Starting Auto Java Runner"
         echo $1 | entr -ps 'clear; echo Compiling Java File; echo; echo Output:;javac '$1' && java '${1%.java}
+        ;;
+    html)
+        if pidof -x "firefox" >/dev/null; then
+            echo "Starting Auto HTML Runner"
+            echo $1 | entr -ps 'clear; echo Rendering HTML File; echo;firefox '$1
+        else
+            echo -e "${RED}Error${NC} (${LIGHTBLUE}HTML Run${NC}): ${YELLOW}Firefox Needs to Already Be Running${NC}"
+        fi
         ;;
     *)
         echo "Unsupported Filetype"
