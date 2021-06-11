@@ -28,12 +28,13 @@ function cd {
 }
 
 alias ls='lsd'
-alias laf='lsd -aF --color=always | grep -v @$'
-alias la='lsd -a'
-alias lal='lsd -al'
+alias laf='lsd -AF --color=always | grep -v @$'
+alias la='lsd -A'
+alias lal='lsd -Al'
 alias ll='lsd -l'
 alias l='lsd -1'
 alias lf='lsd -F --color=always | grep -v @$'
+alias lr='lsd --tree'
 alias cdp="cd ~/projects"
 alias cdc="cd ~/.config"
 alias cds="cd ~/scripts"
@@ -57,6 +58,7 @@ alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
 alias supac="sudo pacman -S"
 alias setesc="setxkbmap -option caps:escape"
 alias autoc="~/utils/auto-compile"
+alias cleanpac="sudo pacman -Rns $(pacman -Qtdq)"
 
 # Vim Mode Config
 bindkey -v
@@ -80,8 +82,8 @@ function git_branch_name()
 setopt PROMPT_SUBST
 THEME_PROMPT_PREFIX=${THEME_PROMPT_PREFIX:-''}
 # THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'λ'}
-THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'✏️ '}
-THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'💡'}
+THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'🔓'}
+THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'🔏'}
 # THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'ᐅ'}
 THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
 zle-keymap-select() {
