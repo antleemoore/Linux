@@ -1,5 +1,5 @@
 set nocompatible 
-syntax on 
+syntax on
 
 set nowrap
 set tabstop=4

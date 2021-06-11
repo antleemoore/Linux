@@ -15,10 +15,15 @@ Plugin 'frazrepo/vim-rainbow'
 Plugin 'google/vim-maktaba'
 Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
+Plugin 'vimwiki/vimwiki'
 call vundle#end()
 call glaive#Install()
-filetype plugin indent on
+filetype indent on
+filetype plugin on
 
+au BufReadPost,BufNewFile *.wiki syntax on
+
+let g:vimwiki_list = [{'path': '~/Documents/notes_vw'}]
 let g:rainbow_active = 1
 set termguicolors
 let g:rainbow_load_separately = [
