@@ -44,7 +44,6 @@ myVertSpacing = ResizableTall 1 (3/100) (3/5) []
 myMirrorThreeCol = mySpacing $ myGaps $ reflectHoriz $ ThreeCol 2 (3/100) (1/2)
 myMainStackLayout = mySpacing $ myGaps $ myVertSpacing
 myxfceLayout = mySpacing $ myGaps $ layoutHook xfceConfig
-
 -- Layout List
 layoutsList = myMainStackLayout ||| myxfceLayout ||| myMirrorThreeCol
 
@@ -70,12 +69,13 @@ myManageHooks = composeAll
 
 -- XMonad Startup
 myStartupHook = do
-            spawnOnce "setxkbmap -option caps:escape &"
+            spawnOnce "setxkbmap -option caps:escape"
             spawnOnce "xfce4-panel --restart || xfce4-panel &"
             spawnOnce "picom --vsync &"
 
 -- Main XMonad Start
-main = xmonad $ ewmh xfceConfig{ terminal=myTerminal
+main = xmonad $ ewmh xfceConfig{ 
+                        terminal=myTerminal
                         , modMask=mod4Mask
                         , keys=myKeys <+> keys defaultConfig
                         , workspaces=myWorkspaces
@@ -110,12 +110,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm, xK_f), sequence_ fullScreenToggle_c)
   , ((modm, xK_r), sendMessage $ Toggle REFLECTY)
   , ((modm, xK_F7), spawn "touchpad-indicator -c")
+  , ((modm, xK_v), spawn "xfce4-popup-clipman")
   , ((modm, xK_Return), spawn $ XMonad.terminal conf)
+  , ((modm, xK_KP_Enter), spawn "galculator")
   , ((modm .|. shiftMask, xK_i), spawn "code")
   , ((modm .|. shiftMask, xK_d), spawn "discord")
   , ((modm .|. shiftMask, xK_s), spawn screenkey_c)
   , ((modm .|. shiftMask, xK_v),  killAllOtherCopies)
   , ((modm .|. shiftMask, xK_t), runInTerm "" "htop")
+  , ((modm .|. shiftMask, xK_q), spawn "xfce4-session-logout")
   , ((modm .|. shiftMask, xK_c), spawn restartXMonad_c)
   , ((modm .|. shiftMask, xK_r), sendMessage $ Toggle REFLECTX)
   , ((modm .|. shiftMask, xK_y), setLayout $ XMonad.layoutHook conf)

@@ -1,7 +1,7 @@
 Config { 
    -- appearance
      font =         "xft:Cascadia Roman Mono PL:size=10:antialias=true:hinting=true"
-   , bgColor =      "gray"
+   , bgColor =      "black"
    , fgColor =      "white"
    , position =     Top
    , border =       BottomB
