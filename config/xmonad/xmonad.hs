@@ -27,9 +27,6 @@ import XMonad.Layout.LayoutHints
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Reflect
 import XMonad.Layout.MultiToggle
--- import XMonad.Layout.LayoutCombinators hiding ( (|||) )
--- import XMonad.Layout.DragPane
--- import XMonad.Layout.Combo
 
 -- Default Variables
 myTerminal = "xfce4-terminal"
@@ -49,59 +46,58 @@ myMainStackLayout = mySpacing $ myGaps $ myVertSpacing
 myxfceLayout = mySpacing $ myGaps $ layoutHook xfceConfig
 
 -- Custom Layout Hook
+layoutsList = myMainStackLayout ||| myxfceLayout ||| myMirrorThreeCol
+
 myLayout = mkToggle (single REFLECTX) $
            mkToggle (single REFLECTY) $
-           layoutHints (avoidStruts(myMainStackLayout
-           ||| myxfceLayout
-           ||| myMirrorThreeCol))
+           layoutHints (avoidStruts(layoutsList))
 
 -- XMonad Startup
 myStartupHook = do
             spawnOnce "setxkbmap -option caps:escape &"
-            spawnOnce "xfce4-panel --restart || xfce4-panel &" spawnOnce "picom --vsync &"
+            spawnOnce "xfce4-panel --restart || xfce4-panel &"
+            spawnOnce "picom --vsync &"
 
--- Old Comments
--- myMirrorThreeCol = reflectHoriz $ myVertSpacing *||*** ThreeCol 2 (3/100) (1/2)
--- myLayout = avoidStruts $ mySpacing $ myGaps $ myVertSpacing ||| layoutHook xfceConfig ||| myThreeCol
--- myDefToMasterHook = insertPosition Master Newer
+-- Keybinding commands
+dmenu_c="dmenu_run -i -sb '#FABD2F' -sf '#000' -fn 'Cascadia Mono Roman'"
+webcam_c="killall mpv || mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
+restartXMonad_c="xmonad --recompile; xmonad --restart;"
+screenkey_c="killall screenkey || screenkey &"
+fullScreenToggle_c=[ sendMessage $ ToggleStruts, sendMessage $ ToggleGaps, withFocused toggleBorder, windows W.focusDown]
 
 -- Keybindings
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
   [
-  ((modm, xK_q), kill)
-  , ((modm, xK_Return), spawn $ XMonad.terminal conf)
+    ((modm, xK_q), kill)
   , ((modm, xK_e), spawn "thunar")
-  , ((modm, xK_grave), spawn "gcolor2")
-  , ((modm .|. shiftMask, xK_e), runInTerm "" "ranger")
-  , ((modm .|. shiftMask, xK_d), spawn "discord")
   , ((modm, xK_w), spawn "firefox")
   , ((modm, xK_a), spawn "anki")
   , ((modm, xK_o), spawn "obs")
+  , ((modm, xK_v), windows copyToAll)
   , ((modm, xK_i), runInTerm "" "nvim")
-  , ((modm .|. shiftMask, xK_i), spawn "code")
-  , ((modm .|. shiftMask, xK_t), runInTerm "" "htop")
-  , ((modm .|. shiftMask, xK_c), spawn "xmonad --recompile; xmonad --restart;")
-  , ((modm, xK_y ), sendMessage NextLayout)
-  , ((modm, xK_c), spawn "killall mpv || mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed") 
-  , ((modm, xK_v ), windows copyToAll)
-  , ((modm .|. shiftMask, xK_v ),  killAllOtherCopies)
-  , ((modm .|. shiftMask, xK_y ), setLayout $ XMonad.layoutHook conf)
+  , ((modm, xK_grave), spawn "gcolor2")
+  , ((modm, xK_p), spawn dmenu_c)
+  , ((modm, xK_c), spawn webcam_c) 
+  , ((modm, xK_y), sendMessage NextLayout)
   , ((modm, xK_space), windows W.swapMaster)
   , ((modm, xK_b), withFocused toggleBorder)
   , ((modm, xK_g), sendMessage $ ToggleGaps)
   , ((modm, xK_u), sendMessage MirrorExpand)
   , ((modm, xK_d), sendMessage MirrorShrink)
-  , ((modm .|. shiftMask, xK_s), spawn "killall screenkey || screenkey &")
-  , ((modm, xK_p), spawn "dmenu_run -i -sb '#FABD2F' -sf '#000' -fn 'Cascadia Mono Roman'")
-  , ((modm, xK_f), sequence_ [ sendMessage $ ToggleStruts, sendMessage $ ToggleGaps, withFocused toggleBorder, windows W.focusDown])
-  , ((modm, xK_F7), spawn "touchpad-indicator -c")
+  , ((modm, xK_f), sequence_ fullScreenToggle_c)
   , ((modm, xK_r), sendMessage $ Toggle REFLECTY)
+  , ((modm, xK_F7), spawn "touchpad-indicator -c")
+  , ((modm, xK_Return), spawn $ XMonad.terminal conf)
+  , ((modm .|. shiftMask, xK_i), spawn "code")
+  , ((modm .|. shiftMask, xK_d), spawn "discord")
+  , ((modm .|. shiftMask, xK_s), spawn screenkey_c)
+  , ((modm .|. shiftMask, xK_v),  killAllOtherCopies)
+  , ((modm .|. shiftMask, xK_t), runInTerm "" "htop")
+  , ((modm .|. shiftMask, xK_c), spawn restartXMonad_c)
   , ((modm .|. shiftMask, xK_r), sendMessage $ Toggle REFLECTX)
+  , ((modm .|. shiftMask, xK_y), setLayout $ XMonad.layoutHook conf)
   ]
-
--- Old Key Binds
--- , ((modm, xK_p), spawn "xfce4-popup-whiskermenu")
 
   -- Workspace Binds
   ++
@@ -121,7 +117,6 @@ main = xmonad $ ewmh xfceConfig{ terminal=myTerminal
                         , borderWidth=myBorderWidth
                         , startupHook=myStartupHook
                         }
--- Main Xmonad End
 
 -- Custom Manage Hooks
 myManageHooks = composeAll

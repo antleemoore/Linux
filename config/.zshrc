@@ -52,10 +52,11 @@ alias gs="git status"
 alias lgit="cd ~/repos/Linux && agit && cd -"
 alias nvimc="vim ~/.config/nvim/init.vim"
 alias killport="~/utils/killport"
-alias rewm="~/scripts/reinstall-wm"
+alias rewm="~/utils/reinstall-wm"
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
 alias supac="sudo pacman -S"
 alias setesc="setxkbmap -option caps:escape"
+alias autoc="~/utils/auto-compile"
 
 # Vim Mode Config
 bindkey -v
@@ -113,5 +114,3 @@ function precmd() {
 }
 colorscript -r
 
-# auto scripting
-alias autoc="~/scripts/auto-compile"
