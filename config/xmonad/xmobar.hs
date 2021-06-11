@@ -1,12 +1,11 @@
 Config { 
-
    -- appearance
      font =         "xft:Cascadia Roman Mono PL:size=10:antialias=true:hinting=true"
-   , bgColor =      "black"
+   , bgColor =      "gray"
    , fgColor =      "white"
    , position =     Top
    , border =       BottomB
-   , borderColor =  "#646464"
+   , borderColor =  "black"
 
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
