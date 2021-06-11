@@ -20,7 +20,7 @@ call glaive#Install()
 filetype plugin indent on
 
 let g:rainbow_active = 1
-
+set termguicolors
 let g:rainbow_load_separately = [
             \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
             \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
@@ -75,3 +75,5 @@ noremap <leader>h :noh<cr>:new<cr>:noh<cr>:CtrlP<cr>
 " command! -nargs=0 Prettier :CocCommand prettier.formatFile
 " autocmd FileType java AutoFormatBuffer google-java-format
 " autocmd FileType python AutoFormatBuffer yapf
+" Plugin 'flazz/vim-colorschemes'
+" colorsheme gruvbox

@@ -111,7 +111,7 @@ function precmd() {
         echo 
     fi
 }
-$HOME/scripts/pacman
+colorscript -r
 
 # auto scripting
 alias autoc="~/scripts/auto-compile"

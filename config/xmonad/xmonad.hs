@@ -25,14 +25,14 @@ import XMonad.Layout.Gaps
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.ThreeColumns
-import XMonad.Layout.LayoutCombinators hiding ( (|||) )
 import XMonad.Layout.Reflect
 import XMonad.Layout.MultiToggle
-import XMonad.Layout.DragPane
-import XMonad.Layout.Combo
+-- import XMonad.Layout.LayoutCombinators hiding ( (|||) )
+-- import XMonad.Layout.DragPane
+-- import XMonad.Layout.Combo
 
 -- Default Variables
-myTerminal = "terminator"
+myTerminal = "xfce4-terminal"
 myWorkspaces = ["[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]"]
 myFocusedBorderColor = "#FABD2F"
 myBorderWidth = 3
@@ -44,21 +44,21 @@ myMoveToStackHook = insertPosition End Older
 
 -- Layout Variables
 myVertSpacing = ResizableTall 1 (3/100) (3/5) []
-myMirrorThreeCol = reflectHoriz $ ThreeCol 2 (3/100) (1/2)
-myMainStackLayout = avoidStruts $ mySpacing $ myGaps $ myVertSpacing
+myMirrorThreeCol = mySpacing $ myGaps $ reflectHoriz $ ThreeCol 2 (3/100) (1/2)
+myMainStackLayout = mySpacing $ myGaps $ myVertSpacing
+myxfceLayout = mySpacing $ myGaps $ layoutHook xfceConfig
 
 -- Custom Layout Hook
 myLayout = mkToggle (single REFLECTX) $
            mkToggle (single REFLECTY) $
-            layoutHints (myMainStackLayout |||
-                            layoutHook xfceConfig |||
-                            myMirrorThreeCol)
+           layoutHints (avoidStruts(myMainStackLayout
+           ||| myxfceLayout
+           ||| myMirrorThreeCol))
 
 -- XMonad Startup
 myStartupHook = do
             spawnOnce "setxkbmap -option caps:escape &"
-            spawnOnce "xfce4-panel --restart &"
-            spawnOnce "picom --vsync &"
+            spawnOnce "xfce4-panel --restart || xfce4-panel &" spawnOnce "picom --vsync &"
 
 -- Old Comments
 -- myMirrorThreeCol = reflectHoriz $ myVertSpacing *||*** ThreeCol 2 (3/100) (1/2)
@@ -72,6 +72,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   ((modm, xK_q), kill)
   , ((modm, xK_Return), spawn $ XMonad.terminal conf)
   , ((modm, xK_e), spawn "thunar")
+  , ((modm, xK_grave), spawn "gcolor2")
   , ((modm .|. shiftMask, xK_e), runInTerm "" "ranger")
   , ((modm .|. shiftMask, xK_d), spawn "discord")
   , ((modm, xK_w), spawn "firefox")
@@ -80,7 +81,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm, xK_i), runInTerm "" "nvim")
   , ((modm .|. shiftMask, xK_i), spawn "code")
   , ((modm .|. shiftMask, xK_t), runInTerm "" "htop")
-  , ((modm .|. shiftMask, xK_c), spawn "xmonad --recompile; xmonad --restart; xfce4-panel --restart")
+  , ((modm .|. shiftMask, xK_c), spawn "xmonad --recompile; xmonad --restart;")
   , ((modm, xK_y ), sendMessage NextLayout)
   , ((modm, xK_c), spawn "killall mpv || mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed") 
   , ((modm, xK_v ), windows copyToAll)
@@ -92,12 +93,15 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm, xK_u), sendMessage MirrorExpand)
   , ((modm, xK_d), sendMessage MirrorShrink)
   , ((modm .|. shiftMask, xK_s), spawn "killall screenkey || screenkey &")
-  , ((modm, xK_p), spawn "xfce4-popup-whiskermenu")
+  , ((modm, xK_p), spawn "dmenu_run -i -sb '#FABD2F' -sf '#000' -fn 'Cascadia Mono Roman'")
   , ((modm, xK_f), sequence_ [ sendMessage $ ToggleStruts, sendMessage $ ToggleGaps, withFocused toggleBorder, windows W.focusDown])
   , ((modm, xK_F7), spawn "touchpad-indicator -c")
   , ((modm, xK_r), sendMessage $ Toggle REFLECTY)
   , ((modm .|. shiftMask, xK_r), sendMessage $ Toggle REFLECTX)
   ]
+
+-- Old Key Binds
+-- , ((modm, xK_p), spawn "xfce4-popup-whiskermenu")
 
   -- Workspace Binds
   ++
@@ -112,7 +116,7 @@ main = xmonad $ ewmh xfceConfig{ terminal=myTerminal
                         , workspaces=myWorkspaces
                         , layoutHook=myLayout
                         , manageHook=myManageHooks <+> manageDocks <+> manageHook xfceConfig
-                        , handleEventHook=handleEventHook xfceConfig <+> fullscreenEventHook
+                        , handleEventHook=handleEventHook xfceConfig <+> docksEventHook <+> fullscreenEventHook
                         , focusedBorderColor=myFocusedBorderColor
                         , borderWidth=myBorderWidth
                         , startupHook=myStartupHook
@@ -124,4 +128,5 @@ myManageHooks = composeAll
         [ isFullscreen -->doFullFloat
         , appName =? "galculator" -->doCenterFloat
         , className =? "mpv" -->myMoveToStackHook
+        , appName =? "gcolor2" -->doCenterFloat
         ]
