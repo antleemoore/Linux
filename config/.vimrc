@@ -23,6 +23,10 @@ set showmatch
 set hlsearch
 set gdefault
 set virtualedit+=block
+set foldmethod=indent
+set nofoldenable
+" set foldnestmax=10
+" set foldlevel=2
 
 let mapleader = " "
 
