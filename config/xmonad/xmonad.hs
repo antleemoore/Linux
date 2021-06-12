@@ -28,13 +28,21 @@ import XMonad.Layout.LayoutHints
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Reflect
 import XMonad.Layout.MultiToggle
+import XMonad.Layout.Renamed
 
 -- Main XMonad Start
-main = xmonad $ ewmh xfceConfig{ 
+main = do
+        h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
+        xmonad $ ewmh xfceConfig{ 
                 terminal=myTerminal, modMask=mod4Mask, keys=myKeyCombo
                 , workspaces=myWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo
                 , handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor 
                 , borderWidth=myBorderWidth, startupHook=myStartupHook
+                , logHook=dynamicLogWithPP $ xmobarPP{ ppOutput= hPutStrLn h
+                                                    , ppCurrent=xmobarColor "#FABD2F" "" . wrap "[" "]"
+                                                    , ppTitle=xmobarColor "#B8BB26" "" . shorten 60
+                                                    , ppLayout=xmobarColor "#CC241D" ""
+                                                    }
                 }
 
 -- Keybindings
@@ -84,9 +92,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
     , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
 
-
 -- Custom Hooks
-myLayout = toggleReflect $ layoutHints (avoidStruts(layoutsList))
+myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts(layoutsList))
 myManageHooks = composeAll
         [ goFullScreen, floatCalculator, moveWebcamToSide, floatColorPicker ]
 myStartupHook = do
@@ -97,7 +104,7 @@ myStartupHook = do
 
 -- Default Variables
 myTerminal = "xfce4-terminal"
-myWorkspaces = ["[1]","[2]","[3]","[4]","[5]","[6]","[7]","[8]","[9]"]
+myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 myFocusedBorderColor = "#FABD2F"
 myBorderWidth = 3
 
@@ -108,9 +115,9 @@ myMoveToStackHook = insertPosition End Older
 
 -- Layout Variables
 myVertSpacing = ResizableTall 1 (3/100) (3/5) []
-myMirrorThreeCol = mySpacing $ myGaps $ reflectHoriz $ ThreeCol 2 (3/100) (1/2)
-myMainStackLayout = mySpacing $ myGaps $ myVertSpacing
-myxfceLayout = mySpacing $ myGaps $ layoutHook xfceConfig
+myMirrorThreeCol = renamed [Replace "3 Column"] $ mySpacing $ myGaps $ reflectHoriz $ ThreeCol 2 (3/100) (1/2)
+myMainStackLayout = renamed [Replace "Default"] $ mySpacing $ myGaps $ myVertSpacing
+myxfceLayout = renamed [CutWordsLeft 1] $ mySpacing $ myGaps $ layoutHook xfceConfig
 -- Layout List
 layoutsList = myMainStackLayout ||| myxfceLayout ||| myMirrorThreeCol
 toggleReflect= mkToggle (single REFLECTX)
