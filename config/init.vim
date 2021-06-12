@@ -25,7 +25,7 @@ au BufReadPost,BufNewFile *.wiki syntax on
 
 let g:vimwiki_list = [{'path': '~/Documents/notes_vw'}]
 let g:rainbow_active = 1
-set termguicolors
+" set termguicolors
 let g:rainbow_load_separately = [
             \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
             \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],

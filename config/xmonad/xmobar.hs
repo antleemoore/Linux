@@ -1,18 +1,16 @@
 Config { 
-   -- appearance
-     font =         "xft:Cascadia Roman Mono PL:size=10:antialias=true:hinting=true"
-   , bgColor =      "black"
-   , fgColor =      "white"
+   font =         "xft:Cascadia Code PL:size=10:antialias=true:hinting=true"
+   , additionalFonts = [  "xft:Symbols Nerd Font:pixelsize=18:antialias=true:hinting=true" ]
+   , bgColor =      "#32302F"
+   , fgColor =      "#F2E5BC"
    , position =     Top
    , border =       BottomB
    , borderColor =  "black"
 
-   -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%battery% | %multicpu% | %multicoretemp% | %memory% | %wi% | %dynnetwork%}{ %bright% | %KMCO% | %date%"
+   , template = "}{%wi% %dynnetwork% | %check-updates% | %multicpu% %multicoretemp% | %memory% | %disku% | %bright% | %default:Master% | %battery% | %KMCO% | %date%"
 
-   -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
    , hideOnStart =      False   -- start with window unmapped (hidden)
    , allDesktops =      True    -- show on all desktops
@@ -20,97 +18,84 @@ Config {
    , pickBroadest =     False   -- choose widest display (multi-monitor)
    , persistent =       True    -- enable/disable hiding (True = disabled)
 
-   -- plugins
-   --   Numbers can be automatically colored according to their value. xmobar
-   --   decides color based on a three-tier/two-cutoff system, controlled by
-   --   command options:
-   --     --Low sets the low cutoff
-   --     --High sets the high cutoff
-   --
-   --     --low sets the color below --Low cutoff
-   --     --normal sets the color between --Low and --High cutoffs
-   --     --High sets the color above --High cutoff
-   --
-   --   The --template option controls how the plugin is displayed. Text
-   --   color can be set by enclosing in <fc></fc> tags. For more details
-   --   see http://projects.haskell.org/xmobar/#system-monitor-plugins.
    , commands = 
-
         -- weather monitor
-        [ Run Weather "KMCO" [ "--template", "<skyCondition> <fc=#4682B4><tempF></fc>°F"
-                                -- | <fc=#4682B4><rh></fc>% "
-                                -- | <fc=#4682B4><pressure></fc>hPa"
-                             ] 36000
+        [ Run WeatherX "KMCO" 
+                            [ ("clear", "\xfa98")
+                            , ("sunny", "\xfa98")
+                            , ("mostly clear", "\xe30c")
+                            , ("mostly sunny", "\xe30c")
+                            , ("partly sunny", "\xe30c")
+                            , ("fair", "\xe3bc")
+                            , ("cloudy","\xe312")
+                            , ("overcast","\xe312")
+                            , ("partly cloudy", "\xe302")
+                            , ("mostly cloudy", "\xe309")
+                            , ("considerable cloudiness", "\xe305")] 
+                            [ "--template", "<fn=1><skyConditionS></fn> <fc=#4682B4><tempF></fc>°F" 
+                            , "-L","65", "-H", "90", "--normal", "#F2E5BC"
+                            , "--high", "#FB4934", "--low", "#83A598"
+                            ] 36000
 
-        , Run Brightness [ "--template", "<percent>%" ] 30
+        , Run DiskU [("/", "<fn=1>\xf7c9</fn> <used> / <size>")]
+                    ["-L", "20", "-H", "80", "-m", "1", "-p", "3"]
+                    18000
+        , Run Brightness [ "-t", "<fn=1>\xf5dd</fn> <percent>%", "--", "-D", "intel_backlight" ] 10
 
+        , Run Volume "default" "Master" [ "--template", "<status> <volume>%"
+                                        , "--", "--on", "<fn=1>\xfa7d</fn>", "--off", "<fn=1>\xfa80</fn>"
+                                        , "--onc", "#F2E5BC", "--offc", "#FB4934"
+                                        ] 10
         -- network activity monitor (dynamic interface resolution)
-         , Run DynNetwork     [  "--template" , "Network: <tx>kB/s|<rx>kB/s"
+         , Run DynNetwork     [  "--template" , "<fn=1>\xf1eb</fn> <fc=#83A598><fn=1>\xf0aa</fn></fc> <tx>KB/s <fc=#B8BB26><fn=1>\xf0ab</fn></fc> <rx>KB/s"
                               , "--Low"      , "1000"       -- units: B/s
                               , "--High"     , "5000"       -- units: B/s
-                              , "--low"      , "green"
-                              , "--normal"   , "orange"
-                              , "--high"     , "red"
-                              ] 10
+                              , "--low"      , "#F2E5BC"
+                              , "--normal"   , "#F2E5BC"
+                              , "--high"     , "#F2E5BC"
+                              ] 50
 
         , Run Wireless "" [ "--template", "<ssid>"] 600
         -- cpu activity monitor
         , Run MultiCpu       [ "--template" , "CPU: <total>%"
                                     , "--Low"      , "50"         -- units: %
                                     , "--High"     , "85"         -- units: %
-                                    , "--low"      , "green"
-                                , "--normal"   , "orange"
-                                , "--high"     , "red"
-                            ] 10
+                                    , "--low"      , "#F2E5BC"
+                                , "--normal"   , "#FABD2F"
+                                , "--high"     , "#FB4934"
+                            ] 50
 
-        , Run MultiCoreTemp ["-t", "CPU: <max>°C ",
-                        -- | <avgpc>%",
+        , Run MultiCoreTemp ["-t", "<max>°C ",
                         "-L", "60", "-H", "80",
-                        "-l", "green", "-n", "yellow", "-h", "red",
+                        "-l", "#F2E5BC", "-n", "#FABD2F", "-h", "#FB4934",
                         "--", "--mintemp", "20", "--maxtemp", "100"] 50
 
-        -- cpu core temperature monitor
-        -- , Run CoreTemp       [ "--template" , "Temp: <core0>°C|<core1>°C"
-                             -- , "--Low"      , "70"        -- units: °C
-                             -- , "--High"     , "80"        -- units: °C
-                             -- , "--low"      , "green"
-                             -- , "--normal"   , "orange"
-                             -- , "--high"     , "red"
-                             -- ] 50
                           
-        -- memory usage monitor
-        , Run Memory         [ "--template" ,"Mem: <usedratio>% (<used>M / <total>M)"
+        , Run Memory         [ "--template" ,"RAM: <usedratio>%"
                              , "--Low"      , "20"        -- units: %
                              , "--High"     , "90"        -- units: %
-                             , "--low"      , "green"
-                             , "--normal"   , "orange"
-                             , "--high"     , "red"
-                             ] 10
-
-        -- battery monitor
-        , Run Battery        [ "--template" , "Batt: <acstatus>"
+                             , "--low"      , "#F2E5BC"
+                             , "--normal"   , "#FABD2F"
+                             , "--high"     , "#FB4934"
+                             ] 50
+        , Run Battery        [ "--template" , "<acstatus>"
                              , "--Low"      , "10"        -- units: %
                              , "--High"     , "80"        -- units: %
-                             , "--low"      , "red"
-                             , "--normal"   , "orange"
+                             , "--low"      , "#FB4934"
+                             , "--normal"   , "#F2E5BC"
                              , "--high"     , "green"
 
                              , "--" -- battery specific options
                                        -- discharging status
-                                       , "-o"	, "<left>% (<timeleft>)"
+                                       , "-o"	, "<fc=#F2E5BC><fn=1>\xf578</fn></fc> <left><fc=#F2E5BC>%</fc>"
                                        -- AC "on" status
-                                       , "-O"	, "<fc=#dAA520>Charging</fc>"
+                                       , "-O"	, "<fc=lightgreen><fn=1>\xf583</fn> <left>%</fc>"
                                        -- charged status
-                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                                       , "-i"	, "<fc=green><fn=1>\xf583</fn> <left>%</fc>"
                              ] 50
 
+        , Run Com "/home/anthony/repos/Linux/utils/check-updates" [] "" 36000
         -- time and date indicator 
-        --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           "<fc=#ABABAB>%F (%a) %T</fc>" "date" 10
-
-        -- keyboard layout indicator
-        -- , Run Kbd            [ ("us(dvorak)" , "<fc=#00008B>DV</fc>")
-        --                     , ("us"         , "<fc=#8B0000>US</fc>")
-        --                     ]
+        , Run Date           "<fn=1>\xf133</fn> %a %b %d %Y %I:%m %p" "date" 50
         ]
-   }
+}

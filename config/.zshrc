@@ -35,6 +35,7 @@ alias ll='lsd -l'
 alias l='lsd -1'
 alias lf='lsd -F --color=always | grep -v @$'
 alias lr='lsd --tree'
+alias brave='$HOME/.password-lock'
 alias cdp="cd ~/projects"
 alias cdc="cd ~/.config"
 alias cds="cd ~/scripts"
@@ -45,6 +46,7 @@ alias codehere="code . && exit"
 alias zshc="vim ~/.zshrc"
 alias vimc="vim ~/.vimrc"
 alias xmoc="vim ~/repos/Linux/config/xmonad/xmonad.hs"
+alias xmobc="vim ~/repos/Linux/config/xmonad/xmobar.hs"
 alias zshs="source ~/.zshrc"
 alias vimr="$BROWSER www.vimregex.com"
 alias agit="~/utils/autogit"
@@ -54,6 +56,7 @@ alias lgit="cd ~/repos/Linux && agit && cd -"
 alias nvimc="vim ~/.config/nvim/init.vim"
 alias killport="~/utils/killport"
 alias rewm="~/utils/reinstall-wm"
+alias redoom="~/.emacs.d/bin/doom sync"
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
 alias supac="sudo pacman -S"
 alias setesc="setxkbmap -option caps:escape"
@@ -104,7 +107,8 @@ TRAPINT() {
   return $(( 128 + $1 ))
 }
 
-PROMPT='$THEME_PROMPT_PREFIX%B%F{#B16286}%~%f%b $(git_branch_name) %(?.%F{cyan}$THEME_VI_MODE_SYMBOL.%F{red}$THEME_VI_MODE_SYMBOL) '
+NEWLINE=$'\n'
+PROMPT='$THEME_PROMPT_PREFIX%B%F{#CC241D}[%f%b %B%F{#458588}%n%f%b%B%F{#D79921}@%f%b%B%F{#689D6A}%m%f%b %B%F{#B16286}%~%f%b %B%F{#CC241D}]%f%b $(git_branch_name)${NEWLINE}%(?.$THEME_VI_MODE_SYMBOL.$THEME_VI_MODE_SYMBOL) ➤ '
 function precmd() {
     # Print a newline before the prompt, unless it's the
     # first prompt in the process.
@@ -115,4 +119,3 @@ function precmd() {
     fi
 }
 colorscript -r
-
