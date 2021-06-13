@@ -8,6 +8,7 @@ import Graphics.X11.ExtraTypes.XF86
 -- Action Imports
 import XMonad.Actions.NoBorders
 import XMonad.Actions.CopyWindow
+import XMonad.Actions.CycleWS
 
 -- Util Imports
 import XMonad.Util.Run
@@ -69,8 +70,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm, xK_d), sendMessage MirrorShrink)
   , ((modm, xK_f), sequence_ fullScreenToggle_c)
   , ((modm, xK_r), sendMessage $ Toggle REFLECTX)
-  -- , ((modm, xK_F7), spawn "touchpad-indicator -c")
-  -- , ((modm, xK_v), spawn "xfce4-popup-clipman")
+  , ((modm, xK_F7), spawn "touchpad-indicator -c")
+  , ((modm, xK_v), spawn "xfce4-popup-clipman")
   , ((modm, xK_Return), spawn $ XMonad.terminal conf)
   , ((modm, xK_KP_Enter), spawn "galculator")
   , ((0,xF86XK_MonBrightnessDown), spawn "lux -s 10%")
@@ -86,6 +87,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   -- , ((modm .|. shiftMask, xK_q), spawn "xfce4-session-logout")
   , ((modm .|. shiftMask, xK_c), spawn restartXMonad_c)
   , ((modm .|. shiftMask, xK_y), setLayout $ XMonad.layoutHook conf)
+  , ((modm,               xK_bracketright),  nextWS)
+  , ((modm,               xK_bracketleft),    prevWS)
+  , ((modm .|. shiftMask, xK_bracketright),  shiftToNext)
+  , ((modm .|. shiftMask, xK_bracketleft),    shiftToPrev)
   ]
   -- Workspace Binds
   ++
