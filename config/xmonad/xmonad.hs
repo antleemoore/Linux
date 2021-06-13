@@ -103,10 +103,12 @@ myManageHooks = composeAll
 myStartupHook = do
             spawnOnce "lxsession &"
             spawnOnce "setxkbmap -option caps:escape &"
-            spawnOnce "trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
-            spawnOnce "xmobar ~/.xmonad/xmobar.hs &"
             spawnOnce "picom --vsync &"
             spawnOnce "/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/wallpapers &"
+            spawnOnce "caffeine &"
+            spawnOnce "xmobar ~/.xmonad/xmobar.hs"
+            spawnOnce "trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19"
+          
 
 -- Default Variables
 myTerminal = "xfce4-terminal"

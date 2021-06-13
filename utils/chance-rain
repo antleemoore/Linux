@@ -1,4 +1,5 @@
 #!/bin/bash
+$HOME/utils/wait-for-internet
 weatherreport=$(curl wttr.in/32817)
 
 chancerain=$(echo $weatherreport | grep -o '[^ ]*%')
