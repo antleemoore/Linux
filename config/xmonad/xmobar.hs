@@ -9,7 +9,7 @@ Config {
 
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%UnsafeStdinReader%}{ %check-updates% | %dynnetwork% | %multicpu% %multicoretemp% | %memory% | %disku% | %bright% | %default:Master% | %battery% | %KMCO% | %date% |%trayerpad%"
+   , template = "%UnsafeStdinReader%}{ | %dynnetwork% | %multicpu% %multicoretemp% | %memory% | %disku% | %bright% | %default:Master% | %battery% | %KMCO% | %date% |%trayerpad%"
 
    , lowerOnStart =     True    -- send to bottom of window stack on start
    , hideOnStart =      False   -- start with window unmapped (hidden)
@@ -94,7 +94,7 @@ Config {
                                        , "-i"   , "<fc=green><fn=1>\xf583</fn></fc> <left>%"
                              ] 50
 
-        , Run Com "check-updates" ["<fn=1>\xf487</fn>"] "" 36000
+        -- , Run Com "check-updates" ["<fn=1>\xf487</fn>"] "" 36000
         , Run Com "/home/anthony/utils/trayer-padding-icon.sh" [] "trayerpad" 20
         -- time and date indicator 
         , Run Date           "<fn=1>\xf133</fn> %a %b %d %Y %I:%m %p" "date" 50

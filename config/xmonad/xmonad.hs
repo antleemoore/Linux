@@ -40,7 +40,7 @@ main = do
                 , borderWidth=myBorderWidth, startupHook=myStartupHook
                 , logHook=dynamicLogWithPP $ xmobarPP{ ppOutput= hPutStrLn h
                                                     , ppCurrent=xmobarColor "#FABD2F" "" . wrap "[" "]"
-                                                    , ppTitle=xmobarColor "#B8BB26" "" . shorten 60
+                                                    , ppTitle=xmobarColor "#B8BB26" "" -- . shorten 60
                                                     , ppLayout=xmobarColor "#CC241D" ""
                                                     , ppSep=" | "
                                                     }
@@ -119,7 +119,7 @@ myMoveToStackHook = insertPosition End Older
 
 -- Layout Variables
 myVertSpacing = ResizableTall 1 (3/100) (3/5) []
-myMirrorThreeCol = renamed [Replace "3 Column"] $ mySpacing $ myGaps $ reflectHoriz $ ThreeCol 2 (3/100) (1/2)
+myMirrorThreeCol = renamed [Replace "3 Col"] $ mySpacing $ myGaps $ reflectHoriz $ ThreeCol 2 (3/100) (1/2)
 myMainStackLayout = renamed [Replace "Default"] $ mySpacing $ myGaps $ myVertSpacing
 myxfceLayout = renamed [CutWordsLeft 1] $ mySpacing $ myGaps $ layoutHook xfceConfig
 -- Layout List
