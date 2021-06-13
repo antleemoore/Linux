@@ -41,7 +41,7 @@ main = do
                 , borderWidth=myBorderWidth, startupHook=myStartupHook
                 , logHook=dynamicLogWithPP $ xmobarPP{ ppOutput= hPutStrLn h
                                                     , ppCurrent=xmobarColor "#FABD2F" "" . wrap "[" "]"
-                                                    , ppTitle=xmobarColor "#B8BB26" "" -- . shorten 60
+                                                    , ppTitle=xmobarColor "#B8BB26" ""
                                                     , ppLayout=xmobarColor "#CC241D" ""
                                                     , ppSep=" | "
                                                     }
@@ -60,7 +60,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm, xK_i), runInTerm "" "nvim")
   , ((modm, xK_grave), spawn "gcolor2")
   , ((modm, xK_p), spawn dmenu_c)
-  -- , ((modm .|. shiftMask, xK_p), spawn "xfce4-popup-whiskermenu")
   , ((modm, xK_c), spawn webcam_c) 
   , ((modm, xK_y), sendMessage NextLayout)
   , ((modm, xK_space), windows W.swapMaster)
@@ -84,7 +83,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm .|. shiftMask, xK_s), spawn screenkey_c)
   , ((modm .|. shiftMask, xK_v),  killAllOtherCopies)
   , ((modm .|. shiftMask, xK_t), runInTerm "" "htop")
-  -- , ((modm .|. shiftMask, xK_q), spawn "xfce4-session-logout")
   , ((modm .|. shiftMask, xK_c), spawn restartXMonad_c)
   , ((modm .|. shiftMask, xK_y), setLayout $ XMonad.layoutHook conf)
   , ((modm,               xK_bracketright),  nextWS)
@@ -106,7 +104,6 @@ myStartupHook = do
             spawnOnce "lxsession &"
             spawnOnce "setxkbmap -option caps:escape &"
             spawnOnce "trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
-            -- spawnOnce "exec /usr/bin/trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --transparent true --alpha 0 --tint 0x32302f --height 19 &"
             spawnOnce "xmobar ~/.xmonad/xmobar.hs &"
             spawnOnce "picom --vsync &"
             spawnOnce "/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/wallpapers &"
