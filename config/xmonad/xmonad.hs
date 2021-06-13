@@ -42,6 +42,7 @@ main = do
                                                     , ppCurrent=xmobarColor "#FABD2F" "" . wrap "[" "]"
                                                     , ppTitle=xmobarColor "#B8BB26" "" . shorten 60
                                                     , ppLayout=xmobarColor "#CC241D" ""
+                                                    , ppSep=" | "
                                                     }
                 }
 
@@ -97,7 +98,10 @@ myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts(l
 myManageHooks = composeAll
         [ goFullScreen, floatCalculator, moveWebcamToSide, floatColorPicker ]
 myStartupHook = do
-            spawnOnce "setxkbmap -option caps:escape"
+            spawnOnce "lxsession &"
+            spawnOnce "setxkbmap -option caps:escape &"
+            spawnOnce "trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
+            -- spawnOnce "exec /usr/bin/trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --transparent true --alpha 0 --tint 0x32302f --height 19 &"
             spawnOnce "xmobar ~/.xmonad/xmobar.hs &"
             spawnOnce "picom --vsync &"
             spawnOnce "nitrogen --restore &"
