@@ -9,7 +9,7 @@ Config {
 
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%UnsafeStdinReader%}{ | %dynnetwork% | %multicpu% %multicoretemp% | %memory% | %disku% | %bright% | %default:Master% | %battery% | %KMCO% | %date% |%trayerpad%"
+   , template = "%UnsafeStdinReader%}{ | %dynnetwork% | %multicpu% %multicoretemp% | %gpu% | %memory% | %disku% | %bright% | %default:Master% | %battery% | %KMCO% | %date% |%trayerpad%"
 
    , lowerOnStart =     True    -- send to bottom of window stack on start
    , hideOnStart =      False   -- start with window unmapped (hidden)
@@ -61,13 +61,13 @@ Config {
                                     , "--Low"      , "50"         -- units: %
                                     , "--High"     , "85"         -- units: %
                                     , "--low"      , "#F2E5BC"
-                                , "--normal"   , "#FABD2F"
-                                , "--high"     , "#FB4934"
+                                , "--normal"   , "#F2E5BC"
+                                , "--high"     , "#F2E5BC"
                             ] 50
 
         , Run MultiCoreTemp ["-t", "<max>°C ",
                         "-L", "60", "-H", "80",
-                        "-l", "#F2E5BC", "-n", "#FABD2F", "-h", "#FB4934",
+                        "-l", "#F2E5BC", "-n", "#F2E5BC", "-h", "#F2E5BC",
                         "--", "--mintemp", "20", "--maxtemp", "100"] 50
 
                           
@@ -75,8 +75,8 @@ Config {
                              , "--Low"      , "20"        -- units: %
                              , "--High"     , "90"        -- units: %
                              , "--low"      , "#F2E5BC"
-                             , "--normal"   , "#FABD2F"
-                             , "--high"     , "#FB4934"
+                             , "--normal"   , "#F2E5BC"
+                             , "--high"     , "#F2E5BC"
                              ] 50
         , Run Battery        [ "--template" , "<acstatus>"
                              , "--Low"      , "10"        -- units: %
@@ -96,8 +96,9 @@ Config {
 
         -- , Run Com "check-updates" ["<fn=1>\xf487</fn>"] "" 36000
         , Run Com "/home/anthony/utils/trayer-padding-icon.sh" [] "trayerpad" 20
+        , Run Com "/home/anthony/utils/gpu-usage" [] "gpu" 50
         -- time and date indicator 
-        , Run Date           "<fn=1>\xf133</fn> %a %b %d %Y %I:%m %p" "date" 50
+        , Run Date           "<fn=1>\xf133</fn> %a %b %d %Y %I:%M %p" "date" 50
         , Run UnsafeStdinReader
         ]
 }

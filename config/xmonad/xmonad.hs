@@ -104,7 +104,7 @@ myStartupHook = do
             -- spawnOnce "exec /usr/bin/trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --transparent true --alpha 0 --tint 0x32302f --height 19 &"
             spawnOnce "xmobar ~/.xmonad/xmobar.hs &"
             spawnOnce "picom --vsync &"
-            spawnOnce "nitrogen --restore &"
+            spawnOnce "/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/wallpapers &"
 
 -- Default Variables
 myTerminal = "xfce4-terminal"
