@@ -8,4 +8,7 @@ intTwo=$(echo ${var} | sed 's/.*\/ //g')
 echo -n "GPU: "
 echo -n $(( intOne * 100 / intTwo))
 echo -n "% "
-echo $foo
+echo -n $foo
+echo -n " "
+echo $(sensors | grep 'Video Fan' | sed 's/ //g' | sed 's/VideoFan\://')
+
