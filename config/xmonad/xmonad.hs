@@ -1,3 +1,5 @@
+-- Dependencies: xmobar, trayer, caffeine, alacritty, styli.sh, lxsession, picom, dmenu, mpv, screenkey, galculator, gcolor2, keybind-programs
+
 -- Base Imports
 import XMonad
 import XMonad.Config.Xfce
@@ -13,6 +15,7 @@ import XMonad.Actions.CycleWS
 -- Util Imports
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
+
 -- Hook Imports
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -22,7 +25,6 @@ import XMonad.Hooks.InsertPosition
 
 -- Layout Imports
 import XMonad.Layout.Spacing
-import XMonad.Layout.Gaps
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.LayoutHints
 import XMonad.Layout.ThreeColumns
@@ -40,13 +42,73 @@ main = do
                 , workspaces=myWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo
                 , handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor 
                 , borderWidth=myBorderWidth, startupHook=myStartupHook
-                , logHook=dynamicLogWithPP $ xmobarPP{ ppOutput= hPutStrLn h
-                                                    , ppCurrent=xmobarColor "#FABD2F" "" . wrap "[" "]"
-                                                    , ppTitle=xmobarColor "#B8BB26" ""
-                                                    , ppLayout=xmobarColor "#CC241D" ""
-                                                    , ppSep=" | "
-                                                    }
+                , logHook=dynamicLogWithPP $ xmobarPP{ ppOutput= hPutStrLn h , ppCurrent=currentWorkspaceStyle
+                                                    , ppTitle=windowTitleStyle , ppLayout=layoutIndicatorStyle
+                                                    , ppSep=" | " }
                 }
+
+-- Custom Hooks
+myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts(layoutsList))
+myManageHooks = composeAll [ goFullScreen, floatCalculator, moveWebcamToSide, floatColorPicker ]
+myStartupHook = do
+            spawnOnce session_s
+            spawnOnce swapCapsWithESC_s
+            spawnOnce compositor_s
+            spawnOnce autowallpaper_s
+            spawnOnce caffeine_s
+            spawnOnce trayer_s
+            spawnOnce xmobar_s
+          
+-- Default Variables
+myTerminal = "alacritty"
+myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
+myFocusedBorderColor = "#FABD2F"
+myBorderWidth = 2
+
+-- Startup Variables
+trayer_s="trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
+autowallpaper_s="/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/wallpapers &"
+session_s="lxsession &"
+swapCapsWithESC_s="setxkbmap -option caps:escape &"
+compositor_s="picom --vsync &"
+xmobar_s="/home/anthony/utils/xmobar-delayed &"
+caffeine_s="caffeine &"
+
+-- Spacing/Position Variables
+mySpacing = spacingRaw False (Border 10 0 10 0) True (Border 0 10 0 10) True
+myMoveToStackHook = insertPosition End Older 
+
+-- Layout Variables
+myVertSpacing = ResizableTall 1 (3/100) (3/5) []
+myMirrorThreeCol = renamed [Replace "3 Col"] $ mySpacing $ reflectHoriz $ ThreeCol 2 (3/100) (1/2)
+myMainStackLayout = renamed [Replace "Default"] $ mySpacing $ myVertSpacing
+myxfceLayout = renamed [CutWordsLeft 1] $ mySpacing $ layoutHook xfceConfig
+myGridLayout = renamed [Replace "Grid"] $ mySpacing $ Grid
+mySpiralLayout = renamed[Replace "Spiral"] $ mySpacing $ spiral (6/7)
+-- Layout List
+layoutsList = myMainStackLayout ||| myGridLayout ||| mySpiralLayout ||| myMirrorThreeCol ||| myxfceLayout
+toggleReflect= mkToggle (single REFLECTX)
+
+-- Keybinding commands
+dmenu_c="dmenu_run -i -sb '#FABD2F' -sf '#000' -fn 'Cascadia Mono Roman'"
+webcam_c="killall mpv || mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
+restartXMonad_c="~/utils/reinstall-wm"
+screenkey_c="killall screenkey || screenkey &"
+fullScreenToggle_c=[ sendMessage $ ToggleStruts, withFocused toggleBorder, windows W.focusDown]
+
+-- Custom Hook Variables
+goFullScreen=isFullscreen -->doFullFloat
+floatCalculator=appName =? "galculator" -->doCenterFloat
+moveWebcamToSide=className =? "mpv" -->myMoveToStackHook
+floatColorPicker=appName =? "gcolor2" -->doCenterFloat
+myManageHookCombo=myManageHooks <+> manageDocks <+> manageHook xfceConfig
+myHandleEventHookCombo=handleEventHook xfceConfig <+> docksEventHook <+> fullscreenEventHook
+myKeyCombo=myKeys <+> keys defaultConfig
+
+-- XMobar Styling
+currentWorkspaceStyle=xmobarColor "#FABD2F" "" . wrap "[" "]"
+windowTitleStyle=xmobarColor "#B8BB26" ""
+layoutIndicatorStyle=xmobarColor "#CC241D" ""
 
 -- Keybindings
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -65,7 +127,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm, xK_y), sendMessage NextLayout)
   , ((modm, xK_space), windows W.swapMaster)
   , ((modm, xK_b), withFocused toggleBorder)
-  , ((modm, xK_g), sendMessage $ ToggleGaps)
   , ((modm, xK_u), sendMessage MirrorExpand)
   , ((modm, xK_d), sendMessage MirrorShrink)
   , ((modm, xK_f), sequence_ fullScreenToggle_c)
@@ -97,55 +158,3 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [((m .|. modm, k), windows $ f i)
     | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
     , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-
--- Custom Hooks
-myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts(layoutsList))
-myManageHooks = composeAll
-        [ goFullScreen, floatCalculator, moveWebcamToSide, floatColorPicker ]
-myStartupHook = do
-            spawnOnce "lxsession &"
-            spawnOnce "setxkbmap -option caps:escape &"
-            spawnOnce "picom --vsync &"
-            spawnOnce "/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/wallpapers &"
-            spawnOnce "caffeine &"
-            spawnOnce "trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
-            spawnOnce "/home/anthony/utils/xmobar-delayed &"
-          
-
--- Default Variables
-myTerminal = "xfce4-terminal"
-myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
-myFocusedBorderColor = "#FABD2F"
-myBorderWidth = 3
-
--- Spacing/Position Variables
-mySpacing = spacingRaw True (Border 10 10 10 10) True (Border 10 10 10 10) True
-myGaps = gaps [(U,10), (R,10), (L,10), (D,10)]
-myMoveToStackHook = insertPosition End Older 
-
--- Layout Variables
-myVertSpacing = ResizableTall 1 (3/100) (3/5) []
-myMirrorThreeCol = renamed [Replace "3 Col"] $ mySpacing $ myGaps $ reflectHoriz $ ThreeCol 2 (3/100) (1/2)
-myMainStackLayout = renamed [Replace "Default"] $ mySpacing $ myGaps $ myVertSpacing
-myxfceLayout = renamed [CutWordsLeft 1] $ mySpacing $ myGaps $ layoutHook xfceConfig
-myGridLayout = renamed [Replace "Grid"] $ mySpacing $ myGaps $ Grid
-mySpiralLayout = renamed[Replace "Spiral"] $ mySpacing $ myGaps $ spiral (6/7)
--- Layout List
-layoutsList = myMainStackLayout ||| myGridLayout ||| mySpiralLayout ||| myMirrorThreeCol ||| myxfceLayout
-toggleReflect= mkToggle (single REFLECTX)
-
--- Keybinding commands
-dmenu_c="dmenu_run -i -sb '#FABD2F' -sf '#000' -fn 'Cascadia Mono Roman'"
-webcam_c="killall mpv || mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
-restartXMonad_c="~/utils/reinstall-wm"
-screenkey_c="killall screenkey || screenkey &"
-fullScreenToggle_c=[ sendMessage $ ToggleStruts, sendMessage $ ToggleGaps, withFocused toggleBorder, windows W.focusDown]
-
--- Custom Hook Variables
-goFullScreen=isFullscreen -->doFullFloat
-floatCalculator=appName =? "galculator" -->doCenterFloat
-moveWebcamToSide=className =? "mpv" -->myMoveToStackHook
-floatColorPicker=appName =? "gcolor2" -->doCenterFloat
-myManageHookCombo=myManageHooks <+> manageDocks <+> manageHook xfceConfig
-myHandleEventHookCombo=handleEventHook xfceConfig <+> docksEventHook <+> fullscreenEventHook
-myKeyCombo=myKeys <+> keys defaultConfig
