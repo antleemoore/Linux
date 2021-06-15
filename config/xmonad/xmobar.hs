@@ -18,7 +18,7 @@ Config {
    , commands = 
         -- weather monitor
         [ 
-          Run DiskU [("/", "<fn=1>\xf7c9</fn> <used> / <size>")]
+          Run DiskU [("/", "<fn=1>\xf7c9</fn><usedp>%")]
                     ["-L", "20", "-H", "80", "-m", "1", "-p", "3"]
                     3000
 
