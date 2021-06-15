@@ -1,0 +1,29 @@
+set nocompatible 
+syntax on
+
+set nowrap
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab 
+set smarttab 
+set shiftround
+set autoindent
+set smartindent
+set relativenumber
+set nobackup
+set nowritebackup
+set noswapfile
+set hidden
+set autoread
+set ignorecase
+set smartcase
+set incsearch
+set showmatch
+set hlsearch
+set gdefault
+set virtualedit+=block
+set foldmethod=indent
+set nofoldenable
+" set foldnestmax=10
+" set foldlevel=2

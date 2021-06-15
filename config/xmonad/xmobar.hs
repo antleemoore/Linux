@@ -1,7 +1,7 @@
 -- Dependencies: Symbols Nerd Font
 Config { 
-   font =         "xft:Cascadia Code PL:size=10:antialias=true:hinting=true, xft:Noto Color Emoji:pixelsize=13:antialias=true:hinting=true"
-   , additionalFonts = [  "xft:Symbols Nerd Font:pixelsize=13:antialias=true:hinting=true" ]
+   font =         "xft:Cascadia Code PL:size=10:antialias=true:hinting=true"
+   , additionalFonts = [  "xft:Symbols Nerd Font:pixelsize=14:antialias=true:hinting=true" ]
    , bgColor =      "#32302F"
    , fgColor =      "#F2E5BC"
    , position =     Top
@@ -23,10 +23,10 @@ Config {
                     ["-L", "20", "-H", "80", "-m", "1", "-p", "3"]
                     3000
 
-        , Run Brightness [ "-t", "<fn=1>\xf5de</fn> <percent>%", "--", "-D", "intel_backlight" ] 5
+        , Run Brightness [ "-t", "<fn=1>\xf0eb</fn> <percent>%", "--", "-D", "intel_backlight" ] 5
 
         , Run Volume "default" "Master" [ "--template", "<status> <volume>%"
-                                        , "--", "--on", "<fn=1>\xfa7d</fn>", "--off", "<fn=1>\xfa80</fn>"
+                                        , "--", "--on", "<fn=1>\xf485</fn>", "--off", "<fn=1>\xf466</fn>"
                                         , "--onc", "#F2E5BC", "--offc", "#FB4934"
                                         ] 5
 

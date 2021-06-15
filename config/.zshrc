@@ -12,110 +12,19 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="agnoster"
 ENABLE_CORRECTION="true"
 COMPLETION_WAITING_DOTS="true"
-
 plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
 
 source $ZSH/oh-my-zsh.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 export LS_COLORS="$LS_COLORS:ow=1;34:tw=1;34:"
-[ -f "/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe" ] \
-    && export BROWSER="/mnt/c/'Program Files'/'Mozilla Firefox'/firefox.exe" \
-    || export BROWSER="firefox" 
+export BROWSER="firefox"
 export HISTCONTROL=ignoredups:erasedups
 export EDITOR="nvim"
 function cd {
     builtin cd "$@" && lsd
 }
 
-alias ls='lsd'
-alias laf='lsd -AF --color=always | grep -v @$'
-alias la='lsd -A'
-alias lal='lsd -Al'
-alias ll='lsd -l'
-alias l='lsd -1'
-alias lf='lsd -F --color=always | grep -v @$'
-alias lr='lsd --tree'
-alias brave='$HOME/.password-lock'
-alias cdp="cd ~/projects"
-alias cdc="cd ~/.config"
-alias cds="cd ~/scripts"
-alias cdu="cd ~/utils"
-alias cdr="cd ~/repos"
-alias cdlr="cd ~/repos/Linux"
-alias codehere="code . && exit"
-alias zshc="vim ~/.zshrc"
-alias vimc="vim ~/.vimrc"
-alias xmoc="vim ~/repos/Linux/config/xmonad/xmonad.hs"
-alias xmobc="vim ~/repos/Linux/config/xmonad/xmobar.hs"
-alias zshs="source ~/.zshrc"
-alias vimr="$BROWSER www.vimregex.com"
-alias agit="~/utils/autogit"
-alias vim="nvim"
-alias gs="git status"
-alias lgit="cd ~/repos/Linux && agit && cd -"
-alias nvimc="vim ~/.config/nvim/init.vim"
-alias killport="~/utils/killport"
-alias rewm="~/utils/reinstall-wm"
-alias redoom="~/.emacs.d/bin/doom sync"
-alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
-alias supac="sudo pacman -S"
-alias setesc="setxkbmap -option caps:escape"
-alias autoc="~/utils/auto-compile"
-alias cleanpac="sudo pacman -Rns $(pacman -Qtdq)"
+source $HOME/.zshaliases
+source $HOME/.zshprompt
 
-# Vim Mode Config
-bindkey -v
-export KEYTIMEOUT=1
-
-# Git Config
-# autoload -Uz vcs_info
-# precmd() { vcs_info }
-# zstyle ':vcs_info:git:*' formats '%b '
-function git_branch_name()
-{
-  branch=$(git symbolic-ref HEAD 2> /dev/null | awk 'BEGIN{FS="/"} {print $NF}')
-  if [[ $branch == "" ]];
-  then
-    :
-  else
-      echo '(%B%F{#FB4934}'$branch'%f%b)'
-  fi
-}
-
-setopt PROMPT_SUBST
-THEME_PROMPT_PREFIX=${THEME_PROMPT_PREFIX:-''}
-# THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'λ'}
-THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'🔓'}
-THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'🔏'}
-# THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'ᐅ'}
-THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
-zle-keymap-select() {
-  if [ "${KEYMAP}" = 'vicmd' ]; then
-    THEME_VI_MODE_SYMBOL="${THEME_VI_CMD_MODE_SYMBOL}"
-  else
-    THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
-  fi
-  zle reset-prompt
-}
-zle -N zle-keymap-select
-zle-line-finish() {
-  THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
-}
-zle -N zle-line-finish
-TRAPINT() {
-  THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
-  return $(( 128 + $1 ))
-}
-
-NEWLINE=$'\n'
-PROMPT='$THEME_PROMPT_PREFIX%B%F{#CC241D}[%f%b %B%F{#458588}%n%f%b%B%F{#D79921}@%f%b%B%F{#689D6A}%m%f%b %B%F{#B16286}%~%f%b %B%F{#CC241D}]%f%b $(git_branch_name)${NEWLINE}%(?.$THEME_VI_MODE_SYMBOL.$THEME_VI_MODE_SYMBOL) ➤ '
-function precmd() {
-    # Print a newline before the prompt, unless it's the
-    # first prompt in the process.
-    if [ -z "$NEW_LINE_BEFORE_PROMPT" ]; then
-        NEW_LINE_BEFORE_PROMPT=1
-    elif [ "$NEW_LINE_BEFORE_PROMPT" -eq 1 ]; then
-        echo 
-    fi
-}
 colorscript -r
