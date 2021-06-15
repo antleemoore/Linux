@@ -13,7 +13,6 @@ import XMonad.Actions.CycleWS
 -- Util Imports
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
-
 -- Hook Imports
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -30,6 +29,8 @@ import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Reflect
 import XMonad.Layout.MultiToggle
 import XMonad.Layout.Renamed
+import XMonad.Layout.Grid
+import XMonad.Layout.Spiral
 
 -- Main XMonad Start
 main = do
@@ -71,15 +72,16 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm, xK_r), sendMessage $ Toggle REFLECTX)
   , ((modm, xK_F7), spawn "touchpad-indicator -c")
   , ((modm, xK_v), spawn "xfce4-popup-clipman")
-  , ((modm, xK_Return), spawn $ XMonad.terminal conf)
+  , ((modm, xK_Return), spawn $ XMonad.terminal conf)  
   , ((modm, xK_KP_Enter), spawn "galculator")
-  , ((0,xF86XK_MonBrightnessDown), spawn "lux -s 10%")
-  , ((0,xF86XK_MonBrightnessUp), spawn "lux -a 10%")
+  , ((0,xF86XK_MonBrightnessDown), spawn "lux -m 1 -s 5%")
+  , ((0,xF86XK_MonBrightnessUp), spawn "lux -M 936 -a 5%")
   , ((0,xF86XK_AudioMute), spawn "amixer set Master toggle")
   , ((0,xF86XK_AudioLowerVolume), spawn "amixer -q sset Master 2%-")
   , ((0,xF86XK_AudioRaiseVolume), spawn "amixer -q sset Master 2%+")
   , ((modm .|. shiftMask, xK_i), spawn "code")
   , ((modm .|. shiftMask, xK_d), spawn "discord")
+  , ((modm .|. shiftMask, xK_q), spawn "lxlock")  
   , ((modm .|. shiftMask, xK_s), spawn screenkey_c)
   , ((modm .|. shiftMask, xK_v),  killAllOtherCopies)
   , ((modm .|. shiftMask, xK_t), runInTerm "" "htop")
@@ -106,8 +108,8 @@ myStartupHook = do
             spawnOnce "picom --vsync &"
             spawnOnce "/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/wallpapers &"
             spawnOnce "caffeine &"
-            spawnOnce "xmobar ~/.xmonad/xmobar.hs"
-            spawnOnce "trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19"
+            spawnOnce "trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
+            spawnOnce "/home/anthony/utils/xmobar-delayed &"
           
 
 -- Default Variables
@@ -126,8 +128,10 @@ myVertSpacing = ResizableTall 1 (3/100) (3/5) []
 myMirrorThreeCol = renamed [Replace "3 Col"] $ mySpacing $ myGaps $ reflectHoriz $ ThreeCol 2 (3/100) (1/2)
 myMainStackLayout = renamed [Replace "Default"] $ mySpacing $ myGaps $ myVertSpacing
 myxfceLayout = renamed [CutWordsLeft 1] $ mySpacing $ myGaps $ layoutHook xfceConfig
+myGridLayout = renamed [Replace "Grid"] $ mySpacing $ myGaps $ Grid
+mySpiralLayout = renamed[Replace "Spiral"] $ mySpacing $ myGaps $ spiral (6/7)
 -- Layout List
-layoutsList = myMainStackLayout ||| myxfceLayout ||| myMirrorThreeCol
+layoutsList = myMainStackLayout ||| myGridLayout ||| mySpiralLayout ||| myMirrorThreeCol ||| myxfceLayout
 toggleReflect= mkToggle (single REFLECTX)
 
 -- Keybinding commands
