@@ -42,12 +42,6 @@ colors:
 
 background_opacity: .975
 
-cursor:
-  style:
-    shape: Underline
-    blinking: On
-  vi_mode_style: Block
-
 mouse:
   hide_when_typing: true
 

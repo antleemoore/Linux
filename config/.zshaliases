@@ -1,5 +1,4 @@
 alias ls='lsd'
-alias autoc='~/utils/auto-compile'
 alias laf='lsd -AF --color=always | grep -v @$'
 alias la='lsd -A'
 alias lal='lsd -Al'
@@ -7,27 +6,34 @@ alias ll='lsd -l'
 alias l='lsd -1'
 alias lf='lsd -F --color=always | grep -v @$'
 alias lr='lsd --tree'
+
 alias cdp="cd ~/projects"
 alias cdc="cd ~/.config"
 alias cds="cd ~/scripts"
 alias cdu="cd ~/utils"
 alias cdr="cd ~/repos"
 alias cdlr="cd ~/repos/Linux"
+
 alias codehere="code . && exit"
+alias autoc='~/utils/auto-compile'
+alias v="nvim"
+alias vim="nvim"
+alias vimr="$BROWSER www.vimregex.com"
+
 alias zshc="vim ~/.zshrc"
 alias vimc="vim ~/.vimrc"
 alias xmoc="vim ~/repos/Linux/config/xmonad/xmonad.hs"
 alias xmobc="vim ~/repos/Linux/config/xmonad/xmobar.hs"
 alias zshs="source ~/.zshrc"
-alias vimr="$BROWSER www.vimregex.com"
+alias nvimc="vim ~/.config/nvim/init.vim"
+alias redoom="~/.emacs.d/bin/doom sync"
+alias rewm="~/utils/reinstall-wm"
+
 alias agit="~/utils/autogit"
-alias v="nvim"
 alias gs="git status"
 alias lgit="cd ~/repos/Linux && agit && cd -"
-alias nvimc="vim ~/.config/nvim/init.vim"
+
 alias killport="~/utils/killport"
-alias rewm="~/utils/reinstall-wm"
-alias redoom="~/.emacs.d/bin/doom sync"
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
 alias supac="sudo pacman -S"
 alias setesc="setxkbmap -option caps:escape"

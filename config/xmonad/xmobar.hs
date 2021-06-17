@@ -1,7 +1,7 @@
 -- Dependencies: Symbols Nerd Font
 Config { 
    font =         "xft:Cascadia Code PL:size=10:antialias=true:hinting=true"
-   , additionalFonts = [  "xft:Symbols Nerd Font:pixelsize=14:antialias=true:hinting=true" ]
+   , additionalFonts = [  "xft:Symbols Nerd Font:pixelsize=12:antialias=true:hinting=true" ]
    , bgColor =      "#32302F"
    , fgColor =      "#F2E5BC"
    , position =     Top
@@ -9,7 +9,8 @@ Config {
    , borderColor =  "black"
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%UnsafeStdinReader%}{ | %dynnetwork% | %multicpu% %multicoretemp%%cpufan% | %gpu% | %memory% | %disku% | %bright% | %default:Master% | %battery% | %KMCO% %chancerain% | %date% |%locks%%trayerpad%"
+   , template = "%UnsafeStdinReader%}{ %bright% %default:Master% %battery% %KMCO% %chancerain% %date% %locks%%trayerpad%"
+   -- , template = "%UnsafeStdinReader%}{ | %dynnetwork% | %multicpu% %multicoretemp%%cpufan% | %gpu% | %memory% | %disku% | %bright% | %default:Master% | %battery% | %KMCO% %chancerain% | %date% |%locks%%trayerpad%"
    , lowerOnStart =     True    -- send to bottom of window stack on start
    , hideOnStart =      False   -- start with window unmapped (hidden)
    , allDesktops =      True    -- show on all desktops

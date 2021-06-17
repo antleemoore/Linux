@@ -25,5 +25,3 @@ set gdefault
 set virtualedit+=block
 set foldmethod=indent
 set nofoldenable
-" set foldnestmax=10
-" set foldlevel=2

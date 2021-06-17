@@ -15,6 +15,7 @@ import XMonad.Actions.CycleWS
 -- Util Imports
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
+import XMonad.Util.Scratchpad
 
 -- Hook Imports
 import XMonad.Hooks.DynamicLog
@@ -42,9 +43,9 @@ main = do
                 , workspaces=myWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo
                 , handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor 
                 , borderWidth=myBorderWidth, startupHook=myStartupHook
-                , logHook=dynamicLogWithPP $ xmobarPP{ ppOutput= hPutStrLn h , ppCurrent=currentWorkspaceStyle
+                , logHook=dynamicLogWithPP $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle
                                                     , ppTitle=windowTitleStyle , ppLayout=layoutIndicatorStyle
-                                                    , ppSep=" | " }
+                                                    , ppSep=" "}
                 }
 
 -- Custom Hooks
@@ -94,19 +95,20 @@ dmenu_c="dmenu_run -i -sb '#FABD2F' -sf '#000' -fn 'Cascadia Mono Roman'"
 webcam_c="killall mpv || mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
 restartXMonad_c="~/utils/reinstall-wm"
 screenkey_c="killall screenkey || screenkey &"
-fullScreenToggle_c=[ sendMessage $ ToggleStruts, withFocused toggleBorder, windows W.focusDown]
+fullScreenToggle_c=[ sendMessage $ ToggleStruts, toggleScreenSpacingEnabled, toggleWindowSpacingEnabled, withFocused toggleBorder, windows W.focusDown]
 
 -- Custom Hook Variables
 goFullScreen=isFullscreen -->doFullFloat
 floatCalculator=appName =? "galculator" -->doCenterFloat
 moveWebcamToSide=className =? "mpv" -->myMoveToStackHook
 floatColorPicker=appName =? "gcolor2" -->doCenterFloat
-myManageHookCombo=myManageHooks <+> manageDocks <+> manageHook xfceConfig
+myManageHookCombo=myManageHooks <+> manageDocks <+> scratchpadManageHookDefault <+> manageHook xfceConfig
 myHandleEventHookCombo=handleEventHook xfceConfig <+> docksEventHook <+> fullscreenEventHook
 myKeyCombo=myKeys <+> keys defaultConfig
 
 -- XMobar Styling
 currentWorkspaceStyle=xmobarColor "#FABD2F" "" . wrap "[" "]"
+otherWorkspaceStyle=xmobarColor "#F2E5BC" ""
 windowTitleStyle=xmobarColor "#B8BB26" ""
 layoutIndicatorStyle=xmobarColor "#CC241D" ""
 
@@ -115,9 +117,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
   [
     ((modm, xK_q), kill)
-  , ((modm, xK_e), spawn "thunar")
-  , ((modm, xK_w), spawn "firefox")
-  , ((modm, xK_a), spawn "anki")
+  , ((modm, xK_e), spawn "thunar") , ((modm, xK_w), spawn "firefox") , ((modm, xK_a), spawn "anki")
   , ((modm, xK_o), spawn "obs")
   , ((modm, xK_v), windows copyToAll)
   , ((modm, xK_i), runInTerm "" "nvim")
@@ -132,7 +132,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((modm, xK_f), sequence_ fullScreenToggle_c)
   , ((modm, xK_r), sendMessage $ Toggle REFLECTX)
   , ((modm, xK_F7), spawn "touchpad-indicator -c")
-  , ((modm, xK_v), spawn "xfce4-popup-clipman")
   , ((modm, xK_Return), spawn $ XMonad.terminal conf)  
   , ((modm, xK_KP_Enter), spawn "galculator")
   , ((0,xF86XK_MonBrightnessDown), spawn "lux -m 1 -s 5%")
@@ -141,12 +140,14 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   , ((0,xF86XK_AudioLowerVolume), spawn "amixer -q sset Master 2%-")
   , ((0,xF86XK_AudioRaiseVolume), spawn "amixer -q sset Master 2%+")
   , ((modm .|. shiftMask, xK_i), spawn "code")
+  , ((controlMask .|. mod1Mask, xK_v), spawn "xfce4-popup-clipman")
   , ((modm .|. shiftMask, xK_d), spawn "discord")
   , ((modm .|. shiftMask, xK_q), spawn "lxlock")  
   , ((modm .|. shiftMask, xK_s), spawn screenkey_c)
   , ((modm .|. shiftMask, xK_v),  killAllOtherCopies)
   , ((modm .|. shiftMask, xK_t), runInTerm "" "htop")
   , ((modm .|. shiftMask, xK_c), spawn restartXMonad_c)
+  , ((modm .|. shiftMask, xK_Return), scratchpadSpawnActionCustom "alacritty --class scratchpad") 
   , ((modm .|. shiftMask, xK_y), setLayout $ XMonad.layoutHook conf)
   , ((modm,               xK_bracketright),  nextWS)
   , ((modm,               xK_bracketleft),    prevWS)
