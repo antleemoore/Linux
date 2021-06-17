@@ -38,15 +38,9 @@ import XMonad.Layout.Spiral
 -- Main XMonad Start
 main = do
         h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-        xmonad $ ewmh xfceConfig{ 
-                terminal=myTerminal, modMask=mod4Mask, keys=myKeyCombo
-                , workspaces=myWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo
-                , handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor 
-                , borderWidth=myBorderWidth, startupHook=myStartupHook
-                , logHook=dynamicLogWithPP $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle
-                                                    , ppTitle=windowTitleStyle , ppLayout=layoutIndicatorStyle
-                                                    , ppSep=" "}
-                }
+        xmonad
+            $ ewmh xfceConfig{ terminal=myTerminal, modMask=mod4Mask, keys=myKeyCombo, workspaces=myWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo, handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor, borderWidth=myBorderWidth, startupHook=myStartupHook, logHook=dynamicLogWithPP
+            $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppSep=" "} }
 
 -- Custom Hooks
 myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts(layoutsList))
@@ -114,48 +108,34 @@ layoutIndicatorStyle=xmobarColor "#CC241D" ""
 
 -- Keybindings
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-
-  [
-    ((modm, xK_q), kill)
-  , ((modm, xK_e), spawn "thunar") , ((modm, xK_w), spawn "firefox") , ((modm, xK_a), spawn "anki")
-  , ((modm, xK_o), spawn "obs")
-  , ((modm, xK_v), windows copyToAll)
-  , ((modm, xK_i), runInTerm "" "nvim")
-  , ((modm, xK_grave), spawn "gcolor2")
-  , ((modm, xK_p), spawn dmenu_c)
-  , ((modm, xK_c), spawn webcam_c) 
-  , ((modm, xK_y), sendMessage NextLayout)
-  , ((modm, xK_space), windows W.swapMaster)
-  , ((modm, xK_b), withFocused toggleBorder)
-  , ((modm, xK_u), sendMessage MirrorExpand)
-  , ((modm, xK_d), sendMessage MirrorShrink)
-  , ((modm, xK_f), sequence_ fullScreenToggle_c)
-  , ((modm, xK_r), sendMessage $ Toggle REFLECTX)
-  , ((modm, xK_F7), spawn "touchpad-indicator -c")
-  , ((modm, xK_Return), spawn $ XMonad.terminal conf)  
-  , ((modm, xK_KP_Enter), spawn "galculator")
-  , ((0,xF86XK_MonBrightnessDown), spawn "lux -m 1 -s 5%")
-  , ((0,xF86XK_MonBrightnessUp), spawn "lux -M 936 -a 5%")
-  , ((0,xF86XK_AudioMute), spawn "amixer set Master toggle")
-  , ((0,xF86XK_AudioLowerVolume), spawn "amixer -q sset Master 2%-")
-  , ((0,xF86XK_AudioRaiseVolume), spawn "amixer -q sset Master 2%+")
-  , ((modm .|. shiftMask, xK_i), spawn "code")
-  , ((controlMask .|. mod1Mask, xK_v), spawn "xfce4-popup-clipman")
-  , ((modm .|. shiftMask, xK_d), spawn "discord")
-  , ((modm .|. shiftMask, xK_q), spawn "lxlock")  
-  , ((modm .|. shiftMask, xK_s), spawn screenkey_c)
-  , ((modm .|. shiftMask, xK_v),  killAllOtherCopies)
-  , ((modm .|. shiftMask, xK_t), runInTerm "" "htop")
-  , ((modm .|. shiftMask, xK_c), spawn restartXMonad_c)
-  , ((modm .|. shiftMask, xK_Return), scratchpadSpawnActionCustom "alacritty --class scratchpad") 
-  , ((modm .|. shiftMask, xK_y), setLayout $ XMonad.layoutHook conf)
-  , ((modm,               xK_bracketright),  nextWS)
-  , ((modm,               xK_bracketleft),    prevWS)
-  , ((modm .|. shiftMask, xK_bracketright),  shiftToNext)
-  , ((modm .|. shiftMask, xK_bracketleft),    shiftToPrev)
-  ]
-  -- Workspace Binds
+  [ ((modm, xK_q), kill), ((modm .|. shiftMask, xK_q), spawn "lxlock"),
+    ((modm, xK_grave), spawn "gcolor2"),
+    ((modm, xK_w), spawn "firefox"),
+    ((modm, xK_e), spawn "thunar"),
+    ((modm, xK_r), sendMessage $ Toggle REFLECTX),
+    ((modm .|. shiftMask, xK_t), runInTerm "" "htop"),
+    ((modm, xK_y), sendMessage NextLayout), ((modm .|. shiftMask, xK_y), setLayout $ XMonad.layoutHook conf),
+    ((modm, xK_u), sendMessage MirrorExpand),
+    ((modm, xK_i), spawn "code"),
+    ((modm, xK_o), spawn "obs"),
+    ((modm, xK_p), spawn dmenu_c),
+    ((modm, xK_bracketright), nextWS), ((modm .|. shiftMask, xK_bracketright),  shiftToNext),
+    ((modm, xK_bracketleft), prevWS), ((modm .|. shiftMask, xK_bracketleft),    shiftToPrev),
+    ((modm, xK_a), spawn "anki"),
+    ((modm .|. shiftMask, xK_s), spawn screenkey_c),
+    ((modm, xK_d), sendMessage MirrorShrink), ((modm .|. shiftMask, xK_d), spawn "discord"),
+    ((modm, xK_f), sequence_ fullScreenToggle_c),
+    ((modm, xK_Return), spawn $ XMonad.terminal conf), ((mod1Mask, xK_Return), scratchpadSpawnActionCustom "alacritty --class scratchpad") ,
+    ((modm, xK_c), spawn webcam_c), ((modm .|. shiftMask, xK_c), spawn restartXMonad_c),
+    ((modm, xK_v), windows copyToAll), ((modm .|. shiftMask, xK_v),  killAllOtherCopies), ((controlMask .|. mod1Mask, xK_v), spawn "xfce4-popup-clipman"),
+    ((modm, xK_b), withFocused toggleBorder),
+    ((modm, xK_space), windows W.swapMaster),
+    ((modm, xK_KP_Enter), spawn "galculator"),
+    ((0,xF86XK_MonBrightnessDown), spawn "lux -m 1 -s 5%"),
+    ((0,xF86XK_MonBrightnessUp), spawn "lux -M 936 -a 5%"),
+    ((0,xF86XK_AudioMute), spawn "amixer set Master toggle"),
+    ((0,xF86XK_AudioLowerVolume), spawn "amixer -q sset Master 2%-"),
+    ((0,xF86XK_AudioRaiseVolume), spawn "amixer -q sset Master 2%+"),
+    ((modm, xK_F7), spawn "touchpad-indicator -c") ]
   ++
-  [((m .|. modm, k), windows $ f i)
-    | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
-    , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+  [((m .|. modm, k), windows $ f i) | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9], (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]

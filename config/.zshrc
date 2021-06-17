@@ -21,7 +21,7 @@ export BROWSER="firefox"
 export HISTCONTROL=ignoredups:erasedups
 export EDITOR="nvim"
 function cd {
-    builtin cd "$@" && lsd
+    builtin cd "$@" && lsd && gss 2>/dev/null
 }
 
 source $HOME/.zshaliases
