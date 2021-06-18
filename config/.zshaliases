@@ -19,6 +19,7 @@ alias autoc='~/utils/auto-compile'
 alias v="nvim"
 alias vim="nvim"
 alias vimr="$BROWSER www.vimregex.com"
+alias pdf="qpdfview"
 
 alias zshc="vim ~/.zshrc"
 alias vimc="vim ~/.vimrc"

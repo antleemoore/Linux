@@ -40,7 +40,7 @@ main = do
         h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
         xmonad
             $ ewmh xfceConfig{ terminal=myTerminal, modMask=mod4Mask, keys=myKeyCombo, workspaces=myWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo, handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor, borderWidth=myBorderWidth, startupHook=myStartupHook, logHook=dynamicLogWithPP
-            $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppSep=" "} }
+            $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppSep=" ", ppOrder= \(ws:l:_:_) -> [ws,l] } }
 
 -- Custom Hooks
 myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts(layoutsList))
@@ -61,7 +61,7 @@ myFocusedBorderColor = "#FABD2F"
 myBorderWidth = 2
 
 -- Startup Variables
-trayer_s="trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
+trayer_s="trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 22 &"
 autowallpaper_s="/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/wallpapers &"
 session_s="lxsession &"
 swapCapsWithESC_s="setxkbmap -option caps:escape &"
@@ -70,7 +70,7 @@ xmobar_s="/home/anthony/utils/xmobar-delayed &"
 caffeine_s="caffeine &"
 
 -- Spacing/Position Variables
-mySpacing = spacingRaw False (Border 10 0 10 0) True (Border 0 10 0 10) True
+mySpacing = spacingRaw False (Border 5 0 5 0) True (Border 0 5 0 5) True
 myMoveToStackHook = insertPosition End Older 
 
 -- Layout Variables
@@ -102,7 +102,9 @@ myKeyCombo=myKeys <+> keys defaultConfig
 
 -- XMobar Styling
 currentWorkspaceStyle=xmobarColor "#FABD2F" "" . wrap "[" "]"
-otherWorkspaceStyle=xmobarColor "#F2E5BC" ""
+hiddenNoWindowWSStyle=xmobarColor "#F2E5BC" ""
+hiddenWSStyle=xmobarColor "#F2E5BC" ""
+-- hiddenWSStyle=xmobarColor "#FABD2F" ""
 windowTitleStyle=xmobarColor "#B8BB26" ""
 layoutIndicatorStyle=xmobarColor "#CC241D" ""
 

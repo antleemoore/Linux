@@ -36,6 +36,18 @@ case $extension in
             echo -e "${RED}Error${NC} (${LIGHTBLUE}HTML Run${NC}): ${YELLOW}Firefox Needs to Already Be Running${NC}"
         fi
         ;;
+    tex)
+        echo "Starting Auto LaTeX Runner"
+        echo "Starting Initial Compile"
+        pdflatex $1 > /dev/null
+        qpdfview ${1%.tex}'.pdf' &
+        # if pidof -x "qpdfview" -o $$ >/dev/null;then
+        echo $1 | entr -ps 'clear; echo Compiling LaTeX File; echo; echo Output:;pdflatex '$1
+        killall qpdfview
+        # else
+            # echo $1 | entr -ps 'clear; echo Compiling LaTeX File; echo; echo Output:;pdflatex '$1
+        # fi
+        ;;
     *)
         echo "Unsupported Filetype"
         ;;
