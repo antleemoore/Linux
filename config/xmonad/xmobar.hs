@@ -4,14 +4,14 @@ Config {
    additionalFonts = [  "xft:Symbols Nerd Font:pixelsize=18:antialias=true:hinting=true" ],
    bgColor = "#32302F", fgColor = "#F2E5BC", position = Top, border = BottomB,
    borderColor = "black", sepChar = "%", alignSep = "}{",
-   template = "%date% %UnsafeStdinReader%}{ %KMCO% %chancerain% %dynnetwork% %multicpu% %multicoretemp%%cpufan% %gpu% %memory% %disku% %bright% %default:Master% %battery% %locks%%trayerpad%",
+   template = "%date% %UnsafeStdinReader%}{ %KMCO% %chancerain%  %dynnetwork%  %multicpu% %multicoretemp%%cpufan%  %gpu%  %memory%  %disku%  %bright%  %default:Master%  %battery%  %locks%%trayerpad%",
    lowerOnStart = True, hideOnStart = False, allDesktops = True,
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
    commands = 
         [ Run DiskU [("/", "<fn=1>\xf7c9</fn><usedp>%")] 
                     ["-L", "20", "-H", "80", "-m", "1", "-p", "3"] 3000,
-          Run Brightness [ "-t", "<fn=1>\xf0eb</fn> <percent>%", "--", "-D", "intel_backlight" ] 5,
+          Run Brightness [ "-t", "<fn=1>\xfbe6</fn> <percent>%", "--", "-D", "intel_backlight" ] 5,
           Run Volume "default" "Master" [ "--template", "<status> <volume>%", "--", "--on", "<fn=1>\xf485</fn>", "--off", "<fn=1>\xf466</fn>", "--onc", "#F2E5BC", "--offc", "#FB4934" ] 5,
           Run DynNetwork [ "--template" , "<fc=#83A598><fn=1>\xf0aa</fn></fc> <tx>KB/s <fc=#B8BB26><fn=1>\xf0ab</fn></fc> <rx>KB/s", "--Low", "1000", "--High", "5000", "--low", "#F2E5BC", "--normal", "#F2E5BC", "--high", "#F2E5BC" ] 50,
           Run MultiCpu [ "--template", "<fn=1>\xf85a</fn> <total>%" , "--Low", "50", "--High", "85", "--low", "#F2E5BC" , "--normal","#F2E5BC","--high", "#F2E5BC" ] 50,

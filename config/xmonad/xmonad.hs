@@ -58,7 +58,7 @@ myStartupHook = do
 myTerminal = "alacritty"
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 myFocusedBorderColor = "#FABD2F"
-myBorderWidth = 2
+myBorderWidth = 3
 
 -- Startup Variables
 trayer_s="trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 22 &"

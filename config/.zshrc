@@ -27,4 +27,4 @@ function cd {
 source $HOME/.zshaliases
 source $HOME/.zshprompt
 
-colorscript -r
+# colorscript -r
