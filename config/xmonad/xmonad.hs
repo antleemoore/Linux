@@ -41,6 +41,7 @@ main = do
         xmonad
             $ ewmh xfceConfig{ terminal=myTerminal, modMask=mod4Mask, keys=myKeyCombo, workspaces=myWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo, handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor, borderWidth=myBorderWidth, startupHook=myStartupHook, logHook=dynamicLogWithPP
             $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppSep=" ", ppOrder= \(ws:l:_:_) -> [ws,l] } }
+            -- $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppSep=" ", ppHidden=hiddenWSStyle, ppHiddenNoWindows=hiddenNoWindowWSStyle, ppOrder= \(ws:l:_:_) -> [ws,l] } }
 
 -- Custom Hooks
 myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts(layoutsList))
@@ -48,10 +49,10 @@ myManageHooks = composeAll [ goFullScreen, floatCalculator, moveWebcamToSide, fl
 myStartupHook = do
             spawnOnce session_s
             spawnOnce swapCapsWithESC_s
-            spawnOnce compositor_s
             spawnOnce autowallpaper_s
-            spawnOnce caffeine_s
+            spawnOnce compositor_s
             spawnOnce trayer_s
+            spawnOnce caffeine_s
             spawnOnce xmobar_s
           
 -- Default Variables
@@ -101,12 +102,13 @@ myHandleEventHookCombo=handleEventHook xfceConfig <+> docksEventHook <+> fullscr
 myKeyCombo=myKeys <+> keys defaultConfig
 
 -- XMobar Styling
-currentWorkspaceStyle=xmobarColor "#FABD2F" "" . wrap "[" "]"
-hiddenNoWindowWSStyle=xmobarColor "#F2E5BC" ""
-hiddenWSStyle=xmobarColor "#F2E5BC" ""
--- hiddenWSStyle=xmobarColor "#FABD2F" ""
+-- currentWorkspaceStyle=xmobarColor "#F2E5BC" "" . wrap "[" "]"
+-- hiddenWSStyle=xmobarColor "#F2E5BC" "" . wrap "*" ""
+hiddenNoWindowWSStyle=xmobarColor "#F2E5BC" "" 
 windowTitleStyle=xmobarColor "#B8BB26" ""
 layoutIndicatorStyle=xmobarColor "#CC241D" ""
+currentWorkspaceStyle=xmobarColor "#FABD2F" "" . wrap "[" "]"
+hiddenWSStyle=xmobarColor "#FABD2F" ""
 
 -- Keybindings
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
@@ -139,6 +141,8 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((0,xF86XK_AudioMute), spawn "amixer set Master toggle"),
     ((0,xF86XK_AudioLowerVolume), spawn "amixer -q sset Master 2%-"),
     ((0,xF86XK_AudioRaiseVolume), spawn "amixer -q sset Master 2%+"),
+    ((modm, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --auto"),
+    ((modm .|. shiftMask, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --off"),
     ((modm, xK_F7), spawn "touchpad-indicator -c") ]
   ++
   [((m .|. modm, k), windows $ f i) | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9], (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]

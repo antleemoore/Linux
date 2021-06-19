@@ -2,9 +2,9 @@
 Config { 
    font = "xft:DejaVu Sans:size=10:antialias=true:hinting=true",
    additionalFonts = [  "xft:Symbols Nerd Font:pixelsize=18:antialias=true:hinting=true", "xft:Noto Color Emoji:pixelsize=15"],
-   bgColor = "#32302F", fgColor = "#F2E5BC", position = Top, border = BottomB,
+   bgColor = "#32302F", fgColor = "#F2E5BC", position = TopW L 100, border = BottomB,
    borderColor = "black", sepChar = "%", alignSep = "}{",
-   template = "%UnsafeStdinReader% %date% %KMCO% %chancerain%}{ %dynnetwork%  %multicpu% %multicoretemp%%cpufan%  %gpu%  %memory%  %disku%  %bright%  %default:Master%  %battery%  %locks%%trayerpad%",
+   template = "%UnsafeStdinReader%  %date%  %KMCO% %chancerain%}{ %dynnetwork%  %multicpu% %multicoretemp%%cpufan%  %gpu%  %memory%  %disku%  %bright%  %default:Master%  %battery%  %locks%%trayerpad%",
    lowerOnStart = True, hideOnStart = False, allDesktops = True,
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
@@ -17,18 +17,18 @@ Config {
           Run MultiCpu [ "--template", "<fn=1>\xf85a</fn> <total>%" , "--Low", "50", "--High", "85", "--low", "#F2E5BC" , "--normal","#F2E5BC","--high", "#F2E5BC" ] 50,
           Run MultiCoreTemp [ "-t", "<max>°C ", "-L", "60", "-H", "80", "-l", "#F2E5BC", "-n", "#F2E5BC", "-h", "#F2E5BC", "--", "--mintemp", "20", "--maxtemp", "100" ] 50,
           Run Memory [ "--template", "<fn=1>\xf0c7</fn> <usedratio>%", "--Low", "20", "--High", "90", "--low", "#F2E5BC", "--normal", "#F2E5BC", "--high", "#F2E5BC" ] 50,
-          Run Battery [ "--template", "<acstatus>", "--Low", "10", "--High", "80", "--low", "#FB4934", "--normal", "#F2E5BC", "--high", "#F2E5BC", "--", "-o", "<fc=#F2E5BC><fn=1>\xf578</fn></fc> <left><fc=#F2E5BC>%</fc>", "-O", "<fc=#F2E5BC><fn=1>\xf584</fn></fc> <left>%", "-i", "<fc=#98971A><fn=1>\xf584</fn></fc> <left>%" ] 20,
+          Run Battery [ "--template", "<acstatus>", "--Low", "10", "--High", "80", "--low", "#FB4934", "--normal", "#F2E5BC", "--high", "#F2E5BC", "--", "-o", "<fc=#F2E5BC><fn=1>\xf578</fn></fc> <left><fc=#F2E5BC>%</fc>", "-O", "<fc=#F2E5BC><fn=1>\xf584</fn></fc> <left>%", "-i", "<fc=#98971A><fn=1>\xf584</fn></fc>" ] 20,
           Run Com "/home/anthony/utils/trayer-padding-icon.sh" [] "trayerpad" 20,
           Run Com "/home/anthony/utils/gpu-usage" ["<fn=1>\xf878</fn>"] "gpu" 50,
           Run Com "/home/anthony/utils/fan-speed" [] "cpufan" 50,
           Run Com "/home/anthony/utils/chance-rain" ["<fn=2>☔</fn>"] "chancerain" 36000,
-          Run Date "<fc=#83c07c><fn=2>📆</fn> %a %b %d %Y %I:%M %p</fc>" "date" 50,
+          Run Date "<fc=#83c07c><fn=2>📆</fn> %a %b %d %Y</fc> <fc=#83A598><fn=2>🕒</fn> %I:%M %p</fc>" "date" 50,
           Run UnsafeStdinReader,
           Run Locks,
           Run WeatherX "KMCO" 
                             -- [ ("clear", "\xfa98"), ("sunny", "\xfa98"), ("mostly clear", "\xe30c"), ("mostly sunny", "\xe30c"), ("partly sunny", "\xe30c"), ("fair", "\xe3bc"), ("cloudy","\xe312"), ("overcast","\xe312"), ("partly cloudy", "\xe302"), ("mostly cloudy", "\xe309"), ("considerable cloudiness", "\xe305") ]
-                            [ ("clear", "<fn=2>☀️</fn>"), ("sunny", "<fn=2>☀️</fn>"), ("mostly clear", "<fn=2>🌤️</fn>"), ("mostly sunny", "<fn=2>🌤️</fn>"), ("partly sunny", "<fn=2>⛅</fn>"), ("fair", "<fn=2>🌥️</fn>"), ("cloudy","<fn=2>☁️</fn>"), ("overcast","<fn=2>☁️</fn>"), ("partly cloudy", "<fn=2>🌤️</fn>"), ("mostly cloudy", "<fn=2>⛅</fn>"), ("considerable cloudiness", "<fn=2>🌥️</fn>") ]
-                            [ "--template", "<fn=1><skyConditionS></fn> <fc=#4682B4><tempF></fc>°F", "-L","65", "-H", "90", "--normal", "#F2E5BC", "--high", "#FB4934", "--low", "#83A598" ] 36000
+                            [ ("clear", "☀"), ("sunny", "☀"), ("mostly clear", "🌤"), ("mostly sunny", "🌤"), ("partly sunny", "⛅"), ("fair", "🌥"), ("cloudy","☁"), ("overcast","🌧"), ("partly cloudy", "🌤"), ("mostly cloudy", "⛅"), ("considerable cloudiness", "🌥") ]
+                            [ "--template", "<fn=2><skyConditionS></fn><fc=#4682B4><tempF></fc>°F", "-L","65", "-H", "90", "--normal", "#F2E5BC", "--high", "#FB4934", "--low", "#83A598" ] 36000
         ]
 }
 -- Other Templates

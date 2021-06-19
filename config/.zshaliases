@@ -39,3 +39,6 @@ alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
 alias supac="sudo pacman -S"
 alias setesc="setxkbmap -option caps:escape"
 alias cleanpac="sudo pacman -Rns $(pacman -Qtdq)"
+
+alias hdmi="xrandr --output HDMI-1-0 --auto"
+alias hdmioff="xrandr --output HDMI-1-0 --off"
