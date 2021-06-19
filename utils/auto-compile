@@ -10,28 +10,28 @@ LIGHTBLUE='\033[1;34m'
 case $extension in 
     cpp)
         echo "Starting Auto C++ Runner"
-        echo $1 | entr -ps 'clear; echo Compiling C++ File; echo; echo Output:;g++ -o '${1%.cpp}' '$1' && ./'${1%.cpp}
+        echo $1 | entr -psc 'echo Compiling C++ File; echo; echo Output:;g++ -o '${1%.cpp}' '$1' && ./'${1%.cpp}
         ;;
     c)
         echo "Starting Auto C Runner"
-        echo $1 | entr -ps 'clear; echo Compiling C File; echo; echo Output:;gcc -o '${1%.c}' '$1' && ./'${1%.c}
+        echo $1 | entr -psc 'echo Compiling C File; echo; echo Output:;gcc -o '${1%.c}' '$1' && ./'${1%.c}
         ;;
     js)
         echo "Starting Auto JavaScript Runner"
-        echo $1 | entr -ps 'clear; echo Compiling JavaScript File; echo; echo Output:;node '$1
+        echo $1 | entr -psc 'echo Compiling JavaScript File; echo; echo Output:;node '$1
         ;;
     py)
         echo "Starting Auto Python Runner"
-        echo $1 | entr -ps 'clear; echo Compiling Python File; echo; echo Output:;python '$1
+        echo $1 | entr -psc 'echo Compiling Python File; echo; echo Output:;python '$1
         ;;
     java)
         echo "Starting Auto Java Runner"
-        echo $1 | entr -ps 'clear; echo Compiling Java File; echo; echo Output:;javac '$1' && java '${1%.java}
+        echo $1 | entr -psc 'echo Compiling Java File; echo; echo Output:;javac '$1' && java '${1%.java}
         ;;
     html)
         if pidof -x "firefox" >/dev/null; then
             echo "Starting Auto HTML Runner"
-            echo $1 | entr -ps 'clear; echo Rendering HTML File; echo;firefox '$1
+            echo $1 | entr -pscr 'echo Rendering HTML File; echo;firefox --new-window '$1
         else
             echo -e "${RED}Error${NC} (${LIGHTBLUE}HTML Run${NC}): ${YELLOW}Firefox Needs to Already Be Running${NC}"
         fi
@@ -42,7 +42,7 @@ case $extension in
         pdflatex $1 > /dev/null
         qpdfview ${1%.tex}'.pdf' &
         # if pidof -x "qpdfview" -o $$ >/dev/null;then
-        echo $1 | entr -ps 'clear; echo Compiling LaTeX File; echo; echo Output:;pdflatex '$1
+        echo $1 | entr -psc 'echo Compiling LaTeX File; echo; echo Output:;pdflatex '$1
         killall qpdfview
         # else
             # echo $1 | entr -ps 'clear; echo Compiling LaTeX File; echo; echo Output:;pdflatex '$1

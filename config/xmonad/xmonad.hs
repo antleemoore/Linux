@@ -57,11 +57,11 @@ myStartupHook = do
 -- Default Variables
 myTerminal = "alacritty"
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
-myFocusedBorderColor = "#FABD2F"
-myBorderWidth = 3
+myFocusedBorderColor = "#FB4934"
+myBorderWidth = 2
 
 -- Startup Variables
-trayer_s="trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 22 &"
+trayer_s="trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
 autowallpaper_s="/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/wallpapers &"
 session_s="lxsession &"
 swapCapsWithESC_s="setxkbmap -option caps:escape &"
@@ -70,7 +70,7 @@ xmobar_s="/home/anthony/utils/xmobar-delayed &"
 caffeine_s="caffeine &"
 
 -- Spacing/Position Variables
-mySpacing = spacingRaw False (Border 5 0 5 0) True (Border 0 5 0 5) True
+mySpacing = spacingRaw False (Border 3 0 3 0) True (Border 0 3 0 3) True
 myMoveToStackHook = insertPosition End Older 
 
 -- Layout Variables
@@ -113,6 +113,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [ ((modm, xK_q), kill), ((modm .|. shiftMask, xK_q), spawn "lxlock"),
     ((modm, xK_grave), spawn "gcolor2"),
     ((modm, xK_w), spawn "firefox"),
+    ((modm .|. shiftMask, xK_w), spawn "firefox --private-window"),
     ((modm, xK_e), spawn "thunar"),
     ((modm, xK_r), sendMessage $ Toggle REFLECTX),
     ((modm .|. shiftMask, xK_t), runInTerm "" "htop"),
