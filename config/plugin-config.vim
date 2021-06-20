@@ -18,7 +18,7 @@ if executable('ag')
     let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 endif
 
-let g:coc_global_extensions = ['coc-prettier','coc-json', 'coc-pairs', 'coc-html', 'coc-python', 'coc-css', 'coc-clangd', 'coc-tsserver', 'coc-eslint', 'coc-sh', 'coc-snippets']
+let g:coc_global_extensions = ['coc-json', 'coc-pairs', 'coc-html', 'coc-python', 'coc-css', 'coc-clangd', 'coc-tsserver', 'coc-eslint', 'coc-snippets']
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ }
