@@ -52,7 +52,7 @@ myStartupHook = do
             spawnOnce autowallpaper_s
             spawnOnce compositor_s
             spawnOnce trayer_s
-            spawnOnce caffeine_s
+            -- spawnOnce caffeine_s
             spawnOnce xmobar_s
           
 -- Default Variables

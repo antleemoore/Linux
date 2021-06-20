@@ -49,8 +49,8 @@ mouse_bindings:
   - { mouse: Right, action: PasteSelection }
     
 key_bindings:
-  - { key: Space, mods: Control, mode: ~Search, action: ToggleViMode }
   - { key: X, mods: Control, mode: Search, action: SearchClear }
+  # - { key: Space, mods: Control, mode: ~Search, action: ToggleViMode }
 
   # Default Keybinds
   #- { key: Paste,                                       action: Paste          }

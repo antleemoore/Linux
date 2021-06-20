@@ -6,7 +6,7 @@ Config {
    borderColor = "black", sepChar = "%", alignSep = "}{",
 --    template = "%UnsafeStdinReader%  %date%  %KMCO% %chancerain%}{ %dynnetwork%  %multicpu% %multicoretemp%%cpufan%  %gpu%  %memory%  %disku%  %bright%  %default:Master%  %battery%  %locks%%trayerpad%",
 -- Desktop template
-   template = "%UnsafeStdinReader%  %date%  %KMCO% %chancerain%}{ %dynnetwork%  %multicpu% %multicoretemp%  %gpu%  %memory%  %disku%  %default:Master%  %trayerpad%",
+   template = "%UnsafeStdinReader%  %date%  %KMCO% %chancerain%}{ %dynnetwork%  %multicpu% %multicoretemp%  %gpu%  %memory%  %disku%  %default:Master% %trayerpad%",
    lowerOnStart = True, hideOnStart = False, allDesktops = True,
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
