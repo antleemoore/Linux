@@ -1,5 +1,5 @@
 #!/bin/bash
-foo=$(sensors | grep GPU | sed 's/.*+//g')  
+foo=$(sensors | grep Tctl: | sed 's/.*+//g')  
 var=$(nvidia-smi | grep 'MiB /' | cut -d '|' --complement -f-2,4 | sed 's/MiB/ MB/g')
 var=${var%|}
 var=$(echo ${var} | sed 's/MB//g')
@@ -10,6 +10,6 @@ echo -n " "
 echo -n $(( intOne * 100 / intTwo))
 echo -n "% "
 echo -n $foo
-echo -n " "
-echo $(sensors | grep 'Video Fan' | sed 's/ //g' | sed 's/VideoFan\://')
+# echo -n " "
+# echo $(sensors | grep 'Video Fan' | sed 's/ //g' | sed 's/VideoFan\://')
 

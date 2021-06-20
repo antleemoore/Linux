@@ -32,7 +32,7 @@ alias rewm="~/utils/reinstall-wm"
 
 alias agit="~/utils/autogit"
 alias gs="git status"
-# alias lgit="cd ~/repos/Linux && agit && cd -"
+alias lgit="cd ~/repos/Linux && agit && cd -"
 
 alias killport="~/utils/killport"
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
