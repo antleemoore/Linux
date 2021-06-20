@@ -63,7 +63,7 @@ myBorderWidth = 2
 
 -- Startup Variables
 trayer_s="trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
-autowallpaper_s="/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/wallpapers &"
+autowallpaper_s="/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/Linux/wallpapers &"
 session_s="lxsession &"
 swapCapsWithESC_s="setxkbmap -option caps:escape &"
 compositor_s="picom --vsync &"
@@ -112,7 +112,7 @@ hiddenWSStyle=xmobarColor "#FABD2F" ""
 
 -- Keybindings
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-  [ ((modm, xK_q), kill), ((modm .|. shiftMask, xK_q), spawn "lxlock"),
+  [ ((modm, xK_q), kill),-- ((modm .|. shiftMask, xK_q), spawn "lxlock"),
     ((modm, xK_grave), spawn "gcolor2"),
     ((modm, xK_w), spawn "firefox"),
     ((modm .|. shiftMask, xK_w), spawn "firefox --private-window"),
