@@ -1,4 +1,4 @@
--- Dependencies: xmobar, trayer, caffeine, alacritty, styli.sh, lxsession, picom, dmenu, mpv, screenkey, galculator, gcolor2, keybind-programs
+-- Dependencies: xmobar, trayer, caffeine, alacritty, styli.sh, lxsession, picom, dmenu, mpv, screenkey, galculator, gcolor2, keybind-programs, playerctl
 
 -- Base Imports
 import XMonad
@@ -49,8 +49,8 @@ myManageHooks = composeAll [ goFullScreen, floatCalculator, moveWebcamToSide, fl
 myStartupHook = do
             spawnOnce session_s
             spawnOnce swapCapsWithESC_s
-            spawnOnce autowallpaper_s
             spawnOnce compositor_s
+            spawnOnce autowallpaper_s
             spawnOnce trayer_s
             spawnOnce caffeine_s
             spawnOnce xmobar_s
@@ -118,12 +118,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm .|. shiftMask, xK_w), spawn "firefox --private-window"),
     ((modm, xK_e), spawn "thunar"),
     ((modm, xK_r), sendMessage $ Toggle REFLECTX),
-    ((modm .|. shiftMask, xK_t), runInTerm "" "htop"),
+    ((controlMask .|. mod1Mask, xK_t), runInTerm "" "htop"),
     ((modm, xK_y), sendMessage NextLayout), ((modm .|. shiftMask, xK_y), setLayout $ XMonad.layoutHook conf),
     ((modm, xK_u), sendMessage MirrorExpand),
     ((modm, xK_i), spawn "code"),
     ((modm, xK_o), spawn "obs"),
-    ((modm, xK_p), spawn dmenu_c),
+    ((modm, xK_p), spawn "thunderbird"),
     ((modm, xK_bracketright), nextWS), ((modm .|. shiftMask, xK_bracketright),  shiftToNext),
     ((modm, xK_bracketleft), prevWS), ((modm .|. shiftMask, xK_bracketleft),    shiftToPrev),
     ((modm, xK_a), spawn "anki"),
@@ -140,7 +140,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((0,xF86XK_MonBrightnessUp), spawn "lux -M 936 -a 5%"),
     ((0,xF86XK_AudioMute), spawn "amixer set Master toggle"),
     ((0,xF86XK_AudioLowerVolume), spawn "amixer -q sset Master 2%-"),
+    ((0,xF86XK_AudioPrev), spawn "playerctl previous"),
+    ((0,xF86XK_AudioPlay), spawn "playerctl play-pause"),
+    ((0,xF86XK_AudioNext), spawn "playerctl next"),
     ((0,xF86XK_AudioRaiseVolume), spawn "amixer -q sset Master 2%+"),
+    ((0,xF86XK_Search), spawn dmenu_c),
     ((modm, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --auto"),
     ((modm .|. shiftMask, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --off"),
     ((modm, xK_F7), spawn "touchpad-indicator -c") ]
