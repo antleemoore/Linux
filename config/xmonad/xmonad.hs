@@ -118,7 +118,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm .|. shiftMask, xK_w), spawn "firefox --private-window"),
     ((modm, xK_e), spawn "thunar"),
     ((modm, xK_r), sendMessage $ Toggle REFLECTX),
-    ((modm .|. shiftMask, xK_t), runInTerm "" "htop"),
+    ((controlMask .|. mod1Mask, xK_t), runInTerm "" "htop"),
     ((modm, xK_y), sendMessage NextLayout), ((modm .|. shiftMask, xK_y), setLayout $ XMonad.layoutHook conf),
     ((modm, xK_u), sendMessage MirrorExpand),
     ((modm, xK_i), spawn "code"),
