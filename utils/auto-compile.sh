@@ -28,27 +28,26 @@ case $extension in
         echo "Starting Auto Java Runner"
         echo $1 | entr -psc 'echo Compiling Java File; echo; echo Output:;javac '$1' && java '${1%.java}
         ;;
-    html)
-        if pidof -x "firefox" >/dev/null; then
+    html) # WIP
             echo "Starting Auto HTML Runner"
             echo $1 | entr -pscr 'echo Rendering HTML File; echo;firefox --new-window '$1
-        else
+        # else
             echo -e "${RED}Error${NC} (${LIGHTBLUE}HTML Run${NC}): ${YELLOW}Firefox Needs to Already Be Running${NC}"
-        fi
+        # fi
         ;;
-    tex)
+    tex) # WIP
         echo "Starting Auto LaTeX Runner"
         echo "Starting Initial Compile"
         pdflatex $1 > /dev/null
         qpdfview ${1%.tex}'.pdf' &
-        # if pidof -x "qpdfview" -o $$ >/dev/null;then
         echo $1 | entr -psc 'echo Compiling LaTeX File; echo; echo Output:;pdflatex '$1
         killall qpdfview
-        # else
-            # echo $1 | entr -ps 'clear; echo Compiling LaTeX File; echo; echo Output:;pdflatex '$1
-        # fi
+        ;;
+    sh)
+        echo "Starting Auto Shell Script Checker"
+        echo $1 | entr -psc 'echo Checking Shell Script; echo; echo Output:; shellcheck '$1
         ;;
     *)
-        echo "Unsupported Filetype"
+        echo "Unsupported File Type"
         ;;
 esac

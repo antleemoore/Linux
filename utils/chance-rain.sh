@@ -2,8 +2,8 @@
 # $HOME/utils/wait-for-internet
 weatherreport=$(curl wttr.in/32817)
 
-chancerain=$(echo $weatherreport | grep -o '[^ ]*%')
-today=$(echo $chancerain | perl -pe 's/.*?(\d+% \d+% \d+% \d+%).*/$1/')
+chancerain=$(echo "$weatherreport" | grep -o '[^ ]*%')
+today=$(echo "$chancerain" | perl -pe 's/.*?(\d+% \d+% \d+% \d+%).*/$1/')
 
 var1=$(echo $today | sed 's/%.*//g')
 firstchange=$(echo $today |sed 's/^[^%]% //g')

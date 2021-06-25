@@ -23,5 +23,5 @@ set showmatch
 set hlsearch
 set gdefault
 set virtualedit+=block
-set foldmethod=indent
+set foldmethod=marker
 set nofoldenable

@@ -11,6 +11,7 @@ import Graphics.X11.ExtraTypes.XF86
 import XMonad.Actions.NoBorders
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
+import XMonad.Actions.SpawnOn
 
 -- Util Imports
 import XMonad.Util.Run
@@ -34,6 +35,11 @@ import XMonad.Layout.MultiToggle
 import XMonad.Layout.Renamed
 import XMonad.Layout.Grid
 import XMonad.Layout.Spiral
+
+spawnToWorkspace :: String -> String -> X ()
+spawnToWorkspace workspace program = do
+                                      spawn program
+                                      windows $ W.greedyView workspace
 
 -- Main XMonad Start
 main = do
@@ -67,7 +73,7 @@ autowallpaper_s="/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home
 session_s="lxsession &"
 swapCapsWithESC_s="setxkbmap -option caps:escape &"
 compositor_s="picom --vsync &"
-xmobar_s="/home/anthony/utils/xmobar-delayed &"
+xmobar_s="/home/anthony/utils/xmobar-delayed.sh &"
 caffeine_s="caffeine &"
 
 -- Spacing/Position Variables
@@ -88,7 +94,7 @@ toggleReflect= mkToggle (single REFLECTX)
 -- Keybinding commands
 dmenu_c="dmenu_run -i -sb '#FABD2F' -sf '#000' -fn 'Cascadia Mono Roman'"
 webcam_c="killall mpv || mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
-restartXMonad_c="~/utils/reinstall-wm"
+restartXMonad_c="~/utils/reinstall-wm.sh"
 screenkey_c="killall screenkey || screenkey &"
 fullScreenToggle_c=[ sendMessage $ ToggleStruts, toggleScreenSpacingEnabled, toggleWindowSpacingEnabled, withFocused toggleBorder, windows W.focusDown]
 
@@ -127,7 +133,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm, xK_bracketright), nextWS), ((modm .|. shiftMask, xK_bracketright),  shiftToNext),
     ((modm, xK_bracketleft), prevWS), ((modm .|. shiftMask, xK_bracketleft),    shiftToPrev),
     ((modm, xK_a), spawn "anki"),
-    ((modm .|. shiftMask, xK_s), spawn screenkey_c),
+    ((modm, xK_s), spawnToWorkspace "9" "spotify"), ((modm .|. shiftMask, xK_s), spawn screenkey_c),
     ((modm, xK_d), sendMessage MirrorShrink), ((modm .|. shiftMask, xK_d), spawn "discord"),
     ((modm, xK_f), sequence_ fullScreenToggle_c),
     ((modm, xK_Return), spawn $ XMonad.terminal conf), ((mod1Mask, xK_Return), scratchpadSpawnActionCustom "alacritty --class scratchpad") ,
@@ -141,6 +147,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((0,xF86XK_AudioMute), spawn "amixer set Master toggle"),
     ((0,xF86XK_AudioLowerVolume), spawn "amixer -q sset Master 2%-"),
     ((0,xF86XK_AudioRaiseVolume), spawn "amixer -q sset Master 2%+"),
+    ((0,xF86XK_AudioPrev), spawn "playerctl previous"),
+    ((0,xF86XK_AudioPlay), spawn "playerctl play-pause"),
+    ((0,xF86XK_AudioNext), spawn "playerctl next"),
     ((modm, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --auto"),
     ((modm .|. shiftMask, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --off"),
     ((modm, xK_F7), spawn "touchpad-indicator -c") ]

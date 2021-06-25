@@ -15,7 +15,7 @@ alias cdr="cd ~/repos"
 alias cdlr="cd ~/repos/Linux"
 
 alias codehere="code . && exit"
-alias autoc='~/utils/auto-compile'
+alias autoc='~/utils/auto-compile.sh'
 alias v="nvim"
 alias vim="nvim"
 alias vimr="$BROWSER www.vimregex.com"
@@ -28,13 +28,13 @@ alias xmobc="vim ~/repos/Linux/config/xmonad/xmobar.hs"
 alias zshs="source ~/.zshrc"
 alias nvimc="vim ~/.config/nvim/init.vim"
 alias redoom="~/.emacs.d/bin/doom sync"
-alias rewm="~/utils/reinstall-wm"
+alias rewm="~/utils/reinstall-wm.sh"
 
-alias agit="~/utils/autogit"
+alias agit="~/utils/autogit.sh"
 alias gs="git status"
 alias lgit="cd ~/repos/Linux && agit && cd -"
 
-alias killport="~/utils/killport"
+alias killport="~/utils/killport.sh"
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
 alias supac="sudo pacman -S"
 alias setesc="setxkbmap -option caps:escape"
