@@ -10,9 +10,9 @@ echo -n " "
 echo -n $(( intOne * 100 / intTwo))
 echo -n "% "
 echo -n $foo
-echo -n " "
-echo -n $(sensors | grep 'fan1' | sed 's/ //g' | sed 's/fan1\://' | sed 's/\ *(.*//')
-echo -n " "
-echo -n $(sensors | grep 'fan2' | sed 's/ //g' | sed 's/fan2\://' | sed 's/\ *(.*//')
-echo -n " "
-echo -n $(sensors | grep 'fan3' | sed 's/ //g' | sed 's/fan3\://' | sed 's/\ *(.*//')
+# echo -n " "
+# echo -n $(sensors | grep 'fan1' | sed 's/ //g' | sed 's/fan1\://' | sed 's/\ *(.*//')
+# echo -n " "
+# echo -n $(sensors | grep 'fan2' | sed 's/ //g' | sed 's/fan2\://' | sed 's/\ *(.*//')
+# echo -n " "
+# echo -n $(sensors | grep 'fan3' | sed 's/ //g' | sed 's/fan3\://' | sed 's/\ *(.*//')
