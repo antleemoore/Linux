@@ -155,12 +155,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((0,xF86XK_AudioPlay), spawn "playerctl play-pause"),
     ((0,xF86XK_AudioNext), spawn "playerctl next"),
     ((modm, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --auto"),
-    ((modm .|. shiftMask, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --off"),
+    -- ((modm .|. shiftMask, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --off"),
     ((modm, xK_F7), spawn "touchpad-indicator -c") ]
   ++
-  [ ((m .|. modm, k), windows (f i))
-      | (i, k) <- zip (workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
-      , (f, m) <- [ (viewOnScreen 0, 0)
+  [ ((m .|. 0, k), windows (f i))
+      | (i, k) <- zip (workspaces conf) ([xK_1 .. xK_9])
+      , (f, m) <- [ (viewOnScreen 0, modm)
                   , (viewOnScreen 1, controlMask)
                   , (W.greedyView, controlMask .|. shiftMask) ]
     ]

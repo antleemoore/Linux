@@ -17,33 +17,54 @@ function git_branch_name()
   fi
 }
 
-setopt PROMPT_SUBST
-THEME_PROMPT_PREFIX=${THEME_PROMPT_PREFIX:-''}
-# THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'λ'}
-THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'🔓'}
-THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'🔏'}
-# THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'ᐅ'}
-THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
-zle-keymap-select() {
-  if [ "${KEYMAP}" = 'vicmd' ]; then
-    THEME_VI_MODE_SYMBOL="${THEME_VI_CMD_MODE_SYMBOL}"
-  else
-    THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+# setopt PROMPT_SUBST
+# THEME_PROMPT_PREFIX=${THEME_PROMPT_PREFIX:-''}
+# # THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'λ'}
+# THEME_VI_INS_MODE_SYMBOL=${THEME_VI_INS_MODE_SYMBOL:-'🔓'}
+# THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'🔏'}
+# # THEME_VI_CMD_MODE_SYMBOL=${THEME_VI_CMD_MODE_SYMBOL:-'ᐅ'}
+# THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+# zle-keymap-select() {
+#   if [ "${KEYMAP}" = 'vicmd' ]; then
+#     THEME_VI_MODE_SYMBOL="${THEME_VI_CMD_MODE_SYMBOL}"
+#   else
+#     THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+#   fi
+#   zle reset-prompt
+# }
+# zle -N zle-keymap-select
+# zle-line-finish() {
+#   THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+# }
+# zle -N zle-line-finish
+# TRAPINT() {
+#   THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+#   return $(( 128 + $1 ))
+# }
+
+# Change cursor shape for different vi modes.
+function zle-keymap-select {
+  if [[ ${KEYMAP} == vicmd ]] ||
+     [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+  elif [[ ${KEYMAP} == main ]] ||
+       [[ ${KEYMAP} == viins ]] ||
+       [[ ${KEYMAP} = '' ]] ||
+       [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
   fi
-  zle reset-prompt
 }
 zle -N zle-keymap-select
-zle-line-finish() {
-  THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
+zle-line-init() {
+    zle -K viins # initiate `vi insert` as keymap (can be removed if `bindkey -V` has been set elsewhere)
+    echo -ne "\e[5 q"
 }
-zle -N zle-line-finish
-TRAPINT() {
-  THEME_VI_MODE_SYMBOL="${THEME_VI_INS_MODE_SYMBOL}"
-  return $(( 128 + $1 ))
-}
+zle -N zle-line-init
+echo -ne '\e[5 q' # Use beam shape cursor on startup.
+preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 NEWLINE=$'\n'
-PROMPT='$THEME_PROMPT_PREFIX%B%F{#CC241D}[%f%b %B%F{#458588}%n%f%b%B%F{#D79921}@%f%b%B%F{#689D6A}%m%f%b %B%F{#B16286}%~%f%b %B%F{#CC241D}]%f%b $(git_branch_name)${NEWLINE}%(?.$THEME_VI_MODE_SYMBOL.$THEME_VI_MODE_SYMBOL) ➤ '
+PROMPT='%B%F{#CC241D}[%f%b %B%F{#458588}%n%f%b%B%F{#D79921}@%f%b%B%F{#689D6A}%m%f%b %B%F{#B16286}%~%f%b %B%F{#CC241D}]%f%b $(git_branch_name)${NEWLINE}$ '
 function precmd() {
     # Print a newline before the prompt, unless it's the
     # first prompt in the process.

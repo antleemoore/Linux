@@ -40,7 +40,7 @@ colors:
     cyan:    '#83c07c'
     white:   '#fff1c6'
 
-background_opacity: .95
+background_opacity: .90
 
 mouse:
   hide_when_typing: true
