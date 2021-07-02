@@ -12,6 +12,7 @@ import XMonad.Actions.NoBorders
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
 import XMonad.Actions.SpawnOn
+import XMonad.Actions.OnScreen
 
 -- Util Imports
 import XMonad.Util.Run
@@ -60,6 +61,7 @@ myStartupHook = do
             spawnOnce trayer_s
             -- spawnOnce caffeine_s
             spawnOnce xmobar_s
+            spawnOnce multimonitor_s
           
 -- Default Variables
 myTerminal = "alacritty"
@@ -68,7 +70,8 @@ myFocusedBorderColor = "#FB4934"
 myBorderWidth = 1
 
 -- Startup Variables
-trayer_s="trayer --edge top --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
+multimonitor_s="xrandr --output 'DP-0' --auto --output 'HDMI-0' --auto --left-of 'DP-0'"
+trayer_s="trayer --edge top --monitor primary --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
 autowallpaper_s="/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/Linux/wallpapers &"
 session_s="lxsession &"
 swapCapsWithESC_s="setxkbmap -option caps:escape &"
@@ -92,7 +95,8 @@ layoutsList = myMainStackLayout ||| myGridLayout ||| mySpiralLayout ||| myMirror
 toggleReflect= mkToggle (single REFLECTX)
 
 -- Keybinding commands
-dmenu_c="dmenu_run -i -sb '#FABD2F' -sf '#000' -fn 'Cascadia Mono Roman'"
+-- dmenu_c="dmenu_run -i -sb '#FABD2F' -sf '#000' -fn 'Cascadia Mono Roman'"
+dmenu_c="dmenu_run"
 webcam_c="killall mpv || mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
 restartXMonad_c="~/utils/reinstall-wm.sh"
 screenkey_c="killall screenkey || screenkey &"
@@ -121,7 +125,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [ ((modm, xK_q), kill),-- ((modm .|. shiftMask, xK_q), spawn "lxlock"),
     ((modm, xK_grave), spawn "gcolor2"),
     ((modm, xK_w), spawn "firefox"),
-    ((modm .|. shiftMask, xK_w), spawn "firefox --private-window"),
+    -- ((modm .|. shiftMask, xK_w), spawn "firefox --private-window"),
     ((modm, xK_e), spawn "thunar"),
     ((modm, xK_r), sendMessage $ Toggle REFLECTX),
     ((controlMask .|. mod1Mask, xK_t), runInTerm "" "htop"),
@@ -154,4 +158,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm .|. shiftMask, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --off"),
     ((modm, xK_F7), spawn "touchpad-indicator -c") ]
   ++
-  [((m .|. modm, k), windows $ f i) | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9], (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
+  [ ((m .|. modm, k), windows (f i))
+      | (i, k) <- zip (workspaces conf) ([xK_1 .. xK_9] ++ [xK_0])
+      , (f, m) <- [ (viewOnScreen 0, 0)
+                  , (viewOnScreen 1, controlMask)
+                  , (W.greedyView, controlMask .|. shiftMask) ]
+    ]
