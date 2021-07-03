@@ -47,7 +47,7 @@ main = do
         h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
         xmonad
             $ ewmh xfceConfig{ terminal=myTerminal, modMask=mod4Mask, keys=myKeyCombo, workspaces=myWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo, handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor, borderWidth=myBorderWidth, startupHook=myStartupHook, logHook=dynamicLogWithPP
-            $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppSep=" ", ppOrder= \(ws:l:_:_) -> [ws,l] } }
+            $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppVisible=visibleWorkspaceStyle, ppSep=" ", ppOrder= \(ws:l:_:_) -> [ws,l] } }
             -- $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppSep=" ", ppHidden=hiddenWSStyle, ppHiddenNoWindows=hiddenNoWindowWSStyle, ppOrder= \(ws:l:_:_) -> [ws,l] } }
 
 -- Custom Hooks
@@ -119,6 +119,7 @@ windowTitleStyle=xmobarColor "#B8BB26" ""
 layoutIndicatorStyle=xmobarColor "#CC241D" ""
 currentWorkspaceStyle=xmobarColor "#FABD2F" "" . wrap "[" "]"
 hiddenWSStyle=xmobarColor "#FABD2F" ""
+visibleWorkspaceStyle=xmobarColor "#e3869b" "" . wrap "(" ")"
 
 -- Keybindings
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
