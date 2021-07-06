@@ -67,10 +67,10 @@ myStartupHook = do
 myTerminal = "alacritty"
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
 myFocusedBorderColor = "#FB4934"
-myBorderWidth = 1
+myBorderWidth = 3
 
 -- Startup Variables
-multimonitor_s="xrandr --output 'DP-0' --auto --output 'HDMI-0' --auto --left-of 'DP-0'"
+multimonitor_s="~/.screenlayout/threemonitorsetup.sh"
 trayer_s="trayer --edge top --monitor primary --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
 autowallpaper_s="/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/Linux/wallpapers &"
 session_s="lxsession &"
@@ -161,5 +161,5 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   ++
   [ ((m .|. 0, k), windows (f i))
       | (i, k) <- zip (workspaces conf) ([xK_1 .. xK_9])
-      , (f, m) <- [ (viewOnScreen 0, modm), (viewOnScreen 1, mod1Mask), (W.greedyView, mod1Mask .|. shiftMask) ]
+      , (f, m) <- [ (viewOnScreen 0, modm), (viewOnScreen 1, mod1Mask), (viewOnScreen 2, controlMask .|. mod1Mask), (W.greedyView, mod1Mask .|. shiftMask) ]
     ]
