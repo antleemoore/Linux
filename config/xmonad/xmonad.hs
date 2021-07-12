@@ -48,7 +48,6 @@ main = do
         xmonad
             $ ewmh xfceConfig{ terminal=myTerminal, modMask=mod4Mask, keys=myKeyCombo, workspaces=myWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo, handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor, borderWidth=myBorderWidth, startupHook=myStartupHook, logHook=dynamicLogWithPP
             $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppVisible=visibleWorkspaceStyle, ppSep=" ", ppOrder= \(ws:l:_:_) -> [ws,l] } }
-            -- $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppSep=" ", ppHidden=hiddenWSStyle, ppHiddenNoWindows=hiddenNoWindowWSStyle, ppOrder= \(ws:l:_:_) -> [ws,l] } }
 
 -- Custom Hooks
 myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts(layoutsList))
@@ -59,7 +58,6 @@ myStartupHook = do
             spawnOnce autowallpaper_s
             spawnOnce compositor_s
             spawnOnce trayer_s
-            -- spawnOnce caffeine_s
             spawnOnce xmobar_s
             spawnOnce multimonitor_s
           
@@ -90,12 +88,12 @@ myMainStackLayout = renamed [Replace "Default"] $ mySpacing $ myVertSpacing
 myxfceLayout = renamed [CutWordsLeft 1] $ mySpacing $ layoutHook xfceConfig
 myGridLayout = renamed [Replace "Grid"] $ mySpacing $ Grid
 mySpiralLayout = renamed[Replace "Spiral"] $ mySpacing $ spiral (6/7)
+
 -- Layout List
 layoutsList = myMainStackLayout ||| myGridLayout ||| mySpiralLayout ||| myMirrorThreeCol ||| myxfceLayout
 toggleReflect= mkToggle (single REFLECTX)
 
 -- Keybinding commands
--- dmenu_c="dmenu_run -i -sb '#FABD2F' -sf '#000' -fn 'Cascadia Mono Roman'"
 dmenu_c="dmenu_run"
 webcam_c="killall mpv || mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
 restartXMonad_c="~/utils/reinstall-wm.sh"
@@ -112,8 +110,6 @@ myHandleEventHookCombo=handleEventHook xfceConfig <+> docksEventHook <+> fullscr
 myKeyCombo=myKeys <+> keys defaultConfig
 
 -- XMobar Styling
--- currentWorkspaceStyle=xmobarColor "#F2E5BC" "" . wrap "[" "]"
--- hiddenWSStyle=xmobarColor "#F2E5BC" "" . wrap "*" ""
 hiddenNoWindowWSStyle=xmobarColor "#F2E5BC" "" 
 windowTitleStyle=xmobarColor "#B8BB26" ""
 layoutIndicatorStyle=xmobarColor "#CC241D" ""
@@ -126,7 +122,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [ ((modm, xK_q), kill),-- ((modm .|. shiftMask, xK_q), spawn "lxlock"),
     ((modm, xK_grave), spawn "gcolor2"),
     ((modm, xK_w), spawn "firefox"),
-    -- ((modm .|. shiftMask, xK_w), spawn "firefox --private-window"),
     ((modm, xK_e), spawn "thunar"),
     ((modm, xK_r), sendMessage $ Toggle REFLECTX),
     ((controlMask .|. mod1Mask, xK_t), runInTerm "" "htop"),
@@ -156,7 +151,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((0,xF86XK_AudioPlay), spawn "playerctl play-pause"),
     ((0,xF86XK_AudioNext), spawn "playerctl next"),
     ((modm, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --auto"),
-    -- ((modm .|. shiftMask, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --off"),
     ((modm, xK_F7), spawn "touchpad-indicator -c") ]
   ++
   [ ((m .|. 0, k), windows (f i))
