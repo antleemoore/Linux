@@ -39,7 +39,7 @@ alias killport="~/utils/killport.sh"
 alias c="unset NEW_LINE_BEFORE_PROMPT && clear"
 alias clear="unset NEW_LINE_BEFORE_PROMPT && clear"
 alias p="sudo pacman -S"
-alias pp="sudo pacman -Ss"
+alias pp="pacman -Ss"
 alias setesc="setxkbmap -option caps:escape"
 alias cleanpac="sudo pacman -Rns $(pacman -Qtdq)"
 

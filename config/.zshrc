@@ -26,5 +26,6 @@ function cd {
 
 source $HOME/.zshaliases
 source $HOME/.zshprompt
+source $HOME/.sfdxalias
 
 neofetch
