@@ -23,3 +23,4 @@ filetype plugin on
 
 source $HOME/.config/nvim/plugin-config.vim
 syntax on
+au BufReadPost *.cls set syntax=java

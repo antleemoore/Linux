@@ -46,7 +46,7 @@ spawnToWorkspace workspace program = do
 main = do
         h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
         xmonad
-            $ ewmh xfceConfig{ terminal=myTerminal, modMask=mod4Mask, keys=myKeyCombo, workspaces=myWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo, handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor, borderWidth=myBorderWidth, startupHook=myStartupHook, logHook=dynamicLogWithPP
+            $ ewmh xfceConfig{ terminal=myTerminal, modMask=mod4Mask, keys=myKeyCombo, workspaces=myClickableWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo, handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor, borderWidth=myBorderWidth, startupHook=myStartupHook, logHook=dynamicLogWithPP
             $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppVisible=visibleWorkspaceStyle, ppSep=" ", ppOrder= \(ws:l:_:_) -> [ws,l] } }
 
 -- Custom Hooks
@@ -64,6 +64,16 @@ myStartupHook = do
 -- Default Variables
 myTerminal = "alacritty"
 myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
+xmobarEscape = concatMap doubleLts
+  where doubleLts '<' = "<<"
+        doubleLts x    = [x]
+myClickableWorkspaces :: [String]
+myClickableWorkspaces = clickable . (map xmobarEscape) $ myWorkspaces
+  where                                                                       
+         clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
+                             (i,ws) <- zip [1..9] l,                                        
+                            let n = i ]
+
 myFocusedBorderColor = "#FB4934"
 myBorderWidth = 3
 
