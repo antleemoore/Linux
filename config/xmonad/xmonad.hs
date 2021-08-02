@@ -143,7 +143,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm, xK_bracketright), nextWS), ((modm .|. shiftMask, xK_bracketright),  shiftToNext),
     ((modm, xK_bracketleft), prevWS), ((modm .|. shiftMask, xK_bracketleft),    shiftToPrev),
     ((modm, xK_a), spawn "anki"),
-    ((modm, xK_s), spawnToWorkspace "9" "spotify"), ((modm .|. shiftMask, xK_s), spawn screenkey_c),
+    ((modm, xK_s), spawn "xfce4-screenshooter -r"), ((modm .|. shiftMask, xK_s), spawn screenkey_c),
     ((modm, xK_d), sendMessage MirrorShrink), ((modm .|. shiftMask, xK_d), spawn "discord"),
     ((modm, xK_f), sequence_ fullScreenToggle_c),
     ((modm, xK_Return), spawn $ XMonad.terminal conf), ((mod1Mask, xK_Return), scratchpadSpawnActionCustom "alacritty --class scratchpad") ,

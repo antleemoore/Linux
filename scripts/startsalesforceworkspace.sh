@@ -1,5 +1,5 @@
 #!/bin/sh
-code &
-google-chrome-stable &
-teams &
+code &&
+google-chrome-stable &&
+teams &&
 exit
