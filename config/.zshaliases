@@ -45,3 +45,4 @@ alias cleanpac="sudo pacman -Rns $(pacman -Qtdq)"
 
 alias hdmi="xrandr --output HDMI-1-0 --auto"
 alias hdmioff="xrandr --output HDMI-1-0 --off"
+alias monfix="$HOME/scripts/threemonitorsetup.sh && exit"

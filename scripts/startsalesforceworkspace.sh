@@ -1,5 +1,5 @@
 #!/bin/sh
-code &&
-google-chrome-stable &&
-teams &&
-exit
+code &
+google-chrome-stable &
+teams &
+thunderbird &

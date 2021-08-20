@@ -6,6 +6,7 @@ import XMonad.Config.Xfce
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 import Graphics.X11.ExtraTypes.XF86
+import XMonad.ManageHook
 
 -- Action Imports
 import XMonad.Actions.NoBorders
@@ -13,6 +14,7 @@ import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.OnScreen
+import XMonad.Actions.FindEmptyWorkspace
 
 -- Util Imports
 import XMonad.Util.Run
@@ -41,6 +43,14 @@ spawnToWorkspace :: String -> String -> X ()
 spawnToWorkspace workspace program = do
                                       spawn program
                                       windows $ W.greedyView workspace
+openSilent :: WorkspaceId -> ManageHook
+openSilent tows = do
+   fromws <- liftX $ return . W.currentTag . windowset =<< get -- get the current ws tag
+   wid    <- ask                                             -- get opened windowId
+   doF $ W.view fromws . W.insertUp wid . W.view tows
+--       |               |                |- move focus to "to" workspace
+--       |               |- insert window
+--       |- move focus back to "from" workspace
 
 -- Main XMonad Start
 main = do
@@ -51,7 +61,7 @@ main = do
 
 -- Custom Hooks
 myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts(layoutsList))
-myManageHooks = composeAll [ goFullScreen, floatCalculator, moveWebcamToSide, floatColorPicker ]
+myManageHooks = composeAll [ goFullScreen, floatCalculator, moveWebcamToSide, floatColorPicker, teamsMonitor, chromeMonitor ]
 myStartupHook = do
             spawnOnce session_s
             spawnOnce swapCapsWithESC_s
@@ -73,14 +83,13 @@ myClickableWorkspaces = clickable . (map xmobarEscape) $ myWorkspaces
          clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
                              (i,ws) <- zip [1..9] l,                                        
                             let n = i ]
-
 myFocusedBorderColor = "#FB4934"
 myBorderWidth = 3
 
 -- Startup Variables
 multimonitor_s="~/.screenlayout/threemonitorsetup.sh"
 trayer_s="trayer --edge top --monitor primary --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
-autowallpaper_s="/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/Linux/wallpapers &"
+autowallpaper_s="/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/Linux/wallpapers && nitrogen --restore &"
 session_s="lxsession &"
 swapCapsWithESC_s="setxkbmap -option caps:escape &"
 compositor_s="picom --vsync &"
@@ -105,7 +114,7 @@ toggleReflect= mkToggle (single REFLECTX)
 
 -- Keybinding commands
 dmenu_c="dmenu_run"
-webcam_c="killall mpv || mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
+webcam_c="mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
 restartXMonad_c="~/utils/reinstall-wm.sh"
 screenkey_c="killall screenkey || screenkey &"
 fullScreenToggle_c=[ sendMessage $ ToggleStruts, toggleScreenSpacingEnabled, toggleWindowSpacingEnabled, withFocused toggleBorder, windows W.focusDown]
@@ -118,6 +127,8 @@ floatColorPicker=appName =? "gcolor2" -->doCenterFloat
 myManageHookCombo=myManageHooks <+> manageDocks <+> scratchpadManageHookDefault <+> manageHook xfceConfig
 myHandleEventHookCombo=handleEventHook xfceConfig <+> docksEventHook <+> fullscreenEventHook
 myKeyCombo=myKeys <+> keys defaultConfig
+teamsMonitor=className =? "Microsoft Teams - Preview" --> openSilent "3"
+chromeMonitor=className =? "google-chrome"--> openSilent "2"
 
 -- XMobar Styling
 hiddenNoWindowWSStyle=xmobarColor "#F2E5BC" "" 
@@ -147,9 +158,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm, xK_d), sendMessage MirrorShrink), ((modm .|. shiftMask, xK_d), spawn "discord"),
     ((modm, xK_f), sequence_ fullScreenToggle_c),
     ((modm, xK_Return), spawn $ XMonad.terminal conf), ((mod1Mask, xK_Return), scratchpadSpawnActionCustom "alacritty --class scratchpad") ,
-    ((modm, xK_c), spawn webcam_c), ((modm .|. shiftMask, xK_c), spawn restartXMonad_c),
+    ((modm, xK_c), spawn webcam_c), ((modm .|. shiftMask, xK_c), spawn "killall mpv"),
     ((modm, xK_v), windows copyToAll), ((modm .|. shiftMask, xK_v),  killAllOtherCopies), ((controlMask .|. mod1Mask, xK_v), spawn "xfce4-popup-clipman"),
     ((modm, xK_b), withFocused toggleBorder),
+    ((modm, xK_m), sendToEmptyWorkspace), ((modm .|. shiftMask, xK_m), tagToEmptyWorkspace),
+    ((modm, xK_n), viewEmptyWorkspace),
     ((modm, xK_space), windows W.swapMaster),
     ((modm, xK_KP_Enter), spawn "galculator"),
     ((0,xF86XK_MonBrightnessDown), spawn "lux -m 1 -s 5%"),
