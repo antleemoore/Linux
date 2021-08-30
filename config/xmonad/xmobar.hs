@@ -20,7 +20,7 @@ Config {
           Run Com "/home/anthony/utils/trayer-padding-icon.sh" [] "trayerpad" 20,
           Run Com "/home/anthony/utils/gpu-usage.sh" ["<fn=1>\xf878</fn>"] "gpu" 60,
           Run Com "/home/anthony/utils/chance-rain.sh" ["<fn=2>☔</fn>"] "chancerain" 36000,
-          Run Date "<action=`calcurse-caldav && alacritty -e calcurse && calcurse-caldav`><fc=#83c07c><fn=2>📆</fn> %a %b %d %Y</fc></action> <fc=#83A598><fn=2>🕒</fn> %I:%M:%S %p</fc>" "date" 10,
+          Run Date "<action=`alacritty -e calcurse`><fc=#83c07c><fn=2>📆</fn> %a %b %d %Y</fc></action> <fc=#83A598><fn=2>🕒</fn> %I:%M:%S %p</fc>" "date" 10,
           Run UnsafeStdinReader,
           Run Locks,
           Run WeatherX "KMCO" 

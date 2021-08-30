@@ -1,15 +1,18 @@
+dpi:
+  x: 96.0
+  y: 96.0
 font:
   normal:
-    family: 'Cascadia Code'
-    style: Regular
+    family: 'Source Code Pro'
+    style: Normal
   bold:
-    family: 'Cascadia Code'
+    family: 'Source Code Pro'
     style: Bold
   italic:
-    family: 'Cascadia Code'
+    family: 'Source Code Pro'
     style: Italic
   bold_italic:
-    family: 'Cascadia Code'
+    family: 'Source Code Pro'
     style: Bold Italic
   size: 12.0
 

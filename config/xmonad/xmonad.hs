@@ -20,6 +20,7 @@ import XMonad.Actions.FindEmptyWorkspace
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
 import XMonad.Util.Scratchpad
+import XMonad.Util.EZConfig
 
 -- Hook Imports
 import XMonad.Hooks.DynamicLog
@@ -48,16 +49,15 @@ spawnToWorkspace workspace program = do
 main = do
         h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
         xmonad
-            $ ewmh xfceConfig{ terminal=myTerminal, modMask=mod4Mask, keys=myKeyCombo, mouseBindings=myMouseBindings, workspaces=myClickableWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo, handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor, borderWidth=myBorderWidth, startupHook=myStartupHook, logHook=dynamicLogWithPP
+            $ ewmh xfceConfig{ terminal=myTerminal, modMask=mod4Mask, keys=myKeyCombo, workspaces=myClickableWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo, handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor, borderWidth=myBorderWidth, startupHook=myStartupHook, logHook=dynamicLogWithPP
             $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppVisible=visibleWorkspaceStyle, ppSep=" ", ppOrder= \(ws:l:_:_) -> [ws,l] } }
-
 -- Custom Hooks
 myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts(layoutsList))
 myManageHooks = composeAll [ goFullScreen, floatCalculator, moveWebcamToSide, floatColorPicker, teamsMonitor, chromeMonitor, floatSu ]
 myStartupHook = do
             spawnOnce session_s
             spawnOnce swapCapsWithESC_s
-            spawnOnce autowallpaper_s
+            -- spawnOnce autowallpaper_s
             spawnOnce compositor_s
             spawnOnce trayer_s
             spawnOnce xmobar_s
@@ -76,12 +76,12 @@ myClickableWorkspaces = clickable . (map xmobarEscape) $ myWorkspaces
                              (i,ws) <- zip [1..9] l,                                        
                             let n = i ]
 myFocusedBorderColor = "#FB4934"
-myBorderWidth = 3
+myBorderWidth = 1
 
 -- Startup Variables
-multimonitor_s="~/.screenlayout/threemonitorsetup.sh"
+multimonitor_s="/home/anthony/bin/threemon &"
 trayer_s="trayer --edge top --monitor primary --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
-autowallpaper_s="/home/anthony/scripts/auto-wallpaper/styli.sh --directory /home/anthony/repos/Linux/wallpapers && nitrogen --restore &"
+autowallpaper_s="nitrogen --restore &"
 session_s="xfce4-session &"
 swapCapsWithESC_s="setxkbmap -option caps:escape &"
 compositor_s="picom --vsync &"
@@ -105,7 +105,7 @@ layoutsList = myMainStackLayout ||| myGridLayout ||| mySpiralLayout ||| myMirror
 toggleReflect= mkToggle (single REFLECTX)
 
 -- Keybinding commands
-dmenu_c="dmenu_run"
+dmenu_c="dmenu_run -p 'Applications'"
 webcam_c="mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
 restartXMonad_c="~/utils/reinstall-wm.sh"
 screenkey_c="killall screenkey || screenkey &"
@@ -143,7 +143,7 @@ openSilent tows = do
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
   [ ((modm, xK_q), kill), ((modm .|. shiftMask, xK_q), spawn "xfce4-session-logout"),
     ((modm, xK_grave), spawn "gcolor2"),
-    ((modm, xK_w), spawn "firefox"),
+    ((modm, xK_w), spawn "firefox"), ((mod1Mask, xK_w), spawn "~/scripts/bookmarksdmenu.sh"),
     ((modm, xK_e), spawn "thunar"),
     ((modm, xK_r), sendMessage $ Toggle REFLECTX),
     ((controlMask .|. mod1Mask, xK_t), runInTerm "" "htop"),
@@ -159,6 +159,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((modm, xK_d), sendMessage MirrorShrink), ((modm .|. shiftMask, xK_d), spawn "discord"),
     ((modm, xK_f), sequence_ fullScreenToggle_c),
     ((modm, xK_Return), spawn $ XMonad.terminal conf), ((mod1Mask, xK_Return), scratchpadSpawnActionCustom "alacritty --class scratchpad") ,
+    ((modm, xK_x), spawn "~/scripts/bootintowindows.sh"),
     ((modm, xK_c), spawn webcam_c), ((modm .|. shiftMask, xK_c), spawn "killall mpv"),
     ((modm, xK_v), windows copyToAll), ((modm .|. shiftMask, xK_v),  killAllOtherCopies), ((controlMask .|. mod1Mask, xK_v), spawn "xfce4-popup-clipman"),
     ((modm, xK_b), withFocused toggleBorder),
@@ -175,6 +176,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     ((0,xF86XK_AudioPlay), spawn "playerctl play-pause"),
     ((0,xF86XK_AudioNext), spawn "playerctl next"),
     ((0,xK_Menu), spawn "xdotool click 3"),
+    ((0,xK_Pause), spawn "xfce4-session-logout -s"),
     ((modm, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --auto"),
     ((modm, xK_F7), spawn "touchpad-indicator -c") ]
   ++
@@ -183,7 +185,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
       , (f, m) <- [ (viewOnScreen 0, modm), (viewOnScreen 1, mod1Mask), (viewOnScreen 2, controlMask .|. mod1Mask), (W.greedyView, mod1Mask .|. shiftMask) ]
     ]
 myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
-    [((modMask, button4), (\w -> focus w >> windows W.focusUp))
+    [
+    ((modMask, button1), (\w -> focus w >> mouseMoveWindow w))
+    , ((modMask, button3), (\w -> focus w >> windows W.swapMaster))
+    , ((modMask, button2), (\w -> focus w >> mouseResizeWindow w))
+    , ((modMask, button4), (\w -> focus w >> windows W.focusUp))
     , ((modMask, button5), (\w -> focus w >> windows W.focusDown))
     , ((mod1Mask, button4), (\w -> focus w >> windows W.swapUp))
     , ((mod1Mask, button5), (\w -> focus w >> windows W.swapDown))

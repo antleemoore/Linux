@@ -24,7 +24,5 @@ nnoremap <leader>D :noh<cr>:bd<cr>
 nnoremap <leader>W :noh<cr>:bw<cr>
 noremap j gj
 noremap k gk
-noremap zo 0o/*{{{*/<ESC>
-noremap zO 0O/*{{{*/<ESC>
-noremap zp 0o/*}}}*/<ESC>
-noremap zP 0O/*}}}*/<ESC>
+noremap zp 0o/*{{{*/<ESC>
+noremap zP 0o/*}}}*/<ESC>

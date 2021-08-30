@@ -21,6 +21,7 @@ alias v="nvim"
 alias vim="nvim"
 alias vimr="$BROWSER www.vimregex.com"
 alias pdf="qpdfview"
+alias svim="sudo nvim"
 
 alias zshc="vim ~/.zshrc"
 alias vimc="vim ~/.vimrc"
