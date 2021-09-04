@@ -1,196 +1,267 @@
 -- Dependencies: xmobar, trayer, caffeine, alacritty, styli.sh, lxsession, picom, dmenu, mpv, screenkey, galculator, gcolor2, keybind-programs
 
 -- Base Imports
-import XMonad
-import XMonad.Config.Xfce
-import qualified Data.Map as M
-import qualified XMonad.StackSet as W
-import Graphics.X11.ExtraTypes.XF86
-import XMonad.ManageHook
 
+import qualified Data.Map as M
+import Graphics.X11.ExtraTypes.XF86
+import XMonad
 -- Action Imports
-import XMonad.Actions.NoBorders
+
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.CycleWS
-import XMonad.Actions.SpawnOn
-import XMonad.Actions.OnScreen
 import XMonad.Actions.FindEmptyWorkspace
-
+import XMonad.Actions.NoBorders
+import XMonad.Actions.OnScreen
+import XMonad.Actions.SpawnOn
+import XMonad.Config.Xfce
 -- Util Imports
-import XMonad.Util.Run
-import XMonad.Util.SpawnOnce
-import XMonad.Util.Scratchpad
-import XMonad.Util.EZConfig
 
 -- Hook Imports
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
-import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.InsertPosition
-
+import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 -- Layout Imports
-import XMonad.Layout.Spacing
-import XMonad.Layout.ResizableTile
-import XMonad.Layout.LayoutHints
-import XMonad.Layout.ThreeColumns
-import XMonad.Layout.Reflect
-import XMonad.Layout.MultiToggle
-import XMonad.Layout.Renamed
+
 import XMonad.Layout.Grid
+import XMonad.Layout.LayoutHints
+import XMonad.Layout.MultiToggle
+import XMonad.Layout.Reflect
+import XMonad.Layout.Renamed
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.Spacing
 import XMonad.Layout.Spiral
+import XMonad.Layout.ThreeColumns
+import XMonad.ManageHook
+import qualified XMonad.StackSet as W
+import XMonad.Util.EZConfig
+import XMonad.Util.Run
+import XMonad.Util.Scratchpad
+import XMonad.Util.SpawnOnce
 
 spawnToWorkspace :: String -> String -> X ()
 spawnToWorkspace workspace program = do
-                                      spawn program
-                                      windows $ W.greedyView workspace
+  spawn program
+  windows $ W.greedyView workspace
 
 -- Main XMonad Start
 main = do
-        h <- spawnPipe "xmobar ~/.xmonad/xmobar.hs"
-        xmonad
-            $ ewmh xfceConfig{ terminal=myTerminal, modMask=mod4Mask, keys=myKeyCombo, workspaces=myClickableWorkspaces, layoutHook=myLayout, manageHook=myManageHookCombo, handleEventHook=myHandleEventHookCombo, focusedBorderColor=myFocusedBorderColor, borderWidth=myBorderWidth, startupHook=myStartupHook, logHook=dynamicLogWithPP
-            $ xmobarPP{ ppOutput= hPutStrLn h, ppCurrent=currentWorkspaceStyle, ppTitle=windowTitleStyle, ppLayout=layoutIndicatorStyle, ppVisible=visibleWorkspaceStyle, ppSep=" ", ppOrder= \(ws:l:_:_) -> [ws,l] } }
+  h <- spawnPipe "xmobar $HOME/.xmonad/xmobar.hs"
+  xmonad $
+    ewmh
+      xfceConfig
+        { terminal = myTerminal,
+          modMask = mod4Mask,
+          keys = myKeyCombo,
+          workspaces = myClickableWorkspaces,
+          layoutHook = myLayout,
+          manageHook = myManageHookCombo,
+          handleEventHook = myHandleEventHookCombo,
+          focusedBorderColor = myFocusedBorderColor,
+          borderWidth = myBorderWidth,
+          startupHook = myStartupHook,
+          logHook =
+            dynamicLogWithPP $
+              xmobarPP {ppOutput = hPutStrLn h, ppCurrent = currentWorkspaceStyle, ppTitle = windowTitleStyle, ppLayout = layoutIndicatorStyle, ppVisible = visibleWorkspaceStyle, ppSep = " ", ppOrder = \(ws : l : _ : _) -> [ws, l]}
+        }
+
 -- Custom Hooks
-myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts(layoutsList))
-myManageHooks = composeAll [ goFullScreen, floatCalculator, moveWebcamToSide, floatColorPicker, teamsMonitor, chromeMonitor, floatSu ]
+myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts layoutsList)
+
+myManageHooks = composeAll [goFullScreen, floatCalculator, moveWebcamToSide, floatColorPicker, teamsMonitor, chromeMonitor, floatSu]
+
 myStartupHook = do
-            spawnOnce session_s
-            spawnOnce swapCapsWithESC_s
-            -- spawnOnce autowallpaper_s
-            spawnOnce compositor_s
-            spawnOnce trayer_s
-            spawnOnce xmobar_s
-            spawnOnce multimonitor_s
-          
+  spawnOnce session_s
+  spawnOnce swapCapsWithESC_s
+  -- spawnOnce autowallpaper_s
+  spawnOnce compositor_s
+  spawnOnce trayer_s
+  spawnOnce xmobar_s
+  spawnOnce multimonitor_s
+
 -- Default Variables
 myTerminal = "alacritty"
-myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
+
+myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+
 xmobarEscape = concatMap doubleLts
-  where doubleLts '<' = "<<"
-        doubleLts x    = [x]
+  where
+    doubleLts '<' = "<<"
+    doubleLts x = [x]
+
 myClickableWorkspaces :: [String]
-myClickableWorkspaces = clickable . (map xmobarEscape) $ myWorkspaces
-  where                                                                       
-         clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
-                             (i,ws) <- zip [1..9] l,                                        
-                            let n = i ]
+myClickableWorkspaces = clickable . map xmobarEscape $ myWorkspaces
+  where
+    clickable l =
+      [ "<action=xdotool key super+" ++ show n ++ ">" ++ ws ++ "</action>"
+        | (i, ws) <- zip [1 .. 9] l,
+          let n = i
+      ]
+
 myFocusedBorderColor = "#FB4934"
+
 myBorderWidth = 1
 
 -- Startup Variables
-multimonitor_s="/home/anthony/bin/threemon &"
-trayer_s="trayer --edge top --monitor primary --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
-autowallpaper_s="nitrogen --restore &"
-session_s="xfce4-session &"
-swapCapsWithESC_s="setxkbmap -option caps:escape &"
-compositor_s="picom --vsync &"
-xmobar_s="/home/anthony/utils/xmobar-delayed.sh &"
-caffeine_s="caffeine &"
+multimonitor_s = "$HOME/bin/threemon"
+
+trayer_s = "trayer --edge top --monitor primary --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
+
+autowallpaper_s = "nitrogen --restore &"
+
+session_s = "xfce4-session &"
+
+swapCapsWithESC_s = "setxkbmap -option caps:escape &"
+
+compositor_s = "picom --vsync &"
+
+xmobar_s = "/home/anthony/utils/xmobar-delayed.sh &"
+
+caffeine_s = "caffeine &"
 
 -- Spacing/Position Variables
 mySpacing = spacingRaw False (Border 3 0 3 0) True (Border 0 3 0 3) True
-myMoveToStackHook = insertPosition End Older 
+
+myMoveToStackHook = insertPosition End Older
 
 -- Layout Variables
-myVertSpacing = ResizableTall 1 (3/100) (3/5) []
-myMirrorThreeCol = renamed [Replace "3 Col"] $ mySpacing $ reflectHoriz $ ThreeCol 2 (3/100) (1/2)
+myVertSpacing = ResizableTall 1 (3 / 100) (3 / 5) []
+
+myMirrorThreeCol = renamed [Replace "3 Col"] $ mySpacing $ reflectHoriz $ ThreeCol 2 (3 / 100) (1 / 2)
+
 myMainStackLayout = renamed [Replace "Default"] $ mySpacing $ myVertSpacing
+
 myxfceLayout = renamed [CutWordsLeft 1] $ mySpacing $ layoutHook xfceConfig
+
 myGridLayout = renamed [Replace "Grid"] $ mySpacing $ Grid
-mySpiralLayout = renamed[Replace "Spiral"] $ mySpacing $ spiral (6/7)
+
+mySpiralLayout = renamed [Replace "Spiral"] $ mySpacing $ spiral (6 / 7)
 
 -- Layout List
 layoutsList = myMainStackLayout ||| myGridLayout ||| mySpiralLayout ||| myMirrorThreeCol ||| myxfceLayout
-toggleReflect= mkToggle (single REFLECTX)
+
+toggleReflect = mkToggle (single REFLECTX)
 
 -- Keybinding commands
-dmenu_c="dmenu_run -p 'Applications'"
-webcam_c="mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
-restartXMonad_c="~/utils/reinstall-wm.sh"
-screenkey_c="killall screenkey || screenkey &"
-fullScreenToggle_c=[ sendMessage $ ToggleStruts, toggleScreenSpacingEnabled, toggleWindowSpacingEnabled, withFocused toggleBorder, windows W.focusDown]
+dmenu_c = "dmenu_run -p 'Applications'"
+
+webcam_c = "mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
+
+restartXMonad_c = "$HOME/utils/reinstall-wm.sh"
+
+screenkey_c = "killall screenkey || screenkey &"
+
+fullScreenToggle_c = [sendMessage $ ToggleStruts, toggleScreenSpacingEnabled, toggleWindowSpacingEnabled, withFocused toggleBorder, windows W.focusDown]
 
 -- Custom Hook Variables
-goFullScreen=isFullscreen -->doFullFloat
-floatCalculator=appName =? "galculator" -->doCenterFloat
-floatSu=appName =? "zenity" -->doCenterFloat
-moveWebcamToSide=className =? "mpv" -->myMoveToStackHook
-floatColorPicker=appName =? "gcolor2" -->doCenterFloat
-myManageHookCombo=myManageHooks <+> manageSpawn <+> manageDocks <+> scratchpadManageHookDefault <+> manageHook xfceConfig
-myHandleEventHookCombo=handleEventHook xfceConfig <+> docksEventHook <+> fullscreenEventHook
-myKeyCombo=myKeys <+> keys defaultConfig
-teamsMonitor=appName =? "Microsoft Teams - Preview" --> openSilent "3"
-chromeMonitor=appName =? "google-chrome"--> openSilent "2"
+goFullScreen = isFullscreen --> doFullFloat
+
+floatCalculator = appName =? "galculator" --> doCenterFloat
+
+floatSu = appName =? "zenity" --> doCenterFloat
+
+moveWebcamToSide = className =? "mpv" --> myMoveToStackHook
+
+floatColorPicker = appName =? "gcolor2" --> doCenterFloat
+
+myManageHookCombo = myManageHooks <+> manageSpawn <+> manageDocks <+> scratchpadManageHookDefault <+> manageHook xfceConfig
+
+myHandleEventHookCombo = handleEventHook xfceConfig <+> docksEventHook <+> fullscreenEventHook
+
+myKeyCombo = myKeys <+> keys defaultConfig
+
+teamsMonitor = appName =? "Microsoft Teams - Preview" --> openSilent "3"
+
+chromeMonitor = appName =? "google-chrome" --> openSilent "2"
 
 -- XMobar Styling
-hiddenNoWindowWSStyle=xmobarColor "#F2E5BC" "" 
-windowTitleStyle=xmobarColor "#B8BB26" ""
-layoutIndicatorStyle=xmobarColor "#CC241D" ""
-currentWorkspaceStyle=xmobarColor "#FABD2F" "" . wrap "[" "]"
-hiddenWSStyle=xmobarColor "#FABD2F" ""
-visibleWorkspaceStyle=xmobarColor "#e3869b" "" . wrap "(" ")"
+hiddenNoWindowWSStyle = xmobarColor "#F2E5BC" ""
+
+windowTitleStyle = xmobarColor "#B8BB26" ""
+
+layoutIndicatorStyle = xmobarColor "#CC241D" ""
+
+currentWorkspaceStyle = xmobarColor "#FABD2F" "" . wrap "[" "]"
+
+hiddenWSStyle = xmobarColor "#FABD2F" ""
+
+visibleWorkspaceStyle = xmobarColor "#e3869b" "" . wrap "(" ")"
 
 openSilent :: WorkspaceId -> ManageHook
 openSilent tows = do
-   fromws <- liftX $ return . W.currentTag . windowset =<< get -- get the current ws tag
-   wid    <- ask                                             -- get opened windowId
-   doF $ W.view fromws . W.insertUp wid . W.view tows
+  fromws <- liftX $ return . W.currentTag . windowset =<< get -- get the current ws tag
+  wid <- ask -- get opened windowId
+  doF $ W.view fromws . W.insertUp wid . W.view tows
+
 --       |               |                |- move focus to "to" workspace
 --       |               |- insert window
 --       |- move focus back to "from" workspace
 -- Keybindings
-myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
-  [ ((modm, xK_q), kill), ((modm .|. shiftMask, xK_q), spawn "xfce4-session-logout"),
-    ((modm, xK_grave), spawn "gcolor2"),
-    ((modm, xK_w), spawn "firefox"), ((mod1Mask, xK_w), spawn "~/scripts/bookmarksdmenu.sh"),
-    ((modm, xK_e), spawn "thunar"),
-    ((modm, xK_r), sendMessage $ Toggle REFLECTX),
-    ((controlMask .|. mod1Mask, xK_t), runInTerm "" "htop"),
-    ((modm, xK_y), sendMessage NextLayout), ((modm .|. shiftMask, xK_y), setLayout $ XMonad.layoutHook conf),
-    ((modm, xK_u), sendMessage MirrorExpand),
-    ((modm, xK_i), spawn "forceworkspace"),
-    ((modm, xK_o), spawn "closeforceworkspace"),
-    ((modm, xK_p), spawn dmenu_c),
-    ((modm, xK_bracketright), nextWS), ((modm .|. shiftMask, xK_bracketright),  shiftToNext),
-    ((modm, xK_bracketleft), prevWS), ((modm .|. shiftMask, xK_bracketleft),    shiftToPrev),
-    ((modm, xK_a), spawn "forceworkspace"),((modm .|. shiftMask, xK_a), spawn "closeforceworkspace"),
-    ((modm, xK_s), spawn "xfce4-screenshooter -r"), ((modm .|. shiftMask, xK_s), spawn screenkey_c),
-    ((modm, xK_d), sendMessage MirrorShrink), ((modm .|. shiftMask, xK_d), spawn "discord"),
-    ((modm, xK_f), sequence_ fullScreenToggle_c),
-    ((modm, xK_Return), spawn $ XMonad.terminal conf), ((mod1Mask, xK_Return), scratchpadSpawnActionCustom "alacritty --class scratchpad") ,
-    ((modm, xK_x), spawn "~/scripts/bootintowindows.sh"),
-    ((modm, xK_c), spawn webcam_c), ((modm .|. shiftMask, xK_c), spawn "killall mpv"),
-    ((modm, xK_v), windows copyToAll), ((modm .|. shiftMask, xK_v),  killAllOtherCopies), ((controlMask .|. mod1Mask, xK_v), spawn "xfce4-popup-clipman"),
-    ((modm, xK_b), withFocused toggleBorder),
-    ((modm, xK_m), sendToEmptyWorkspace), ((modm .|. shiftMask, xK_m), tagToEmptyWorkspace),
-    ((modm, xK_n), viewEmptyWorkspace),
-    ((modm, xK_space), windows W.swapMaster),
-    ((modm, xK_KP_Enter), spawn "galculator"),
-    ((0,xF86XK_MonBrightnessDown), spawn "lux -m 1 -s 5%"),
-    ((0,xF86XK_MonBrightnessUp), spawn "lux -M 936 -a 5%"),
-    ((0,xF86XK_AudioMute), spawn "amixer set Master toggle"),
-    ((0,xF86XK_AudioLowerVolume), spawn "amixer -q sset Master 2%-"),
-    ((0,xF86XK_AudioRaiseVolume), spawn "amixer -q sset Master 2%+"),
-    ((0,xF86XK_AudioPrev), spawn "playerctl previous"),
-    ((0,xF86XK_AudioPlay), spawn "playerctl play-pause"),
-    ((0,xF86XK_AudioNext), spawn "playerctl next"),
-    ((0,xK_Menu), spawn "xdotool click 3"),
-    ((0,xK_Pause), spawn "xfce4-session-logout -s"),
-    ((modm, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --auto"),
-    ((modm, xK_F7), spawn "touchpad-indicator -c") ]
-  ++
-  [ ((m .|. 0, k), windows (f i))
-      | (i, k) <- zip (workspaces conf) ([xK_1 .. xK_9])
-      , (f, m) <- [ (viewOnScreen 0, modm), (viewOnScreen 1, mod1Mask), (viewOnScreen 2, controlMask .|. mod1Mask), (W.greedyView, mod1Mask .|. shiftMask) ]
+myKeys conf@(XConfig {XMonad.modMask = modm}) =
+  M.fromList $
+    [ ((modm, xK_q), kill),
+      ((modm .|. shiftMask, xK_q), spawn "xfce4-session-logout"),
+      ((modm, xK_grave), spawn "gcolor2"),
+      ((modm, xK_w), spawn "firefox"),
+      ((mod1Mask, xK_w), spawn "$HOME/scripts/bookmarksdmenu.sh"),
+      ((modm, xK_e), spawn "thunar"),
+      ((mod1Mask, xK_e), spawn "$HOME/scripts/confdmenu.sh"),
+      ((modm, xK_r), sendMessage $ Toggle REFLECTX),
+      ((mod1Mask, xK_t), runInTerm "" "htop"),
+      ((modm, xK_y), sendMessage NextLayout),
+      ((mod1Mask, xK_y), setLayout $ XMonad.layoutHook conf),
+      ((modm, xK_u), sendMessage MirrorExpand),
+      ((modm, xK_p), spawn dmenu_c),
+      ((modm, xK_bracketright), nextWS),
+      ((mod1Mask, xK_bracketright), shiftToNext),
+      ((modm, xK_bracketleft), prevWS),
+      ((mod1Mask, xK_bracketleft), shiftToPrev),
+      ((modm, xK_a), spawn "forceworkspace"),
+      ((mod1Mask, xK_a), spawn "closeforceworkspace"),
+      ((modm, xK_s), spawn "xfce4-screenshooter -r"),
+      ((mod1Mask, xK_s), spawn screenkey_c),
+      ((modm, xK_d), sendMessage MirrorShrink),
+      ((modm, xK_f), sequence_ fullScreenToggle_c),
+      ((modm, xK_Return), spawn $ XMonad.terminal conf),
+      ((mod1Mask, xK_Return), scratchpadSpawnActionCustom "alacritty --class scratchpad"),
+      ((modm, xK_x), spawn "$HOME/scripts/bootintowindows.sh"),
+      ((modm, xK_c), spawn webcam_c),
+      ((modm .|. shiftMask, xK_c), spawn "killall mpv"),
+      ((modm, xK_v), windows copyToAll),
+      ((modm .|. shiftMask, xK_v), killAllOtherCopies),
+      ((mod1Mask, xK_v), spawn "xfce4-popup-clipman"),
+      ((modm, xK_b), withFocused toggleBorder),
+      ((modm, xK_m), sendToEmptyWorkspace),
+      ((mod1Mask, xK_m), tagToEmptyWorkspace),
+      ((modm, xK_n), viewEmptyWorkspace),
+      ((modm, xK_space), windows W.swapMaster),
+      ((modm, xK_KP_Enter), spawn "galculator"),
+      ((0, xF86XK_MonBrightnessDown), spawn "lux -m 1 -s 5%"),
+      ((0, xF86XK_MonBrightnessUp), spawn "lux -M 936 -a 5%"),
+      ((0, xF86XK_AudioMute), spawn "amixer set Master toggle"),
+      ((0, xF86XK_AudioLowerVolume), spawn "amixer -q sset Master 2%-"),
+      ((0, xF86XK_AudioRaiseVolume), spawn "amixer -q sset Master 2%+"),
+      ((0, xF86XK_AudioPrev), spawn "playerctl previous"),
+      ((0, xF86XK_AudioPlay), spawn "playerctl play-pause"),
+      ((0, xF86XK_AudioNext), spawn "playerctl next"),
+      ((0, xK_Menu), spawn "xdotool click 3"),
+      ((0, xK_Pause), spawn "xfce4-session-logout -s"),
+      ((modm, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --auto"),
+      ((modm, xK_F7), spawn "touchpad-indicator -c")
     ]
-myMouseBindings (XConfig {XMonad.modMask = modMask}) = M.fromList $
-    [
-    ((modMask, button1), (\w -> focus w >> mouseMoveWindow w))
-    , ((modMask, button3), (\w -> focus w >> windows W.swapMaster))
-    , ((modMask, button2), (\w -> focus w >> mouseResizeWindow w))
-    , ((modMask, button4), (\w -> focus w >> windows W.focusUp))
-    , ((modMask, button5), (\w -> focus w >> windows W.focusDown))
-    , ((mod1Mask, button4), (\w -> focus w >> windows W.swapUp))
-    , ((mod1Mask, button5), (\w -> focus w >> windows W.swapDown))
+      ++ [ ((m .|. 0, k), windows (f i))
+           | (i, k) <- zip (workspaces conf) [xK_1 .. xK_9],
+             (f, m) <- [(viewOnScreen 0, modm), (viewOnScreen 1, mod1Mask), (viewOnScreen 2, controlMask .|. mod1Mask), (W.greedyView, mod1Mask .|. shiftMask)]
+         ]
+
+myMouseBindings XConfig {XMonad.modMask = modMask} =
+  M.fromList
+    [ ((modMask, button1), \w -> focus w >> mouseMoveWindow w),
+      ((modMask, button3), \w -> focus w >> windows W.swapMaster),
+      ((modMask, button2), \w -> focus w >> mouseResizeWindow w),
+      ((modMask, button4), \w -> focus w >> windows W.focusUp),
+      ((modMask, button5), \w -> focus w >> windows W.focusDown),
+      ((mod1Mask, button4), \w -> focus w >> windows W.swapUp),
+      ((mod1Mask, button5), \w -> focus w >> windows W.swapDown)
     ]

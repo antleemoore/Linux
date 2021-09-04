@@ -1,8 +1,9 @@
 #!/bin/sh
 
-BROWSER="firefox"
+DMBROWSER="firefox"
 
 declare -a options=(
+"Search - https://www.bing.com"
 "Calendar - https://calendar.google.com/calendar/u/0/r?pli=1"
 "Canvas - https://webcourses.ucf.edu"
 "myUCF - https://my.ucf.edu"
@@ -20,5 +21,5 @@ declare -a options=(
 choice=$(printf '%s\n' "${options[@]}" | dmenu -sb '#B16286' -i -p 'Bookmarks')
 if [[ "$choice" ]]; then
     cfg=$(printf '%s\n' "$choice" | awk '{print $NF}')
-    $BROWSER "$cfg"
+    $DMBROWSER "$cfg"
 fi
