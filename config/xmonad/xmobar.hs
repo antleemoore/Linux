@@ -5,7 +5,7 @@ Config {
    bgColor = "#32302F", fgColor = "#F2E5BC", position = TopW L 100, border = BottomB,
    borderColor = "black", sepChar = "%", alignSep = "}{",
 -- Desktop template
-   template = "%UnsafeStdinReader%  %date%  %chancerain%}{ %dynnetwork%  %multicpu%  %memory%  %disku%  %default:Master% %trayerpad%",
+   template = "%UnsafeStdinReader%  %date%  }{ %dynnetwork%  %multicpu%  %memory%  %disku%  %default:Master% %trayerpad%",
    lowerOnStart = True, hideOnStart = False, allDesktops = True,
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
