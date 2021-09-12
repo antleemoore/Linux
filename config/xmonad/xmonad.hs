@@ -74,11 +74,12 @@ myManageHooks = composeAll [goFullScreen, floatCalculator, moveWebcamToSide, flo
 myStartupHook = do
   spawnOnce session_s
   spawnOnce swapCapsWithESC_s
-  -- spawnOnce autowallpaper_s
+  spawnOnce autowallpaper_s
   spawnOnce compositor_s
   spawnOnce trayer_s
   spawnOnce xmobar_s
   spawnOnce multimonitor_s
+  spawnOnce clipboard_s
 
 -- Default Variables
 myTerminal = "alacritty"
@@ -110,7 +111,7 @@ trayer_s = "trayer --edge top --monitor primary --align right --widthtype reques
 
 autowallpaper_s = "nitrogen --restore &"
 
-session_s = "xfce4-session &"
+session_s = "lxsession &"
 
 swapCapsWithESC_s = "setxkbmap -option caps:escape &"
 
@@ -119,6 +120,8 @@ compositor_s = "picom --vsync &"
 xmobar_s = "/home/anthony/utils/xmobar-delayed.sh &"
 
 caffeine_s = "caffeine &"
+
+clipboard_s = "xfce4-clipman &"
 
 -- Spacing/Position Variables
 mySpacing = spacingRaw False (Border 3 0 3 0) True (Border 0 3 0 3) True
