@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # DMEDITOR="emacsclient -c -a emacs"
-# DMEDITOR="alacritty -e nvim"
-DMEDITOR="code"
+DMEDITOR="alacritty -e nvim"
+# DMEDITOR="code"
 
 declare -a options=(
 "alacritty - $HOME/repos/Linux/config/alacritty.yml"

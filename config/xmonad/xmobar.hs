@@ -1,7 +1,7 @@
 -- Dependencies: Symbols Nerd Font
 Config { 
-   font = "xft:DejaVu Sans:size=6:antialias=true:hinting=true",
-   additionalFonts = [  "xft:Symbols Nerd Font:pixelsize=18:antialias=true:hinting=true", "xft:Noto Color Emoji:pixelsize=15"],
+   font = "xft:DejaVu Sans:size=10:antialias=true:hinting=true",
+   additionalFonts = [  "xft:Symbols Nerd Font:pixelsize=15:antialias=true:hinting=true", "xft:Noto Color Emoji:pixelsize=15"],
    bgColor = "#32302F", fgColor = "#F2E5BC", position = TopW L 100, border = BottomB,
    borderColor = "black", sepChar = "%", alignSep = "}{",
 -- Desktop template

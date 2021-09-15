@@ -115,7 +115,7 @@ session_s = "lxsession &"
 
 swapCapsWithESC_s = "setxkbmap -option caps:escape &"
 
-compositor_s = "picom --vsync &"
+compositor_s = "picom &"
 
 xmobar_s = "/home/anthony/utils/xmobar-delayed.sh &"
 
@@ -222,8 +222,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((mod1Mask, xK_bracketleft), shiftToPrev),
       ((modm, xK_a), spawn "forceworkspace"),
       ((mod1Mask, xK_a), spawn "closeforceworkspace"),
-      ((modm, xK_s), spawn "xfce4-screenshooter -r"),
-      ((mod1Mask, xK_s), spawn screenkey_c),
+      ((modm, xK_s), spawn "xfce4-screenshooter -r"), ((mod1Mask, xK_s), spawn screenkey_c),
       ((modm, xK_d), sendMessage MirrorShrink),
       ((modm, xK_f), sequence_ fullScreenToggle_c),
       ((modm, xK_Return), spawn $ XMonad.terminal conf),
