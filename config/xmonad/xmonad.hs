@@ -63,7 +63,7 @@ main = do
           startupHook = myStartupHook,
           logHook =
             dynamicLogWithPP $
-              xmobarPP {ppOutput = hPutStrLn h, ppCurrent = currentWorkspaceStyle, ppTitle = windowTitleStyle, ppLayout = layoutIndicatorStyle, ppVisible = visibleWorkspaceStyle, ppSep = " ", ppOrder = \(ws : l : _ : _) -> [ws, l]}
+              xmobarPP {ppOutput = hPutStrLn h, ppCurrent = currentWorkspaceStyle, ppTitle = windowTitleStyle, ppLayout = layoutIndicatorStyle, ppVisible = visibleWorkspaceStyle, ppSep = " ", ppOrder = \(ws : l : _ : t) -> [ws, l, t]}
         }
 
 -- Custom Hooks
@@ -78,7 +78,7 @@ myStartupHook = do
   spawnOnce compositor_s
   spawnOnce trayer_s
   spawnOnce xmobar_s
-  spawnOnce multimonitor_s
+  spawnOnce screenlayout_s
   spawnOnce clipboard_s
 
 -- Default Variables
@@ -106,7 +106,7 @@ myBorderWidth = 1
 
 -- Startup Variables
 multimonitor_s = "$HOME/bin/threemon"
-
+screenlayout_s = "$HOME/.screenlayout/layout.sh"
 trayer_s = "trayer --edge top --monitor primary --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
 
 autowallpaper_s = "nitrogen --restore &"

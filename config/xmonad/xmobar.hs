@@ -1,11 +1,10 @@
--- Dependencies: Symbols Nerd Font
 Config { 
    font = "xft:DejaVu Sans:size=10:antialias=true:hinting=true",
    additionalFonts = [  "xft:Symbols Nerd Font:pixelsize=15:antialias=true:hinting=true", "xft:Noto Color Emoji:pixelsize=15"],
    bgColor = "#32302F", fgColor = "#F2E5BC", position = TopW L 100, border = BottomB,
    borderColor = "black", sepChar = "%", alignSep = "}{",
 -- Desktop template
-   template = "%UnsafeStdinReader%  %date%  }{ %dynnetwork%  %multicpu%  %memory%  %disku%  %default:Master% %trayerpad%",
+   template = "%uptime%   %checkupdates%   %date%   %KMCO%  %chancerain%   %UnsafeStdinReader%}{  %dynnetwork%   %multicpu%   %memory%   %gpu%  %disku%   %default:Master% %trayerpad%",
    lowerOnStart = True, hideOnStart = False, allDesktops = True,
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
@@ -19,9 +18,15 @@ Config {
           Run Com "/home/anthony/utils/trayer-padding-icon.sh" [] "trayerpad" 20,
           Run Com "/home/anthony/utils/gpu-usage.sh" ["<fn=1>\xf878</fn>"] "gpu" 60,
           Run Com "/home/anthony/utils/chance-rain.sh" ["<fn=2>\x2602</fn>"] "chancerain" 36000,
+          Run Com "/home/anthony/utils/check-updates.sh" ["<fn=2>\x1F4E6</fn>"] "checkupdates" 36000,
           Run Date "<action=`alacritty -e calcurse`><fc=#83c07c><fn=2>\x1f4c5</fn> %a %b %d %Y</fc></action> <fc=#83A598><fn=2>\x1f551</fn> %I:%M:%S %p</fc>" "date" 10,
           Run UnsafeStdinReader,
-          Run Locks
+          Run StdinReader,
+          Run Locks,
+          Run Uptime ["-t", "<fn=2>\x1F427</fn> <fc=#FFF1C6><days>d <hours>h <minutes>m</fc>"] 600,
+          Run WeatherX "KMCO" 
+                            [ ("clear", "☀"), ("sunny", "☀"), ("mostly clear", "🌤"), ("mostly sunny", "🌤"), ("partly sunny", "⛅"), ("fair", "🌥"), ("cloudy","☁"), ("overcast","🌧"), ("partly cloudy", "🌤"), ("mostly cloudy", "⛅"), ("considerable cloudiness", "🌥") ]
+                            [ "--template", "<fn=2><skyConditionS></fn><fc=#4682B4><tempF></fc>°F", "-L","65", "-H", "90", "--normal", "#F2E5BC", "--high", "#FB4934", "--low", "#83A598" ] 36000
         ]
 }
 -- Other Templates

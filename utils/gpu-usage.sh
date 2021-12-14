@@ -9,4 +9,4 @@ echo -n $1
 echo -n " "
 echo -n $(( intOne * 100 / intTwo))
 echo -n "% "
-echo -n $foo
+# echo -n $foo
