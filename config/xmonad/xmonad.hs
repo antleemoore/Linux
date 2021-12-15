@@ -98,7 +98,7 @@ myClickableWorkspaces = clickable . map xmobarEscape $ myWorkspaces
       ]
 
 myFocusedBorderColor = "#FB4934"
-myBorderWidth = 1
+myBorderWidth = 3
 
 -- Startup Variables
 multimonitor_s = "$HOME/bin/threemon"
@@ -191,7 +191,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm, xK_f), sequence_ fullScreenToggle_c),
       ((modm, xK_Return), spawn $ XMonad.terminal conf),
       ((mod1Mask, xK_Return), scratchpadSpawnActionCustom "alacritty --class scratchpad"),
-      ((modm, xK_x), spawn "$HOME/scripts/bootintowindows.sh"),
+      ((modm .|. shiftMask, xK_x), spawn "xkill"),
       ((modm, xK_c), spawn webcam_c),
       ((modm .|. shiftMask, xK_c), spawn "killall mpv"),
       ((modm, xK_v), windows copyToAll),
