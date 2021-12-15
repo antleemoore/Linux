@@ -63,13 +63,12 @@ main = do
           startupHook = myStartupHook,
           logHook =
             dynamicLogWithPP $
-              xmobarPP {ppOutput = hPutStrLn h, ppCurrent = currentWorkspaceStyle, ppTitle = windowTitleStyle, ppLayout = layoutIndicatorStyle, ppVisible = visibleWorkspaceStyle, ppSep = " ", ppOrder = \(ws : l : _ : t) -> [ws, l, t]}
+              xmobarPP {ppOutput = hPutStrLn h, ppCurrent = currentWorkspaceStyle, ppTitle = windowTitleStyle, ppLayout = layoutIndicatorStyle, ppVisible = visibleWorkspaceStyle, ppSep = " ", ppOrder = \(ws : l : t : _) -> [ws,l,t]}
         }
 
 -- Custom Hooks
 myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts layoutsList)
-
-myManageHooks = composeAll [goFullScreen, floatCalculator, moveWebcamToSide, floatColorPicker, teamsMonitor, chromeMonitor, floatSu]
+myManageHooks = composeAll [goFullScreen, floatCalculator, floatPavu, moveWebcamToSide, floatColorPicker, teamsMonitor, chromeMonitor, floatSu]
 
 myStartupHook = do
   spawnOnce session_s
@@ -83,9 +82,7 @@ myStartupHook = do
 
 -- Default Variables
 myTerminal = "alacritty"
-
 myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-
 xmobarEscape = concatMap doubleLts
   where
     doubleLts '<' = "<<"
@@ -101,94 +98,62 @@ myClickableWorkspaces = clickable . map xmobarEscape $ myWorkspaces
       ]
 
 myFocusedBorderColor = "#FB4934"
-
 myBorderWidth = 1
 
 -- Startup Variables
 multimonitor_s = "$HOME/bin/threemon"
 screenlayout_s = "$HOME/.screenlayout/layout.sh"
 trayer_s = "trayer --edge top --monitor primary --align right --widthtype request --SetDockType true --SetPartialStrut true --expand true --transparent true --alpha 0 --tint 0x32302f --height 19 &"
-
 autowallpaper_s = "nitrogen --restore &"
-
 session_s = "lxsession &"
-
 swapCapsWithESC_s = "setxkbmap -option caps:escape &"
-
 compositor_s = "picom &"
-
 xmobar_s = "/home/anthony/utils/xmobar-delayed.sh &"
-
 caffeine_s = "caffeine &"
-
 clipboard_s = "xfce4-clipman &"
 
 -- Spacing/Position Variables
 mySpacing = spacingRaw False (Border 3 0 3 0) True (Border 0 3 0 3) True
-
 myMoveToStackHook = insertPosition End Older
 
 -- Layout Variables
 myVertSpacing = ResizableTall 1 (3 / 100) (3 / 5) []
-
 myMirrorThreeCol = renamed [Replace "3 Col"] $ mySpacing $ reflectHoriz $ ThreeCol 2 (3 / 100) (1 / 2)
-
 myMainStackLayout = renamed [Replace "Default"] $ mySpacing $ myVertSpacing
-
 myxfceLayout = renamed [CutWordsLeft 1] $ mySpacing $ layoutHook xfceConfig
-
 myGridLayout = renamed [Replace "Grid"] $ mySpacing $ Grid
-
 mySpiralLayout = renamed [Replace "Spiral"] $ mySpacing $ spiral (6 / 7)
 
 -- Layout List
 layoutsList = myMainStackLayout ||| myGridLayout ||| mySpiralLayout ||| myMirrorThreeCol ||| myxfceLayout
-
 toggleReflect = mkToggle (single REFLECTX)
 
 -- Keybinding commands
 dmenu_c = "dmenu_run -p 'Applications'"
-
 webcam_c = "mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
-
 restartXMonad_c = "$HOME/utils/reinstall-wm.sh"
-
 screenkey_c = "killall screenkey || screenkey &"
-
 fullScreenToggle_c = [sendMessage $ ToggleStruts, toggleScreenSpacingEnabled, toggleWindowSpacingEnabled, withFocused toggleBorder, windows W.focusDown]
 
 -- Custom Hook Variables
 goFullScreen = isFullscreen --> doFullFloat
-
 floatCalculator = appName =? "galculator" --> doCenterFloat
-
+floatPavu = appName =? "pavucontrol" --> doCenterFloat
 floatSu = appName =? "zenity" --> doCenterFloat
-
 moveWebcamToSide = className =? "mpv" --> myMoveToStackHook
-
 floatColorPicker = appName =? "gcolor2" --> doCenterFloat
-
 myManageHookCombo = myManageHooks <+> manageSpawn <+> manageDocks <+> scratchpadManageHookDefault <+> manageHook xfceConfig
-
 myHandleEventHookCombo = handleEventHook xfceConfig <+> docksEventHook <+> fullscreenEventHook
-
 myKeyCombo = myKeys <+> keys defaultConfig
-
 teamsMonitor = appName =? "Microsoft Teams - Preview" --> openSilent "3"
-
 chromeMonitor = appName =? "google-chrome" --> openSilent "2"
 
 -- XMobar Styling
 hiddenNoWindowWSStyle = xmobarColor "#F2E5BC" ""
-
 windowTitleStyle = xmobarColor "#B8BB26" ""
-
 layoutIndicatorStyle = xmobarColor "#CC241D" ""
-
 currentWorkspaceStyle = xmobarColor "#FABD2F" "" . wrap "[" "]"
-
 hiddenWSStyle = xmobarColor "#FABD2F" ""
-
 visibleWorkspaceStyle = xmobarColor "#e3869b" "" . wrap "(" ")"
 
 openSilent :: WorkspaceId -> ManageHook
@@ -220,8 +185,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((mod1Mask, xK_bracketright), shiftToNext),
       ((modm, xK_bracketleft), prevWS),
       ((mod1Mask, xK_bracketleft), shiftToPrev),
-      ((modm, xK_a), spawn "forceworkspace"),
-      ((mod1Mask, xK_a), spawn "closeforceworkspace"),
+      ((modm, xK_a), spawn "pavucontrol -t 3"),
       ((modm, xK_s), spawn "xfce4-screenshooter -r"), ((mod1Mask, xK_s), spawn screenkey_c),
       ((modm, xK_d), sendMessage MirrorShrink),
       ((modm, xK_f), sequence_ fullScreenToggle_c),
