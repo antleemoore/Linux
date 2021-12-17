@@ -4,7 +4,7 @@ Config {
    bgColor = "#32302F", fgColor = "#F2E5BC", position = TopW L 100, border = BottomB,
    borderColor = "black", sepChar = "%", alignSep = "}{",
 -- Desktop template
-   template = "%uptime%   %checkupdates%   %date%   %KMCO%  %chancerain%   %UnsafeStdinReader%}{  %dynnetwork%   %multicpu%   %memory%   %gpu%  %disku%   %multivolume%  %trayerpad%",
+   template = "%uptime%   %checkupdates%   %date%   %KMCO%  %chancerain%   <action=`alacritty -e newsboat`>%news%</action>   %UnsafeStdinReader%}{  %dynnetwork%   %multicpu%   %memory%   %gpu%  %disku%   %multivolume%  %trayerpad%",
    lowerOnStart = True, hideOnStart = False, allDesktops = True,
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
@@ -20,6 +20,7 @@ Config {
           Run Com "/home/anthony/utils/gpu-usage.sh" ["<fn=1>\xf878</fn>"] "gpu" 60,
           Run Com "/home/anthony/utils/chance-rain.sh" ["<fn=2>\x2602</fn>"] "chancerain" 36000,
           Run Com "/home/anthony/utils/check-updates.sh" ["<fn=2>\x1F4E6</fn>"] "checkupdates" 36000,
+          Run Com "/home/anthony/utils/shownews.sh" ["<fn=2>\x1F4F0</fn>"] "news" 1200,
           Run Date "<action=`alacritty -e calcurse`><fc=#83c07c><fn=2>\x1f4c5</fn> %a %b %d %Y</fc></action> <fc=#83A598><fn=2>\x1f551</fn> %I:%M:%S %p</fc>" "date" 10,
           Run UnsafeStdinReader,
           Run StdinReader,
