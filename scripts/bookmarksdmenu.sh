@@ -15,6 +15,7 @@ declare -a options=(
 "Funimation - https://www.funimation.com"
 "MangaDex - https://www.mangadex.com"
 "MAL - https://www.myanimelist.com"
+"News - https://apnews.com/hub/ap-top-news?utm_source=apnewsnav&utm_medium=sections"
 
 )
 

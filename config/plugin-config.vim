@@ -23,6 +23,11 @@ let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ }
 
+let g:neovide_refresh_rate=144
+let g:neovide_no_idle=v:true
+let g:neovide_transparency=0.90
+let g:neovide_cursor_animation_length=0.01
+
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
   autocmd FileType c,cpp,proto,arduino,java AutoFormatBuffer clang-format

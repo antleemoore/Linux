@@ -130,7 +130,7 @@ toggleReflect = mkToggle (single REFLECTX)
 
 -- Keybinding commands
 dmenu_c = "dmenu_run -p 'Applications'"
-webcam_c = "mpv --demuxer-lavf-o=video_size=1280x720,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
+webcam_c = "mpv --demuxer-lavf-o=video_size=1920x1080,input_format=mjpeg av://v4l2:/dev/video0 --profile=low-latency --untimed"
 restartXMonad_c = "$HOME/utils/reinstall-wm.sh"
 screenkey_c = "killall screenkey || screenkey &"
 fullScreenToggle_c = [sendMessage $ ToggleStruts, toggleScreenSpacingEnabled, toggleWindowSpacingEnabled, withFocused toggleBorder, windows W.focusDown]

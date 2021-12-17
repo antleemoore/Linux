@@ -16,6 +16,7 @@ Plugin 'google/vim-maktaba'
 Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
 Plugin 'vimwiki/vimwiki'
+Plugin 'morhetz/gruvbox'
 call vundle#end()
 call glaive#Install()
 filetype indent on
@@ -24,3 +25,4 @@ filetype plugin on
 source $HOME/.config/nvim/plugin-config.vim
 syntax on
 au BufReadPost *.cls set syntax=java
+colorscheme gruvbox
