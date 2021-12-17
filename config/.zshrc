@@ -8,6 +8,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 export ZSH="$HOME/.oh-my-zsh"
+export HDD="/run/media/anthony/Internal HDD"
+export SSD="/run/media/anthony/Windows SSD"
 
 ZSH_THEME="agnoster"
 ENABLE_CORRECTION="true"
@@ -23,6 +25,15 @@ export EDITOR="nvim"
 function cd {
     builtin cd "$@" && lsd && gss 2>/dev/null
 }
+
+# Declare the variable
+typeset -A ZSH_HIGHLIGHT_STYLES
+
+# To differentiate aliases from other command types
+ZSH_HIGHLIGHT_STYLES[alias]='fg=yellow'
+ZSH_HIGHLIGHT_STYLES[command]='fg=green'
+ZSH_HIGHLIGHT_STYLES[path]='fg=cyan'
+ZSH_HIGHLIGHT_STYLES[globbing]='none'
 
 source $HOME/.zshaliases
 source $HOME/.zshprompt

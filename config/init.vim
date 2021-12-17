@@ -28,5 +28,3 @@ au BufReadPost *.cls set syntax=java
 colorscheme gruvbox
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
-highlight Normal guibg=none
-highlight NonText guibg=none
