@@ -25,3 +25,4 @@ set gdefault
 set virtualedit+=block
 set foldmethod=marker
 set nofoldenable
+set clipboard+=unnamedplus

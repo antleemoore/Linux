@@ -17,8 +17,7 @@ alias cdlrc="cd ~/repos/Linux/config"
 
 alias codehere="code . && exit"
 alias autoc='~/utils/auto-compile.sh'
-alias v="neovide"
-alias vim="nvim"
+alias v="nvim"
 alias vimr="$BROWSER www.vimregex.com"
 alias pdf="qpdfview"
 alias svim="sudo nvim"

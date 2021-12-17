@@ -11,7 +11,7 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
-" Plugin 'frazrepo/vim-rainbow'
+Plugin 'frazrepo/vim-rainbow'
 Plugin 'google/vim-maktaba'
 Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
@@ -26,3 +26,7 @@ source $HOME/.config/nvim/plugin-config.vim
 syntax on
 au BufReadPost *.cls set syntax=java
 colorscheme gruvbox
+highlight Normal ctermbg=none
+highlight NonText ctermbg=none
+highlight Normal guibg=none
+highlight NonText guibg=none

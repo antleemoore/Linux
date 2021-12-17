@@ -68,7 +68,7 @@ main = do
 
 -- Custom Hooks
 myLayout = renamed [CutWordsLeft 1] $ toggleReflect $ layoutHints (avoidStruts layoutsList)
-myManageHooks = composeAll [goFullScreen, floatCalculator, floatPavu, moveWebcamToSide, floatColorPicker, teamsMonitor, chromeMonitor, floatSu]
+myManageHooks = composeAll [goFullScreen, floatCalculator, floatPavu, moveWebcamToSide, floatColorPicker, teamsMonitor, chromeMonitor, floatSu, floatPiP]
 
 myStartupHook = do
   spawnOnce session_s
@@ -137,6 +137,7 @@ fullScreenToggle_c = [sendMessage $ ToggleStruts, toggleScreenSpacingEnabled, to
 
 -- Custom Hook Variables
 goFullScreen = isFullscreen --> doFullFloat
+floatPiP = className =? "Toolkit"--> doCenterFloat
 floatCalculator = appName =? "galculator" --> doCenterFloat
 floatPavu = appName =? "pavucontrol" --> doCenterFloat
 floatSu = appName =? "zenity" --> doCenterFloat

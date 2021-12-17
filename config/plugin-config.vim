@@ -1,17 +1,17 @@
 au BufReadPost,BufNewFile *.wiki syntax on
 
 let g:vimwiki_list = [{'path': '~/Documents/notes_vw'}]
-" let g:rainbow_active = 1
-" set termguicolors
-" let g:rainbow_load_separately = [
-"             \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-"             \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
-"             \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
-"             \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
-"             \ ]
+let g:rainbow_active = 1
+set termguicolors
+let g:rainbow_load_separately = [
+            \ [ '*' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+            \ [ '*.tex' , [['(', ')'], ['\[', '\]']] ],
+            \ [ '*.cpp' , [['(', ')'], ['\[', '\]'], ['{', '}']] ],
+            \ [ '*.{html,htm}' , [['(', ')'], ['\[', '\]'], ['{', '}'], ['<\a[^>]*>', '</[^>]*>']] ],
+            \ ]
 
-" let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
-" let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
+let g:rainbow_guifgs = ['RoyalBlue3', 'DarkOrange3', 'DarkOrchid3', 'FireBrick']
+let g:rainbow_ctermfgs = ['lightblue', 'lightgreen', 'yellow', 'red', 'magenta']
 let g:ctrlp_max_height = 10
 let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
 if executable('ag')
@@ -44,7 +44,6 @@ augroup END
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr><CR>  pumvisible() ? "<Right>" : "\<CR>"
-noremap <leader>p :noh<cr>:CtrlP<cr>
 nnoremap <leader>c <Plug>CommentaryLine
 noremap <leader>v :noh<cr>:vnew<cr>:noh<cr>:CtrlP<cr>
 noremap <leader>h :noh<cr>:new<cr>:noh<cr>:CtrlP<cr>
