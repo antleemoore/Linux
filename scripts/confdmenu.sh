@@ -39,6 +39,7 @@ declare -a options=(
 "three_monitors - $HOME/repos/Linux/scripts/threemonitorsetup.sh"
 "two_monitors - $HOME/repos/Linux/scripts/twomonitorsetup.sh"
 "update_calendar - $HOME/repos/Linux/scripts/updatecalendar.sh"
+"newsboat - $HOME/repos/Linux/config/.newsboat/config"
 )
 
 choice=$(printf '%s\n' "${options[@]}" | dmenu -sb '#458588' -i -p "Files")
