@@ -31,6 +31,7 @@ declare -a options=(
 "wait_internet - $HOME/repos/Linux/utils/wait-for-internet.sh"
 "delay_xmobar - $HOME/repos/Linux/utils/xmobar-delayed.sh"
 "bookmarks_dmenu - $HOME/repos/Linux/scripts/bookmarksdmenu.sh"
+"browsers_dmenu - $HOME/repos/Linux/scripts/browsersdmenu.sh"
 "files_dmenu - $HOME/repos/Linux/scripts/confdmenu.sh"
 "boot_windows - $HOME/repos/Linux/scripts/bootintowindows.sh"
 "close_sfdx_workspace - $HOME/repos/Linux/scripts/closesalesforceworkspace.sh"

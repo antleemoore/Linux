@@ -174,6 +174,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm, xK_grave), spawn "gcolor2"),
       ((modm, xK_w), spawn "firefox"),
       ((mod1Mask, xK_w), spawn "$HOME/scripts/bookmarksdmenu.sh"),
+      ((modm .|. shiftMask, xK_w), spawn "$HOME/scripts/browsersdmenu.sh"),
       ((modm, xK_e), spawn "thunar"),
       ((mod1Mask, xK_e), spawn "$HOME/scripts/confdmenu.sh"),
       ((modm, xK_r), sendMessage $ Toggle REFLECTX),

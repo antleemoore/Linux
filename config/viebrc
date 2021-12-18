@@ -26,4 +26,6 @@ map <C-s> <:write>
 map <C-I> <:devtools>
 nnoremap ; <toCommandMode>
 nnoremap D <:close>
+nnoremap D <:close>
+command hsplit <:split>
 " vim: ft=vim
