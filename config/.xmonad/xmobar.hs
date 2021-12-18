@@ -1,0 +1,1 @@
+/home/anthony/repos/Linux/config/xmonad/xmobar.hs
