@@ -43,6 +43,7 @@ declare -a options=(
 "news_urls - $HOME/repos/Linux/config/.newsboat/urls"
 "root_rice - $HOME/repos/Linux/config/rootrice.sh"
 "rice - $HOME/repos/Linux/config/rice.sh"
+"vieb - $HOME/repos/Linux/config/viebrc"
 )
 
 choice=$(printf '%s\n' "${options[@]}" | dmenu -sb '#458588' -i -p "Files")
