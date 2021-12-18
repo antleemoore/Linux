@@ -7,7 +7,7 @@ alias l='lsd -1'
 alias lf='lsd -F --color=always | grep -v @$'
 alias lr='lsd --tree'
 
-alias cdp="cd ~/projects"
+alias cdp="cd ~/Projects"
 alias cdc="cd ~/.config"
 alias cds="cd ~/scripts"
 alias cdu="cd ~/utils"

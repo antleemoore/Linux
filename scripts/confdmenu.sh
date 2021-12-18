@@ -42,8 +42,8 @@ declare -a options=(
 "update_calendar - $HOME/repos/Linux/scripts/updatecalendar.sh"
 "newsboat - $HOME/repos/Linux/config/.newsboat/config"
 "news_urls - $HOME/repos/Linux/config/.newsboat/urls"
-"root_rice - $HOME/repos/Linux/config/rootrice.sh"
-"rice - $HOME/repos/Linux/config/rice.sh"
+"root_rice - $HOME/repos/Linux/config/startup/rootrice.sh"
+"rice - $HOME/repos/Linux/config/startup/rice.sh"
 "vieb - $HOME/repos/Linux/config/viebrc"
 )
 

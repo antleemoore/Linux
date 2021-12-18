@@ -23,8 +23,8 @@ filetype indent on
 filetype plugin on
 
 source $HOME/.config/nvim/plugin-config.vim
-syntax on
 au BufReadPost *.cls set syntax=java
 colorscheme gruvbox
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
+syntax on

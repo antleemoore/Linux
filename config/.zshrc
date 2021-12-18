@@ -10,6 +10,8 @@ export NVM_DIR="$HOME/.nvm"
 export ZSH="$HOME/.oh-my-zsh"
 export HDD="/run/media/anthony/Internal HDD"
 export SSD="/run/media/anthony/Windows SSD"
+export LR="$HOME/repos/Linux"
+export LRC="$HOME/repos/Linux/config"
 
 ZSH_THEME="agnoster"
 ENABLE_CORRECTION="true"
@@ -40,19 +42,3 @@ source $HOME/.zshprompt
 source $HOME/.sfdxalias
 
 neofetch
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/anthony/projects/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/anthony/projects/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/anthony/projects/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/anthony/projects/anaconda3/bin:$PATH"
-    fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
-

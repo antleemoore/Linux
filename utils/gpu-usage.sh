@@ -5,8 +5,6 @@ var=${var%|}
 var=$(echo ${var} | sed 's/MB//g')
 intOne=$(echo ${var} | sed 's/ \/.*//g')
 intTwo=$(echo ${var} | sed 's/.*\/ //g')
-echo -n $1 
-echo -n " "
-echo -n $(( intOne * 100 / intTwo))
-echo -n "% "
+sum=$((intOne*100/intTwo))
+echo $1 $sum%
 # echo -n $foo

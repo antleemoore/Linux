@@ -1,4 +1,5 @@
 au BufReadPost,BufNewFile *.wiki syntax on
+au BufReadPost,BufNewFile *.html syntax on
 
 let g:vimwiki_list = [{'path': '~/Documents/notes_vw'}]
 let g:rainbow_active = 1

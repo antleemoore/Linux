@@ -16,6 +16,7 @@ ln -s ~/repos/Linux/config/.zshprompt ~
 ln -s ~/repos/Linux/config/.sfdxalias ~
 ln -s ~/repos/Linux/scripts ~
 ln -s ~/repos/Linux/utils ~
+ln -s ~/repos/Linux/config/.screenlayout ~
 ln -s ~/repos/Linux/config/.newsboat ~
 ln -s ~/repos/Linux/config/alacritty.yml ~/.config/alacritty
 ln -s ~/repos/Linux/config/init.vim ~/.config/nvim

@@ -172,7 +172,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
     [ ((modm, xK_q), kill),
       ((modm .|. shiftMask, xK_q), spawn "xfce4-session-logout"),
       ((modm, xK_grave), spawn "gcolor2"),
-      ((modm, xK_w), spawn "firefox"),
+      ((modm, xK_w), spawn "microsoft-edge-stable"),
       ((mod1Mask, xK_w), spawn "$HOME/scripts/bookmarksdmenu.sh"),
       ((modm .|. shiftMask, xK_w), spawn "$HOME/scripts/browsersdmenu.sh"),
       ((modm, xK_e), spawn "thunar"),
