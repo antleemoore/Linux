@@ -170,7 +170,7 @@ openSilent tows = do
 myKeys conf@(XConfig {XMonad.modMask = modm}) =
   M.fromList $
     [ ((modm, xK_q), kill),
-      ((modm .|. shiftMask, xK_q), spawn "xfce4-session-logout"),
+      ((modm .|. shiftMask, xK_q), spawn "lxsession-logout"),
       ((modm, xK_grave), spawn "gcolor2"),
       ((modm, xK_w), spawn "microsoft-edge-stable"),
       ((mod1Mask, xK_w), spawn "$HOME/scripts/bookmarksdmenu.sh"),
