@@ -7,7 +7,7 @@ alias l='lsd -1'
 alias lf='lsd -F --color=always | grep -v @$'
 alias lr='lsd --tree'
 
-alias cdp="cd ~/Projects"
+alias cdp="cd ~/projects"
 alias cdc="cd ~/.config"
 alias cds="cd ~/scripts"
 alias cdu="cd ~/utils"
@@ -19,6 +19,7 @@ alias cdssd="cd /run/media/anthony/Windows\ SSD"
 
 alias codehere="code . && exit"
 alias autoc='~/utils/auto-compile.sh'
+alias v="neovide"
 alias vim="nvim"
 alias vimr="$BROWSER www.vimregex.com"
 alias pdf="qpdfview"
@@ -51,3 +52,7 @@ alias cleanpac="sudo pacman -Rns $(pacman -Qtdq)"
 alias hdmi="xrandr --output HDMI-1-0 --auto"
 alias hdmioff="xrandr --output HDMI-1-0 --off"
 alias monfix="$HOME/scripts/threemonitorsetup.sh && exit"
+
+
+alias ca="conda activate"
+alias cad="conda deactivate"
