@@ -63,7 +63,7 @@ main = do
           startupHook = myStartupHook,
           logHook =
             dynamicLogWithPP $
-              xmobarPP {ppOutput = hPutStrLn h, ppCurrent = currentWorkspaceStyle, ppTitle = windowTitleStyle, ppLayout = layoutIndicatorStyle, ppVisible = visibleWorkspaceStyle, ppSep = " ", ppOrder = \(ws : l : t : _) -> [ws,l,t]}
+              xmobarPP {ppOutput = hPutStrLn h, ppCurrent = currentWorkspaceStyle, ppTitle = windowTitleStyle, ppLayout = layoutIndicatorStyle, ppVisible = visibleWorkspaceStyle, ppSep = " ", ppOrder = \(ws : l : _ : _) -> [ws,l]}
         }
 
 -- Custom Hooks

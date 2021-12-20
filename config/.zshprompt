@@ -13,7 +13,7 @@ function git_branch_name()
   then
     :
   else
-      echo '(%B%F{#FB4934}'$branch'%f%b)'
+      echo '(%B%F{#FB4934}'$branch'%f%b) '
   fi
 }
 
@@ -64,7 +64,8 @@ echo -ne '\e[5 q' # Use beam shape cursor on startup.
 preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 
 NEWLINE=$'\n'
-PROMPT='%B%F{#CC241D}[%f%b %B%F{#458588}%n%f%b%B%F{#D79921}@%f%b%B%F{#689D6A}%m%f%b %B%F{#B16286}%~%f%b %B%F{#CC241D}]%f%b $(git_branch_name)${NEWLINE}$ '
+#PROMPT='%B%F{#CC241D}[%f%b %B%F{#458588}%n%f%b%B%F{#D79921}@%f%b%B%F{#689D6A}%m%f%b %B%F{#B16286}%~%f%b %B%F{#CC241D}]%f%b $(git_branch_name)${NEWLINE}$ '
+PROMPT=' %B%F{#ebdbb2}%~%f%b%B%F{#CC241D}%f%b $(git_branch_name)$ '
 function precmd() {
     # Print a newline before the prompt, unless it's the
     # first prompt in the process.
