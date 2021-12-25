@@ -9,7 +9,7 @@ Config {
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
    commands = 
-        [ Run DiskU [("/", "<fn=2>\x1f4bd</fn><freep>%")] 
+        [ Run DiskU [("/home", "<fn=2>\x1f4bd</fn><usedp>%")] 
                     ["-L", "20", "-H", "80", "-m", "1", "-p", "3"] 3000,
           -- Run Volume "default" "Master" [ "--template", "<action=`pavucontrol -t 3`><status> <volume>%</action>", "--", "--on", "<fn=1>\xf485</fn>", "--off", "<fn=1>\xf466</fn>", "--onc", "#F2E5BC", "--offc", "#FB4934" ] 5,
           Run Com "/home/anthony/utils/multi-volume.sh" ["<fn=2>\x1f3a7</fn>", "<fn=2>🔊</fn>"] "multivolume" 5,

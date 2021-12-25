@@ -79,6 +79,7 @@ myStartupHook = do
   spawnOnce xmobar_s
   spawnOnce screenlayout_s
   spawnOnce clipboard_s
+  spawnOnce bluetooth_s
 
 -- Default Variables
 myTerminal = "alacritty"
@@ -111,6 +112,7 @@ compositor_s = "picom &"
 xmobar_s = "/home/anthony/utils/xmobar-delayed.sh &"
 caffeine_s = "caffeine &"
 clipboard_s = "xfce4-clipman &"
+bluetooth_s = "blueman-applet &"
 
 -- Spacing/Position Variables
 mySpacing = spacingRaw False (Border 3 0 3 0) True (Border 0 3 0 3) True

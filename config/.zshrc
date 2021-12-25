@@ -12,6 +12,7 @@ export HDD="/run/media/anthony/Internal HDD"
 export SSD="/run/media/anthony/Windows SSD"
 export LR="$HOME/repos/Linux"
 export LRC="$HOME/repos/Linux/config"
+export PATH="$HOME/bin:$PATH"
 
 ZSH_THEME="agnoster"
 ENABLE_CORRECTION="true"
