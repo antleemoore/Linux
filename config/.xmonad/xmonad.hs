@@ -36,7 +36,6 @@ import XMonad.Layout.Spiral
 import XMonad.Layout.ThreeColumns
 import XMonad.ManageHook
 import qualified XMonad.StackSet as W
-import XMonad.Util.EZConfig
 import XMonad.Util.Run
 import XMonad.Util.Scratchpad
 import XMonad.Util.SpawnOnce
@@ -99,7 +98,7 @@ myClickableWorkspaces = clickable . map xmobarEscape $ myWorkspaces
           let n = i
       ]
 
-myFocusedBorderColor = "#FB4934"
+myFocusedBorderColor = "#FF6188"
 myBorderWidth = 3
 
 -- Startup Variables
@@ -153,12 +152,12 @@ teamsMonitor = appName =? "Microsoft Teams - Preview" --> openSilent "3"
 chromeMonitor = appName =? "google-chrome" --> openSilent "2"
 
 -- XMobar Styling
-hiddenNoWindowWSStyle = xmobarColor "#F2E5BC" ""
-windowTitleStyle = xmobarColor "#B8BB26" ""
-layoutIndicatorStyle = xmobarColor "#CC241D" ""
-currentWorkspaceStyle = xmobarColor "#FABD2F" "" . wrap "[" "]"
-hiddenWSStyle = xmobarColor "#FABD2F" ""
-visibleWorkspaceStyle = xmobarColor "#e3869b" "" . wrap "(" ")"
+hiddenNoWindowWSStyle = xmobarColor "#FCFCFA" ""
+windowTitleStyle = xmobarColor "#A9DC76" ""
+layoutIndicatorStyle = xmobarColor "#FF6188" ""
+currentWorkspaceStyle = xmobarColor "#FFD866" "" . wrap "[" "]"
+hiddenWSStyle = xmobarColor "#FFD866" ""
+visibleWorkspaceStyle = xmobarColor "#AB9DF2" "" . wrap "(" ")"
 
 openSilent :: WorkspaceId -> ManageHook
 openSilent tows = do

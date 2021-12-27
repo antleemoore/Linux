@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DMBROWSER="firefox"
+DMBROWSER="microsoft-edge-stable"
 
 declare -a options=(
 "Search - https://www.bing.com"

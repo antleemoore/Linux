@@ -19,30 +19,34 @@ font:
 draw_bold_text_with_bright_colors: true
 
 colors:
+  # Default colors
   primary:
-    background: "#32302f"
-    foreground: "#f2e5bc"
+    background: '#2D2A2E'
+    foreground: '#FCFCFA'
 
+  # Normal colors
   normal:
-    black: "#6a6766"
-    red: "#cc241d"
-    green: "#98971a"
-    yellow: "#d79921"
-    blue: "#458588"
-    magenta: "#b16286"
-    cyan: "#689d6a"
-    white: "#f2e5bc"
+    black:   '#403E41'
+    red:     '#FF6188'
+    green:   '#A9DC76'
+    yellow:  '#FFD866'
+    blue:    '#FC9867'
+    magenta: '#AB9DF2'
+    cyan:    '#78DCE8'
+    white:   '#FCFCFA'
 
+  # Bright colors
   bright:
-    black: "#1d2021"
-    red: "#fb4934"
-    green: "#b8bb26"
-    yellow: "#fabd2f"
-    blue: "#83a598"
-    magenta: "#d3869b"
-    cyan: "#83c07c"
-    white: "#fff1c6"
+    black:   '#727072'
+    red:     '#FF6188'
+    green:   '#A9DC76'
+    yellow:  '#FFD866'
+    blue:    '#FC9867'
+    magenta: '#AB9DF2'
+    cyan:    '#78DCE8'
+    white:   '#FCFCFA'
 
+  # Bright colors
 background_opacity: .90
 
 mouse:
