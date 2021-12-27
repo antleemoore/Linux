@@ -19,7 +19,7 @@ declare -a options=(
 
 )
 
-choice=$(printf '%s\n' "${options[@]}" | dmenu -sb '#B16286' -i -p 'Bookmarks')
+choice=$(printf '%s\n' "${options[@]}" | dmenu -sb '#ab9df2' -i -p 'Bookmarks')
 if [[ "$choice" ]]; then
     cfg=$(printf '%s\n' "$choice" | awk '{print $NF}')
     $DMBROWSER "$cfg"

@@ -6,7 +6,7 @@ declare -a options=(
 "firefox"
 )
 
-choice=$(printf '%s\n' "${options[@]}" | dmenu -sb '#CC241D' -i -p 'Bookmarks')
+choice=$(printf '%s\n' "${options[@]}" | dmenu -sb '#ff6188' -i -p 'Bookmarks')
 if [[ "$choice" ]]; then
     cfg=$(printf '%s\n' "$choice" | awk '{print $NF}')
     $cfg ""

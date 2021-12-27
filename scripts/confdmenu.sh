@@ -47,7 +47,7 @@ declare -a options=(
 "vieb - $HOME/repos/Linux/config/viebrc"
 )
 
-choice=$(printf '%s\n' "${options[@]}" | dmenu -sb '#458588' -i -p "Files")
+choice=$(printf '%s\n' "${options[@]}" | dmenu -sb '#78dce8' -i -p "Files")
 
 if [[ "$choice" ]]; then
     cfg=$(printf '%s\n' "$choice" | awk '{print $NF}')
