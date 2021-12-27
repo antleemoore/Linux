@@ -5,6 +5,7 @@
 import qualified Data.Map as M
 import Graphics.X11.ExtraTypes.XF86
 import XMonad
+import XMonad.Config.Xfce
 -- Action Imports
 
 import XMonad.Actions.CopyWindow
@@ -13,7 +14,7 @@ import XMonad.Actions.FindEmptyWorkspace
 import XMonad.Actions.NoBorders
 import XMonad.Actions.OnScreen
 import XMonad.Actions.SpawnOn
-import XMonad.Config.Xfce
+import XMonad.Actions.Submap
 -- Util Imports
 
 -- Hook Imports
@@ -175,16 +176,18 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm .|. shiftMask, xK_q), spawn "lxsession-logout"),
       ((modm, xK_grave), spawn "gcolor2"),
       ((modm, xK_w), spawn "microsoft-edge-stable"),
-      ((mod1Mask, xK_w), spawn "$HOME/scripts/bookmarksdmenu.sh"),
-      ((modm .|. shiftMask, xK_w), spawn "$HOME/scripts/browsersdmenu.sh"),
       ((modm, xK_e), spawn "thunar"),
-      ((mod1Mask, xK_e), spawn "$HOME/scripts/confdmenu.sh"),
       ((modm, xK_r), sendMessage $ Toggle REFLECTX),
       ((mod1Mask, xK_t), runInTerm "" "htop"),
       ((modm, xK_y), sendMessage NextLayout),
       ((mod1Mask, xK_y), setLayout $ XMonad.layoutHook conf),
       ((modm, xK_u), sendMessage MirrorExpand),
-      ((modm, xK_p), spawn dmenu_c),
+      ((modm, xK_p), submap . M.fromList $
+        [ ((0, xK_p),   spawn dmenu_c)
+        , ((0, xK_e),   spawn "$HOME/scripts/confdmenu.sh")
+        , ((0, xK_w),   spawn "$HOME/scripts/bookmarksdmenu.sh")
+        , ((0, xK_b),   spawn "$HOME/scripts/browsersdmenu.sh")
+        ]),
       ((modm, xK_bracketright), nextWS),
       ((mod1Mask, xK_bracketright), shiftToNext),
       ((modm, xK_bracketleft), prevWS),
