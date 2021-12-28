@@ -1,10 +1,10 @@
 Config { 
    font = "xft:DejaVu Sans:size=12:antialias=true:hinting=true",
    additionalFonts = [  "xft:Symbols Nerd Font:pixelsize=15:antialias=true:hinting=true", "xft:Noto Color Emoji:pixelsize=12"],
-   bgColor = "#403e41", fgColor = "#FCFCFA", position = TopW L 100, border = BottomB,
+   bgColor = "#312F2E", fgColor = "#FCFCFA", position = TopW L 100, border = BottomB,
    borderColor = "black", sepChar = "%", alignSep = "}{",
 -- Desktop template
-   template = "%UnsafeStdinReader%  %uptime%  %date%  <fc=#FC9867>%bitcoin%</fc>}{%dynnetwork%  %KMCO%  %chancerain%  %checkupdates%  <action=`alacritty -e newsboat`>%news%</action>  %multicpu%  %memory%  %gpu%  %disku% %multivolume%  %trayerpad%",
+   template = "%UnsafeStdinReader%  <fc=#ffd866>%uptime%</fc>  %date%  <fc=#FC9867>%bitcoin%</fc>}{%dynnetwork%  %KMCO%  %chancerain%  <fc=#ffd866>%checkupdates%</fc>  <action=`alacritty -e newsboat`>%news%</action>  %multicpu%  %memory%  %gpu%  %disku% %multivolume%  %trayerpad%",
    lowerOnStart = True, hideOnStart = False, allDesktops = True,
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
@@ -29,7 +29,7 @@ Config {
           Run Uptime ["-t", "<fn=2>\x1F427</fn> <days>d <hours>h <minutes>m"] 600,
           Run WeatherX "KMCO" 
                             [ ("clear", "☀"), ("sunny", "☀"), ("mostly clear", "☀"), ("mostly sunny", "🌤"), ("partly sunny", "⛅"), ("fair", "🌥"), ("cloudy","☁"), ("overcast","🌧"), ("partly cloudy", "🌤"), ("mostly cloudy", "⛅"), ("considerable cloudiness", "🌥") ]
-                            [ "--template", "<fn=2><skyConditionS></fn><fc=#AB9DF2><tempF></fc>°F", "-L","65", "-H", "90", "--normal", "#FCFCFA", "--high", "#FF6188", "--low", "#78DCE8" ] 36000
+                            [ "--template", "<fn=2><skyConditionS></fn><tempF>°F", "-L","68", "-H", "90", "--normal", "#FCFCFA", "--high", "#FF6188", "--low", "#ab9df2" ] 36000
         ]
 }
 -- Other Templates

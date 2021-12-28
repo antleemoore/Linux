@@ -63,7 +63,7 @@ main = do
           startupHook = myStartupHook,
           logHook =
             dynamicLogWithPP $
-              xmobarPP {ppOutput = hPutStrLn h, ppCurrent = currentWorkspaceStyle, ppTitle = windowTitleStyle, ppLayout = layoutIndicatorStyle, ppVisible = visibleWorkspaceStyle, ppSep = " ", ppOrder = \(ws : l : _ : _) -> [ws,l]}
+              xmobarPP {ppOutput = hPutStrLn h, ppCurrent = currentWorkspaceStyle, ppTitle = windowTitleStyle, ppLayout = layoutIndicatorStyle, ppVisible = visibleWorkspaceStyle, ppSep = "  ", ppOrder = \(ws : l : _ : _) -> [ws,l], ppHiddenNoWindows=hiddenNoWindowWSStyle, ppHidden=hiddenWSStyle}
         }
 
 -- Custom Hooks
@@ -155,9 +155,9 @@ chromeMonitor = appName =? "google-chrome" --> openSilent "2"
 hiddenNoWindowWSStyle = xmobarColor "#FCFCFA" ""
 windowTitleStyle = xmobarColor "#A9DC76" ""
 layoutIndicatorStyle = xmobarColor "#FF6188" ""
-currentWorkspaceStyle = xmobarColor "#FFD866" "" . wrap "[" "]"
-hiddenWSStyle = xmobarColor "#FFD866" ""
-visibleWorkspaceStyle = xmobarColor "#AB9DF2" "" . wrap "(" ")"
+currentWorkspaceStyle = xmobarColor "#FCFCFA" "" . wrap "[" "]"
+hiddenWSStyle = xmobarColor "#FCFCFA" "" . wrap "" "*"
+visibleWorkspaceStyle = xmobarColor "#FCFCFA" "" . wrap "(" ")"
 
 openSilent :: WorkspaceId -> ManageHook
 openSilent tows = do
