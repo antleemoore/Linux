@@ -37,7 +37,6 @@ import XMonad.Layout.ThreeColumns
 import XMonad.ManageHook
 import qualified XMonad.StackSet as W
 import XMonad.Util.Run
-import XMonad.Util.Scratchpad
 import XMonad.Util.SpawnOnce
 
 spawnToWorkspace :: String -> String -> X ()
@@ -145,7 +144,7 @@ floatPavu = appName =? "pavucontrol" --> doCenterFloat
 floatSu = appName =? "zenity" --> doCenterFloat
 moveWebcamToSide = className =? "mpv" --> myMoveToStackHook
 floatColorPicker = appName =? "gcolor2" --> doCenterFloat
-myManageHookCombo = myManageHooks <+> manageSpawn <+> manageDocks <+> scratchpadManageHook (W.RationalRect 0.25 0.25 0.5 0.5) <+> manageHook xfceConfig
+myManageHookCombo = myManageHooks <+> manageSpawn <+> manageDocks <+> manageHook xfceConfig
 myHandleEventHookCombo = handleEventHook xfceConfig <+> docksEventHook <+> fullscreenEventHook
 myKeyCombo = myKeys <+> keys defaultConfig
 teamsMonitor = appName =? "Microsoft Teams - Preview" --> openSilent "3"
@@ -168,6 +167,7 @@ openSilent tows = do
 --       |               |                |- move focus to "to" workspace
 --       |               |- insert window
 --       |- move focus back to "from" workspace
+
 -- Keybindings
 myKeys conf@(XConfig {XMonad.modMask = modm}) =
   M.fromList $
@@ -196,7 +196,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm, xK_d), sendMessage MirrorShrink),
       ((modm, xK_f), sequence_ fullScreenToggle_c),
       ((modm, xK_Return), spawn $ XMonad.terminal conf),
-      ((mod1Mask, xK_Return), scratchpadSpawnActionCustom "alacritty --class scratchpad"),
       ((modm .|. shiftMask, xK_x), spawn "xkill"),
       ((modm, xK_c), spawn webcam_c),
       ((modm .|. shiftMask, xK_c), spawn "killall mpv"),

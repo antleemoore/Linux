@@ -1,11 +1,21 @@
 #!/bin/sh
-b=$(pactl list sinks short | grep hdmi | awk '{print $1}')
-a=$(pactl -- get-sink-volume $b)
+hdmiemoji=$2
+hdmi=$(pactl list sinks short | grep hdmi | awk '{print $1}')
+hdmivolume=$(pactl -- get-sink-volume $hdmi)
+hdmimute=$(pactl -- get-sink-mute $hdmi | awk '{print $2}')
+if [ "$hdmimute" == "yes" ]; then
+    hdmiemoji=$3
+fi
 
-d=$(pactl list sinks short | grep analog-stereo | awk '{print $1}')
-e=$(pactl -- get-sink-volume $d)
+hpemoji=$1
+hp=$(pactl list sinks short | grep analog-stereo | awk '{print $1}')
+hpvolume=$(pactl -- get-sink-volume $hp)
+hpmute=$(pactl -- get-sink-mute $hp | awk '{print $2}')
+if [ "$hpmute" == "yes" ]; then
+    hpemoji=$3
+fi
 
-c=$([[ $a =~ [0123456789]+% ]] && echo "$BASH_REMATCH")
-f=$([[ $e =~ [0123456789]+% ]] && echo "$BASH_REMATCH")
+sprint=$([[ $hdmivolume =~ [0123456789]+% ]] && echo "$BASH_REMATCH")
+hpprint=$([[ $hpvolume =~ [0123456789]+% ]] && echo "$BASH_REMATCH")
 
-echo $1 $f $2 $c
+echo $hpemoji $hpprint $hdmiemoji $sprint
