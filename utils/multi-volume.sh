@@ -1,3 +1,4 @@
+#!/bin/sh
 b=$(pactl list sinks short | grep hdmi | awk '{print $1}')
 a=$(pactl -- get-sink-volume $b)
 

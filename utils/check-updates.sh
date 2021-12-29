@@ -1,3 +1,5 @@
 #!/bin/bash
 check=$(checkupdates | wc -l)
-echo "$1 $check"
+if [[ $check -ne 0 ]]; then
+    echo $1 $check
+fi

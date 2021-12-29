@@ -24,6 +24,7 @@ alias vim="nvim"
 alias vimr="$BROWSER www.vimregex.com"
 alias pdf="qpdfview"
 alias svim="sudo nvim"
+alias tempsh="$HOME/utils/gen-temp-script.sh"
 
 alias zshc="nvim ~/.zshrc"
 alias vimc="nvim ~/.vimrc"
@@ -52,7 +53,8 @@ alias cleanpac="sudo pacman -Rns $(pacman -Qtdq)"
 alias hdmi="xrandr --output HDMI-1-0 --auto"
 alias hdmioff="xrandr --output HDMI-1-0 --off"
 alias monfix="$HOME/scripts/threemonitorsetup.sh && exit"
-
+alias dmon="$HOME/.screenlayout/layout.sh"
+alias smon="$HOME/.screenlayout/single-monitor.sh"
 
 alias ca="conda activate"
 alias cad="conda deactivate"

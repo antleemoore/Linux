@@ -4,7 +4,7 @@ Config {
    bgColor = "#312F2E", fgColor = "#FCFCFA", position = TopW L 100, border = BottomB,
    borderColor = "black", sepChar = "%", alignSep = "}{",
 -- Desktop template
-   template = "%UnsafeStdinReader%  <fc=#ffd866>%uptime%</fc>  %date%  <fc=#FC9867>%bitcoin%</fc>}{%dynnetwork%  %KMCO%  %chancerain%  <fc=#ffd866>%checkupdates%</fc>  <action=`alacritty -e newsboat`>%news%</action>  %multicpu%  %memory%  %gpu%  %disku% %multivolume%  %trayerpad%",
+   template = "%UnsafeStdinReader%  <fc=#ab9df2>%uptime%</fc>  %date%  <fc=#FC9867>%bitcoin%</fc>  <fc=#ffd866>%checkupdates%</fc>}{%dynnetwork%  %KMCO%  %chancerain%  <action=`alacritty -e newsboat`>%news%</action>  %multicpu%  %memory%  %gpu%  %disku% %multivolume%  %trayerpad%",
    lowerOnStart = True, hideOnStart = False, allDesktops = True,
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
@@ -19,7 +19,7 @@ Config {
           Run Com "/home/anthony/utils/trayer-padding-icon.sh" [] "trayerpad" 20,
           Run Com "/home/anthony/utils/gpu-usage.sh" ["<fn=2>\x1f3ae</fn>"] "gpu" 60,
           Run Com "/home/anthony/utils/chance-rain.sh" ["<fn=2>\x2602</fn>"] "chancerain" 36000,
-          Run Com "/home/anthony/utils/check-updates.sh" ["<fn=2>\x1F4E6</fn>"] "checkupdates" 36000,
+          Run Com "/home/anthony/utils/check-updates.sh" ["<fn=2>\x1F4E6</fn>"] "checkupdates" 3000,
           Run Com "/home/anthony/utils/bitcoin-price.sh" ["<fn=2>\x1F4B0</fn>"] "bitcoin" 72000,
           Run Com "/home/anthony/utils/shownews.sh" ["<fn=2>\x1F4F0</fn>"] "news" 1200,
           Run Date "<action=`alacritty -e calcurse`><fc=#A9DC76><fn=2>\x1f4c5</fn> %a %b %d %Y</fc></action> <fc=#78DCE8><fn=2>\x1f551</fn> %I:%M:%S %p</fc>" "date" 10,

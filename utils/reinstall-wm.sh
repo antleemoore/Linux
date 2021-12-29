@@ -1,3 +1,4 @@
+#!/bin/sh
 xmonad --recompile
 xmonad --restart
 # xfce4-panel --restart

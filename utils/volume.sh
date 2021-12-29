@@ -1,3 +1,4 @@
+#!/bin/sh
 hdmi=$(pactl list sinks short | grep hdmi | grep RUNNING | awk '{print $1}')
 headphones=$(pactl list sinks short | grep analog-stereo | grep RUNNING | awk '{print $1}')
 

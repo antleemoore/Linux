@@ -145,7 +145,7 @@ floatPavu = appName =? "pavucontrol" --> doCenterFloat
 floatSu = appName =? "zenity" --> doCenterFloat
 moveWebcamToSide = className =? "mpv" --> myMoveToStackHook
 floatColorPicker = appName =? "gcolor2" --> doCenterFloat
-myManageHookCombo = myManageHooks <+> manageSpawn <+> manageDocks <+> scratchpadManageHookDefault <+> manageHook xfceConfig
+myManageHookCombo = myManageHooks <+> manageSpawn <+> manageDocks <+> scratchpadManageHook (W.RationalRect 0.25 0.25 0.5 0.5) <+> manageHook xfceConfig
 myHandleEventHookCombo = handleEventHook xfceConfig <+> docksEventHook <+> fullscreenEventHook
 myKeyCombo = myKeys <+> keys defaultConfig
 teamsMonitor = appName =? "Microsoft Teams - Preview" --> openSilent "3"
@@ -182,10 +182,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((mod1Mask, xK_y), setLayout $ XMonad.layoutHook conf),
       ((modm, xK_u), sendMessage MirrorExpand),
       ((modm, xK_p), submap . M.fromList $
-        [ ((0, xK_p),   spawn dmenu_c)
-        , ((0, xK_e),   spawn "$HOME/scripts/confdmenu.sh")
-        , ((0, xK_w),   spawn "$HOME/scripts/bookmarksdmenu.sh")
-        , ((0, xK_b),   spawn "$HOME/scripts/browsersdmenu.sh")
+        [ ((modm, xK_p),   spawn dmenu_c)
+        , ((modm, xK_e),   spawn "$HOME/scripts/confdmenu.sh")
+        , ((modm, xK_w),   spawn "$HOME/scripts/bookmarksdmenu.sh")
+        , ((modm, xK_b),   spawn "$HOME/scripts/browsersdmenu.sh")
         ]),
       ((modm, xK_bracketright), nextWS),
       ((mod1Mask, xK_bracketright), shiftToNext),
