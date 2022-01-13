@@ -1,7 +1,6 @@
--- Dependencies: xmobar, trayer, caffeine, alacritty, styli.sh, lxsession, picom, dmenu, mpv, screenkey, galculator, gcolor2, keybind-programs
-
 -- Base Imports
 
+import System.Exit
 import qualified Data.Map as M
 import Graphics.X11.ExtraTypes.XF86
 import XMonad
@@ -38,6 +37,8 @@ import XMonad.ManageHook
 import qualified XMonad.StackSet as W
 import XMonad.Util.Run
 import XMonad.Util.SpawnOnce
+import XMonad.Util.Scratchpad
+import XMonad.Prompt.ConfirmPrompt
 
 spawnToWorkspace :: String -> String -> X ()
 spawnToWorkspace workspace program = do
@@ -62,7 +63,7 @@ main = do
           startupHook = myStartupHook,
           logHook =
             dynamicLogWithPP $
-              xmobarPP {ppOutput = hPutStrLn h, ppCurrent = currentWorkspaceStyle, ppTitle = windowTitleStyle, ppLayout = layoutIndicatorStyle, ppVisible = visibleWorkspaceStyle, ppSep = "  ", ppOrder = \(ws : l : _ : _) -> [ws,l], ppHiddenNoWindows=hiddenNoWindowWSStyle, ppHidden=hiddenWSStyle}
+              xmobarPP {ppOutput = hPutStrLn h, ppCurrent = currentWorkspaceStyle, ppTitle = windowTitleStyle, ppLayout = layoutIndicatorStyle, ppVisible = visibleWorkspaceStyle, ppSep = "  ", ppOrder = \(ws : l : _ : _) -> [ws,l]} -- ppHiddenNoWindows=hiddenNoWindowWSStyle, ppHidden=hiddenWSStyle }
         }
 
 -- Custom Hooks
@@ -97,7 +98,7 @@ myClickableWorkspaces = clickable . map xmobarEscape $ myWorkspaces
           let n = i
       ]
 
-myFocusedBorderColor = "#FF6188"
+myFocusedBorderColor = "#EB0400"
 myBorderWidth = 3
 
 -- Startup Variables
@@ -144,7 +145,7 @@ floatPavu = appName =? "pavucontrol" --> doCenterFloat
 floatSu = appName =? "zenity" --> doCenterFloat
 moveWebcamToSide = className =? "mpv" --> myMoveToStackHook
 floatColorPicker = appName =? "gcolor2" --> doCenterFloat
-myManageHookCombo = myManageHooks <+> manageSpawn <+> manageDocks <+> manageHook xfceConfig
+myManageHookCombo = myManageHooks <+> manageSpawn <+> manageDocks <+> scratchpadManageHook (W.RationalRect 0.1 0.1 0.8 0.8)
 myHandleEventHookCombo = handleEventHook xfceConfig <+> docksEventHook <+> fullscreenEventHook
 myKeyCombo = myKeys <+> keys defaultConfig
 teamsMonitor = appName =? "Microsoft Teams - Preview" --> openSilent "3"
@@ -167,17 +168,21 @@ openSilent tows = do
 --       |               |                |- move focus to "to" workspace
 --       |               |- insert window
 --       |- move focus back to "from" workspace
-
 -- Keybindings
 myKeys conf@(XConfig {XMonad.modMask = modm}) =
   M.fromList $
     [ ((modm, xK_q), kill),
-      ((modm .|. shiftMask, xK_q), spawn "lxsession-logout"),
+      ((modm .|. shiftMask, xK_q), submap . M.fromList $
+        [ ((modm .|. shiftMask, xK_q), spawn "shutdown now")
+        , ((modm .|. shiftMask, xK_r), spawn "reboot")
+        , ((modm .|. shiftMask, xK_e),   io (exitWith ExitSuccess))
+        ]),
       ((modm, xK_grave), spawn "gcolor2"),
       ((modm, xK_w), spawn "microsoft-edge-stable"),
       ((modm, xK_e), spawn "thunar"),
       ((modm, xK_r), sendMessage $ Toggle REFLECTX),
       ((mod1Mask, xK_t), runInTerm "" "htop"),
+      ((controlMask .|. mod1Mask, xK_t), spawn "terminator"),
       ((modm, xK_y), sendMessage NextLayout),
       ((mod1Mask, xK_y), setLayout $ XMonad.layoutHook conf),
       ((modm, xK_u), sendMessage MirrorExpand),
@@ -196,6 +201,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm, xK_d), sendMessage MirrorShrink),
       ((modm, xK_f), sequence_ fullScreenToggle_c),
       ((modm, xK_Return), spawn $ XMonad.terminal conf),
+      ((modm .|. shiftMask, xK_Return), scratchpadSpawnActionCustom "alacritty --class scratchpad"),
       ((modm .|. shiftMask, xK_x), spawn "xkill"),
       ((modm, xK_c), spawn webcam_c),
       ((modm .|. shiftMask, xK_c), spawn "killall mpv"),
@@ -203,9 +209,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((modm .|. shiftMask, xK_v), killAllOtherCopies),
       ((mod1Mask, xK_v), spawn "xfce4-popup-clipman"),
       ((modm, xK_b), withFocused toggleBorder),
-      ((modm, xK_m), sendToEmptyWorkspace),
-      ((mod1Mask, xK_m), tagToEmptyWorkspace),
       ((modm, xK_n), viewEmptyWorkspace),
+      ((modm .|. shiftMask, xK_n), sendToEmptyWorkspace),
+      ((modm, xK_m), submap . M.fromList $
+        [ ((modm, xK_s),   spawn "$HOME/.screenlayout/single-monitor.sh")
+        , ((modm, xK_d),   spawn "$HOME/.screenlayout/layout.sh")
+        ]),
       ((modm, xK_space), windows W.swapMaster),
       ((modm, xK_KP_Enter), spawn "galculator"),
       ((0, xF86XK_MonBrightnessDown), spawn "lux -m 1 -s 5%"),
@@ -218,8 +227,12 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) =
       ((0, xF86XK_AudioNext), spawn "playerctl next"),
       ((0, xK_Menu), spawn "xdotool click 3"),
       ((0, xK_Pause), spawn "xfce4-session-logout -s"),
-      ((modm, xK_0), runInTerm "" "xrandr --output HDMI-1-0 --auto"),
-      ((modm, xK_F7), spawn "touchpad-indicator -c")
+      ((0, xK_F1), spawn "$HOME/utils/volume.sh mute"),
+      ((0, xK_F2), spawn "$HOME/utils/volume.sh down"),
+      ((0, xK_F3), spawn "$HOME/utils/volume.sh up"),
+      ((0, xK_F5), spawn "playerctl previous"),
+      ((0, xK_F6), spawn "playerctl play-pause"),
+      ((0, xK_F7), spawn "playerctl next")
     ]
       ++ [ ((m .|. 0, k), windows (f i))
            | (i, k) <- zip (workspaces conf) [xK_1 .. xK_9],

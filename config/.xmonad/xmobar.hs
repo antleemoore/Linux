@@ -4,7 +4,7 @@ Config {
    bgColor = "#312F2E", fgColor = "#FCFCFA", position = TopW L 100, border = BottomB,
    borderColor = "black", sepChar = "%", alignSep = "}{",
 -- Desktop template
-   template = "%UnsafeStdinReader%  <fc=#ab9df2>%uptime%</fc>  %date%  <fc=#FC9867>%bitcoin%</fc>  <fc=#ffd866>%checkupdates%</fc>}{%dynnetwork%  %KMCO%  %chancerain%  <action=`alacritty -e newsboat`>%news%</action>  %multicpu%  %memory%  %gpu%  %disku% %multivolume%  %trayerpad%",
+   template = "%UnsafeStdinReader%  <fc=#ab9df2>%uptime%</fc>  %date%  <fc=#FC9867>%bitcoin%</fc>  <fc=#ffd866>%checkupdates%</fc>}{%dynnetwork%  %KMCO%  %chancerain%  <action=`alacritty -e newsboat`>%news%</action>  %multicpu%  %memory%  %gpu%  %disku% %multivolume% %trayerpad%",
    lowerOnStart = True, hideOnStart = False, allDesktops = True,
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
@@ -28,7 +28,7 @@ Config {
           Run Locks,
           Run Uptime ["-t", "<fn=2>\x1F427</fn> <days>d <hours>h <minutes>m"] 600,
           Run WeatherX "KMCO" 
-                            [ ("clear", "☀"), ("sunny", "☀"), ("mostly clear", "☀"), ("mostly sunny", "🌤"), ("partly sunny", "⛅"), ("fair", "🌥"), ("cloudy","☁"), ("overcast","🌧"), ("partly cloudy", "🌤"), ("mostly cloudy", "⛅"), ("considerable cloudiness", "🌥") ]
+                            [ ("clear", "☀"), ("sunny", "☀"), ("mostly clear", "☀"), ("mostly sunny", "🌤 "), ("partly sunny", "⛅"), ("fair", "🌥"), ("cloudy","☁"), ("overcast","🌧"), ("partly cloudy", "🌤"), ("mostly cloudy", "⛅"), ("considerable cloudiness", "🌥") ]
                             [ "--template", "<fn=2><skyConditionS></fn><tempF>°F", "-L","68", "-H", "90", "--normal", "#FCFCFA", "--high", "#FF6188", "--low", "#ab9df2" ] 36000
         ]
 }

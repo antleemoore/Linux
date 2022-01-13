@@ -58,3 +58,5 @@ alias smon="$HOME/.screenlayout/single-monitor.sh"
 
 alias ca="conda activate"
 alias cad="conda deactivate"
+
+alias nf="neofetch --block_range 0 7"
