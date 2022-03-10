@@ -1,3 +1,0 @@
-alias sfdxdep='sfdx force:source:deploy -p .'
-alias sfdxret='sfdx force:source:retrieve -p .'
-alias cddev='cd $HOME/projects/salesforce/dev/dev/force-app/main/default'

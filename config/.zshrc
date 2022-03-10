@@ -40,9 +40,7 @@ ZSH_HIGHLIGHT_STYLES[globbing]='none'
 
 source $HOME/.zshaliases
 source $HOME/.zshprompt
-source $HOME/.sfdxalias
 
-pfetch
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
