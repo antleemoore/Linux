@@ -1,5 +1,6 @@
 #!/bin/sh
-mkdir ~/repos ~/Projects ~/.config/dunst ~/.config/picom ~/.xmonad ~/.config/alacritty ~/.config/nvim
+sudo pacman -Syyu neovim noto-fonts-emoji alsa-lib alsa-plugins alsa-utils python3 zsh xorg-xev xorg-xprop dunst nitrogen picom trayer neofetch lsd npm yarn lxsession xmonad xmonad-contrib xmobar cronie aspell-en libmythes mythes-en languagetool alacritty python-pip make gcc discord adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx-im fcitx-configtool fcitx-anthy xdotool lxappearance ttf-nerd-fonts-symbols playerctl mpv xorg-xkill screenkey steam pacman-contrib ntfs-3g mlocate base-devel
+mkdir ~/repos ~/Projects ~/.config/coc ~/.config/dunst ~/.config/picom ~/.xmonad ~/.config/alacritty ~/.config/nvim
 git clone https://github.com/antleemoore/Linux ~/repos/Linux
 git clone https://github.com/antleemoore/dmenu ~/repos/dmenu
 git clone https://aur.archlinux.org/yay.git ~/repos/yay
@@ -10,10 +11,6 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 git clone https://github.com/ryanoasis/nerd-fonts --depth=1 ~/repos/nerd-fonts
 ~/repos/nerd-fonts/install.sh
 cd ~/repos/dmenu && sudo make install && cd ~
-ln -s ~/repos/Linux/config/.zshrc ~
-ln -s ~/repos/Linux/config/.zshaliases ~
-ln -s ~/repos/Linux/config/.zshprompt ~
-ln -s ~/repos/Linux/config/.sfdxalias ~
 ln -s ~/repos/Linux/scripts ~
 ln -s ~/repos/Linux/utils ~
 ln -s ~/repos/Linux/config/.screenlayout ~
@@ -21,16 +18,28 @@ ln -s ~/repos/Linux/config/.newsboat ~
 ln -s ~/repos/Linux/config/alacritty.yml ~/.config/alacritty
 ln -s ~/repos/Linux/config/init.vim ~/.config/nvim
 ln -s ~/repos/Linux/config/plugin-config.vim ~/.config/nvim
-# ln -s ~/repos/Linux/config/.snippets ~/.config/coc/ultisnip
 ln -s ~/repos/Linux/config/.pam_environment ~
 ln -s ~/repos/Linux/config/.vimrc ~
 ln -s ~/repos/Linux/config/.vimset ~
 ln -s ~/repos/Linux/config/.vimremap ~
-ln -s ~/repos/Linux/config/xmonad/xmobar.hs ~/.xmonad
-ln -s ~/repos/Linux/config/xmonad/xmonad.hs ~/.xmonad
+ln -s ~/repos/Linux/config/.xmonad/ ~
 ln -s ~/repos/Linux/config/picom.conf ~/.config/picom
 ln -s ~/repos/Linux/config/dunstrc ~/.config/dunst
 python -m pip install --user --upgrade pynvim
+nvim +PluginInstall +qall
+cd ~/.vim/bundle/coc.nvim && npm install && cd - 
+ln -s ~/repos/Linux/config/ultisnip ~/.config/coc
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+rm ~/.zshrc
+ln -s ~/repos/Linux/config/.zshrc ~
+ln -s ~/repos/Linux/config/.zshaliases ~
+ln -s ~/repos/Linux/config/.zshprompt ~
+ln -s ~/repos/Linux/config/.sfdxalias ~
+
+yay -S libxft-bgra-git pfetch
+# snap install autocpu-freq
+snap install code --classic
+
+xmonad --recompile
