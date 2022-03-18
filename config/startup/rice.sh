@@ -38,9 +38,8 @@ ln -s ~/repos/Linux/config/.zshrc ~
 ln -s ~/repos/Linux/config/.zshaliases ~
 ln -s ~/repos/Linux/config/.zshprompt ~
 ln -s ~/repos/Linux/config/.sfdxalias ~
-
-yay -S libxft-bgra-git pfetch microsoft-edge-stable
-# snap install autocpu-freq
+yay -S libxft-bgra-git pfetch microsoft-edge-stable coinmon
+sudo ln -s /var/lib/snapd/snap /snap
 snap install code --classic
-
+# snap install autocpu-freq
 xmonad --recompile
