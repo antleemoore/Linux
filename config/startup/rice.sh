@@ -1,5 +1,5 @@
 #!/bin/sh
-sudo pacman -Syyu neovim noto-fonts-emoji alsa-lib alsa-plugins alsa-utils python3 zsh xorg-xev xorg-xprop dunst nitrogen picom trayer neofetch lsd npm yarn lxsession xmonad xmonad-contrib xmobar cronie aspell-en libmythes mythes-en languagetool alacritty python-pip make gcc discord adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx-im fcitx-configtool fcitx-anthy xdotool lxappearance ttf-nerd-fonts-symbols playerctl mpv xorg-xkill screenkey steam pacman-contrib ntfs-3g mlocate base-devel
+sudo pacman -Syyu neovim noto-fonts-emoji alsa-lib alsa-plugins alsa-utils python3 zsh xorg-xev xorg-xprop dunst nitrogen picom trayer neofetch lsd npm yarn lxsession xmonad xmonad-contrib xmobar cronie aspell-en libmythes mythes-en languagetool alacritty python-pip make gcc discord adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx-im fcitx-configtool fcitx-anthy xdotool lxappearance ttf-nerd-fonts-symbols playerctl mpv xorg-xkill screenkey steam pacman-contrib ntfs-3g mlocate base-devel terminator newsboat
 mkdir ~/repos ~/Projects ~/.config/coc ~/.config/dunst ~/.config/picom ~/.xmonad ~/.config/alacritty ~/.config/nvim
 git clone https://github.com/antleemoore/Linux ~/repos/Linux
 git clone https://github.com/antleemoore/dmenu ~/repos/dmenu
@@ -38,7 +38,7 @@ ln -s ~/repos/Linux/config/.zshaliases ~
 ln -s ~/repos/Linux/config/.zshprompt ~
 ln -s ~/repos/Linux/config/.sfdxalias ~
 
-yay -S libxft-bgra-git pfetch
+yay -S libxft-bgra-git pfetch microsoft-edge-stable
 # snap install autocpu-freq
 snap install code --classic
 
