@@ -22,6 +22,7 @@ ln -s ~/repos/Linux/config/.pam_environment ~
 ln -s ~/repos/Linux/config/.vimrc ~
 ln -s ~/repos/Linux/config/.vimset ~
 ln -s ~/repos/Linux/config/.vimremap ~
+rm -rf ~/.xmonad
 ln -s ~/repos/Linux/config/.xmonad/ ~
 ln -s ~/repos/Linux/config/picom.conf ~/.config/picom
 ln -s ~/repos/Linux/config/dunstrc ~/.config/dunst
