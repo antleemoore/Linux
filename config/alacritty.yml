@@ -47,7 +47,7 @@ colors:
     white:   '#FCFCFA'
 
   # Bright colors
-background_opacity: .90
+window.opacity: .90
 
 mouse:
   hide_when_typing: true
