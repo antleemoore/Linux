@@ -17,6 +17,7 @@ Plugin 'google/vim-codefmt'
 Plugin 'google/vim-glaive'
 Plugin 'vimwiki/vimwiki'
 Plugin 'morhetz/gruvbox'
+Plugin 'mbbell/undotree'
 call vundle#end()
 call glaive#Install()
 filetype indent on
