@@ -26,3 +26,7 @@ noremap j gj
 noremap k gk
 noremap zp 0o/*{{{*/<ESC>
 noremap zP 0o/*}}}*/<ESC>
+nnoremap <C-H> <C-w>H
+nnoremap <C-J> <C-w>J
+nnoremap <C-K> <C-w>K
+nnoremap <C-L> <C-w>L
