@@ -27,4 +27,5 @@ source $HOME/.config/nvim/plugin-config.vim
 au BufReadPost *.cls set syntax=java
 highlight Normal ctermbg=none
 highlight NonText ctermbg=none
+tnoremap <Esc> <C-\><C-n>
 syntax on
