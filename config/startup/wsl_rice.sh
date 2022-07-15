@@ -1,5 +1,6 @@
 #!/bin/sh
 # Command to run: wget -L https://raw.githubusercontent.com/antleemoore/Linux/arch/config/startup/wsl_rice.sh && sh ./wsl_rice.sh
+# install nerd font on windows and enable it in wsl profile
 sudo pacman -Syyu git neovim python3 zsh neofetch lsd npm yarn cronie python-pip make gcc pacman-contrib ntfs-3g mlocate base-devel
 mkdir ~/repos ~/Projects ~/.config/coc ~/.config/nvim
 git clone https://github.com/antleemoore/Linux ~/repos/Linux
