@@ -35,6 +35,8 @@ mkdir -p ~/.vim/pack/mbbill/start
 cd ~/.vim/pack/mbbill/start
 git clone https://github.com/mbbill/undotree.git
 vim -u NONE -c "helptags undotree/doc" -c q
+git clone https://github.com/github/copilot.vim.git ~/.config/nvim/pack/github/start/copilot.vim
+nvim +Copilot
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 git clone https://github.com/zsh-users/zsh-autosuggestions.git ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
