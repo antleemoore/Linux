@@ -23,7 +23,7 @@ set showmatch
 set hlsearch
 set gdefault
 set virtualedit+=block
-set foldmethod=marker
+set foldmethod=syntax
 au FileType python set foldmethod=indent
 set nofoldenable
 set clipboard+=unnamedplus
