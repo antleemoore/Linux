@@ -48,8 +48,10 @@ spawnToWorkspace workspace program = do
 -- Main XMonad Start
 main = do
   h <- spawnPipe "xmobar $HOME/.xmonad/xmobar.hs"
-  xmonad $
-    ewmh
+  xmonad $ 
+    docks $
+    ewmhFullscreen $
+    ewmh 
       xfceConfig
         { terminal = myTerminal,
           modMask = mod4Mask,
@@ -146,8 +148,8 @@ floatSu = appName =? "zenity" --> doCenterFloat
 moveWebcamToSide = className =? "mpv" --> myMoveToStackHook
 floatColorPicker = appName =? "gcolor2" --> doCenterFloat
 myManageHookCombo = myManageHooks <+> manageSpawn <+> manageDocks <+> scratchpadManageHook (W.RationalRect 0.1 0.1 0.8 0.8)
-myHandleEventHookCombo = handleEventHook xfceConfig <+> docksEventHook <+> fullscreenEventHook
-myKeyCombo = myKeys <+> keys defaultConfig
+myHandleEventHookCombo = handleEventHook xfceConfig
+myKeyCombo = myKeys <+> keys def
 teamsMonitor = appName =? "Microsoft Teams - Preview" --> openSilent "3"
 chromeMonitor = appName =? "google-chrome" --> openSilent "2"
 
