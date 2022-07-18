@@ -22,10 +22,10 @@ noremap <leader>x :noh<cr>:call clearmatches()<cr>
 nnoremap <leader><leader> :noh<cr>:bn<cr>
 nnoremap <leader>D :noh<cr>:bd<cr>
 nnoremap <leader>W :noh<cr>:bw<cr>
+nnoremap zC zM
+nnoremap zO zR
 noremap j gj
 noremap k gk
-noremap zp 0o/*{{{*/<ESC>
-noremap zP 0o/*}}}*/<ESC>
 nnoremap <M-h> <C-w>H
 nnoremap <M-j> <C-w>J
 nnoremap <M-k> <C-w>K
