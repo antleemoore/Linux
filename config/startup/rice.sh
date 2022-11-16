@@ -1,6 +1,6 @@
 #!/bin/sh
 # Command to run: wget -L https://raw.githubusercontent.com/antleemoore/Linux/arch/config/startup/rice.sh && sh ./rice.sh
-sudo pacman -Syyu neovim noto-fonts-emoji alsa-lib alsa-plugins alsa-utils python3 zsh xorg-xev xorg-xprop nitrogen picom trayer neofetch lsd npm yarn lxsession xmonad xmonad-contrib xmobar cronie aspell-en libmythes mythes-en languagetool alacritty python-pip make gcc discord adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx-im fcitx-configtool fcitx-anthy xdotool lxappearance ttf-nerd-fonts-symbols playerctl mpv xorg-xkill screenkey steam pacman-contrib ntfs-3g mlocate base-devel terminator newsboat
+sudo pacman -Syyu neovim noto-fonts-emoji alsa-lib alsa-plugins alsa-utils python3 zsh xorg-xev xorg-xprop nitrogen picom trayer neofetch lsd npm yarn lxsession xmonad xmonad-contrib xmobar cronie aspell-en libmythes mythes-en languagetool alacritty python-pip make gcc discord adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx-im fcitx-configtool fcitx-anthy xdotool lxappearance ttf-nerd-fonts-symbols-common playerctl mpv xorg-xkill screenkey steam pacman-contrib ntfs-3g mlocate base-devel terminator newsboat
 mkdir ~/repos ~/Projects ~/.config/coc ~/.config/dunst ~/.config/picom ~/.xmonad ~/.config/alacritty ~/.config/nvim
 git clone https://github.com/antleemoore/Linux ~/repos/Linux
 git clone https://github.com/antleemoore/dmenu ~/repos/dmenu
