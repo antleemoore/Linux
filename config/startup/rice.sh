@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 # Command to run: wget -L https://raw.githubusercontent.com/antleemoore/Linux/arch/config/startup/rice.sh && sh ./rice.sh
-sudo pacman -Syyu neovim noto-fonts-emoji alsa-lib alsa-plugins alsa-utils python3 zsh xorg-xev xorg-xprop nitrogen picom trayer neofetch lsd npm yarn lxsession xmonad xmonad-contrib xmobar cronie aspell-en libmythes mythes-en languagetool alacritty python-pip make gcc discord adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx-im fcitx-configtool fcitx-anthy xdotool lxappearance ttf-nerd-fonts-symbols-common playerctl mpv xorg-xkill screenkey steam pacman-contrib ntfs-3g mlocate base-devel terminator newsboat
+sudo pacman -Syyu vim xorg-server-devel neovim noto-fonts-emoji alsa-lib alsa-plugins alsa-utils python3 zsh xorg-xev xorg-xprop nitrogen picom trayer neofetch lsd npm yarn lxsession xmonad xmonad-contrib xmobar cronie aspell-en libmythes mythes-en languagetool alacritty python-pip make gcc discord adobe-source-han-sans-jp-fonts adobe-source-han-serif-jp-fonts fcitx-im fcitx-configtool fcitx-anthy xdotool lxappearance ttf-nerd-fonts-symbols-common playerctl mpv xorg-xkill screenkey steam pacman-contrib ntfs-3g mlocate base-devel terminator newsboat
 mkdir ~/repos ~/Projects ~/.config/coc ~/.config/dunst ~/.config/picom ~/.xmonad ~/.config/alacritty ~/.config/nvim
 git clone https://github.com/antleemoore/Linux ~/repos/Linux
 git clone https://github.com/antleemoore/dmenu ~/repos/dmenu
@@ -45,8 +45,9 @@ ln -s ~/repos/Linux/config/.zshaliases ~
 ln -s ~/repos/Linux/config/.zshprompt ~
 ln -s ~/repos/Linux/config/.sfdxalias ~
 git clone https://github.com/uditkarode/libxft-bgra ~/repos/libxft-bgra
-sh ~/repos/libxft-bgra/autogen.sh --sysconfdir=/etc --prefix=/usr --mandir=/usr/share/man
-cd ~/repos/libxft-bgra && sudo make install && cd ~
+cd ~/repos/libxft-bgra
+sh ./autogen.sh --sysconfdir=/etc --prefix=/usr --mandir=/usr/share/man
+sudo make install && cd ~
 yay -S pfetch microsoft-edge-stable-bin coinmon
 sudo ln -s /var/lib/snapd/snap /snap
 xmonad --recompile
