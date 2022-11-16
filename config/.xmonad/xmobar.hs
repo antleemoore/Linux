@@ -4,7 +4,7 @@ Config {
    bgColor = "#312F2E", fgColor = "#FCFCFA", position = TopW L 100, border = BottomB,
    borderColor = "black", sepChar = "%", alignSep = "}{",
 -- Desktop template
-   template = "%UnsafeStdinReader%  <fc=#ab9df2>%uptime%</fc>  %date%  <fc=#FC9867>%bitcoin%</fc>  <fc=#ffd866>%checkupdates%</fc>}{%dynnetwork%  %KMCO%  %chancerain%  <action=`alacritty -e newsboat`>%news%</action>  %multicpu%  %memory%  %gpu% %battery% %disku% %multivolume% %trayerpad%",
+   template = "%UnsafeStdinReader%  <fc=#ab9df2>%uptime%</fc>  %date%  <fc=#FC9867>%bitcoin%</fc>  <fc=#ffd866>%checkupdates%</fc>}{%dynnetwork%  %KMCO%  %chancerain%  <action=`alacritty -e newsboat`>%news%</action>  %multicpu%  %memory%  %gpu% %battery% %disku% %bright% %multivolume% %trayerpad%",
    lowerOnStart = True, hideOnStart = False, allDesktops = True,
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
@@ -16,6 +16,7 @@ Config {
           Run DynNetwork [ "--template" , "<fc=#78DCE8><fn=1>\xf0aa</fn></fc> <tx>KB/s <fc=#A9DC76><fn=1>\xf0ab</fn></fc> <rx>KB/s", "--Low", "1000", "--High", "5000", "--low", "#FCFCFA", "--normal", "#FCFCFA", "--high", "#FCFCFA" ] 60,
           Run MultiCpu [ "--template", "<fn=2>\x1f5a5</fn> <total>%" , "--Low", "50", "--High", "85", "--low", "#FCFCFA" , "--normal","#FCFCFA","--high", "#FCFCFA" ] 60,
           Run Memory [ "--template", "<action=`alacritty -e htop`><fn=2>💾</fn> <usedratio>%</action>", "--Low", "20", "--High", "90", "--low", "#FCFCFA", "--normal", "#FCFCFA", "--high", "#FCFCFA" ] 60,
+          Run Brightness ["-t", "<fn=2>\x2600</fn>: <percent>%","--", "-D", "/sys/class/backlight/intel_backlight"] 60,
           Run Com "/home/anthonym/utils/trayer-padding-icon.sh" [] "trayerpad" 20,
           Run Com "/home/anthonym/utils/gpu-usage.sh" ["<fn=2>\x1f3ae</fn>"] "gpu" 60,
           Run Com "/home/anthonym/utils/chance-rain.sh" ["<fn=2>\x2602</fn>"] "chancerain" 36000,
