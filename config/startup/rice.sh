@@ -48,6 +48,7 @@ git clone https://github.com/uditkarode/libxft-bgra ~/repos/libxft-bgra
 cd ~/repos/libxft-bgra
 sh ./autogen.sh --sysconfdir=/etc --prefix=/usr --mandir=/usr/share/man
 sudo make install && cd ~
-yay -S pfetch microsoft-edge-stable-bin coinmon
+yay -S lux pfetch microsoft-edge-stable-bin coinmon
 sudo ln -s /var/lib/snapd/snap /snap
+sudo lux
 xmonad --recompile
