@@ -4,7 +4,7 @@ Config {
    bgColor = "#312F2E", fgColor = "#FCFCFA", position = TopW L 100, border = BottomB,
    borderColor = "black", sepChar = "%", alignSep = "}{",
 -- Desktop template
-   template = "%UnsafeStdinReader%  <fc=#ab9df2>%uptime%</fc>  %date%  <fc=#FC9867>%bitcoin%</fc>  <fc=#ffd866>%checkupdates%</fc>}{%dynnetwork%  %KMCO%  %chancerain%  <action=`alacritty -e newsboat`>%news%</action>  %multicpu%  %memory%  %gpu% %battery% %disku% %bright% %multivolume% %trayerpad%",
+   template = "%UnsafeStdinReader%  <fc=#ab9df2>%uptime%</fc>  %date%  <fc=#ffd866>%checkupdates%</fc>}{%dynnetwork%  %KMCO%  %chancerain%  <action=`alacritty -e newsboat`>%news%</action>  %multicpu%  %memory%  %gpu% %battery% %disku% %bright% %multivolume% %trayerpad%",
    lowerOnStart = True, hideOnStart = False, allDesktops = True,
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
