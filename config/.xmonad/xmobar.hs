@@ -4,7 +4,7 @@ Config {
    bgColor = "#312F2E", fgColor = "#FCFCFA", position = TopW L 100, border = BottomB,
    borderColor = "black", sepChar = "%", alignSep = "}{",
 -- Desktop template
-   template = "%UnsafeStdinReader%  <fc=#ab9df2>%uptime%</fc>  %date%  <fc=#FC9867>%bitcoin%</fc>  <fc=#ffd866>%checkupdates%</fc>}{%dynnetwork%  %KMCO%  %chancerain%  <action=`alacritty -e newsboat`>%news%</action>  %multicpu%  %memory%  %gpu%  %disku% %multivolume% %trayerpad%",
+   template = "%UnsafeStdinReader%  <fc=#ab9df2>%uptime%</fc>  %date%  <fc=#FC9867>%bitcoin%</fc>  <fc=#ffd866>%checkupdates%</fc>}{%dynnetwork%  %KMCO%  %chancerain%  <action=`alacritty -e newsboat`>%news%</action>  %multicpu%  %memory%  %gpu% %battery% %disku% %multivolume% %trayerpad%",
    lowerOnStart = True, hideOnStart = False, allDesktops = True,
    overrideRedirect = True, pickBroadest = False, persistent = True,
 
@@ -23,6 +23,21 @@ Config {
           Run Com "/home/anthonym/utils/bitcoin-price.sh" ["<fn=2>\x1F4B0</fn>"] "bitcoin" 72000,
           Run Com "/home/anthonym/utils/shownews.sh" ["<fn=2>\x1F4F0</fn>"] "news" 1200,
           Run Date "<action=`microsoft-edge-stable https://calendar.google.com/calendar/u/0/r`><fc=#A9DC76><fn=2>\x1f4c5</fn> %a %b %d %Y</fc></action> <fc=#78DCE8><fn=2>\x1f551</fn> %I:%M:%S %p</fc>" "date" 10,
+          Run Battery        [ "--template" , "<fn=2>\x1f50b</fn>: <acstatus>"
+                             , "--Low"      , "10"        -- units: %
+                             , "--High"     , "80"        -- units: %
+                             , "--low"      , "darkred"
+                             --, "--normal"   , "darkorange"
+                             --, "--high"     , "green"
+
+                             , "--" -- battery specific options
+                                       -- discharging status
+                                       , "-o"	, "<left>% (<timeleft>)"
+                                       -- AC "on" status
+                                       , "-O"	, "<fc=#dAA520><left>%</fc>"
+                                       -- charged status
+                                       , "-i"	, "<fc=#006000>Charged</fc>"
+                             ] 50,
           Run UnsafeStdinReader,
           Run StdinReader,
           Run Locks,
